@@ -11,6 +11,7 @@ import type {
 const FUSION_K = 45
 const LEXICAL_WEIGHT = 1.2
 const SEMANTIC_WEIGHT = 1
+const LEXICAL_SCORE_BONUS = 0.012
 
 interface MutableFusionResult {
   chunk: LexicalHit['chunk']
@@ -42,11 +43,17 @@ function classifyConfidence(results: RankedWikiResult[]): SearchConfidence {
 }
 
 function addLexicalHits(target: Map<string, MutableFusionResult>, hits: LexicalHit[]): void {
+  const strongestLexicalScore = hits[0]?.score ?? 0
   hits.forEach((hit, index) => {
     const rank = index + 1
+    const relativeLexicalStrength = strongestLexicalScore > 0
+      ? hit.score / strongestLexicalScore
+      : 0
     target.set(hit.chunk.id, {
       chunk: hit.chunk,
-      score: LEXICAL_WEIGHT / (FUSION_K + rank) + hit.exactBoost * 0.004,
+      score: LEXICAL_WEIGHT / (FUSION_K + rank)
+        + relativeLexicalStrength * LEXICAL_SCORE_BONUS
+        + hit.exactBoost * 0.004,
       lexicalRank: rank,
       lexicalScore: hit.score,
       semanticRank: null,

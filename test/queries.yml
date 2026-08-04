@@ -1,6 +1,8 @@
 queries:
   - query: why does my DAC keep changing sample rate
     expected: Audio-Output-and-Bit-Perfect-Playback#format-changes-and-device-support
+  - query: why is my sample rate weird
+    expected: Audio-Output-and-Bit-Perfect-Playback#format-changes-and-device-support
   - query: another app has no sound when exclusive mode is on
     expected: Audio-Output-and-Bit-Perfect-Playback#another-app-becomes-silent
   - query: parallax says synced but my television has an echo
