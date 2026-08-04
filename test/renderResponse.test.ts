@@ -39,6 +39,7 @@ function rankedResult(overrides: Partial<WikiChunk> = {}): RankedWikiResult {
 }
 
 function rendered(response: WikiSearchResponse): {
+  content: string | undefined
   embed: ReturnType<EmbedBuilder['toJSON']>
   row: ReturnType<ActionRowBuilder<ButtonBuilder>['toJSON']>
 } {
@@ -47,7 +48,11 @@ function rendered(response: WikiSearchResponse): {
   const row = output.components?.[0]
   assert.ok(embed instanceof EmbedBuilder)
   assert.ok(row instanceof ActionRowBuilder)
-  return { embed: embed.toJSON(), row: row.toJSON() }
+  return {
+    content: typeof output.content === 'string' ? output.content : undefined,
+    embed: embed.toJSON(),
+    row: row.toJSON(),
+  }
 }
 
 test('renders a compact, query-relevant result without medium-confidence clutter', () => {
@@ -57,7 +62,7 @@ test('renders a compact, query-relevant result without medium-confidence clutter
     heading: 'Now Playing information',
     url: 'https://example.test/wiki/Queue#now-playing',
   })
-  const { embed, row } = rendered({
+  const { content, embed, row } = rendered({
     query: 'why is my sample rate weird',
     confidence: 'medium',
     results: [primary, alternative],
@@ -70,10 +75,12 @@ test('renders a compact, query-relevant result without medium-confidence clutter
   assert.equal(embed.fields, undefined)
   assert.equal(embed.footer, undefined)
   assert.equal(row.components.length, 1)
+  assert.equal(content, 'I think this is the bit you’re after:')
+  assert.equal('label' in row.components[0]! ? row.components[0].label : undefined, 'Read this section')
 })
 
 test('shows compact alternatives only for low-confidence results', () => {
-  const { embed, row } = rendered({
+  const { content, embed, row } = rendered({
     query: 'something strange',
     confidence: 'low',
     results: [
@@ -89,4 +96,18 @@ test('shows compact alternatives only for low-confidence results', () => {
   assert.equal(embed.fields?.[0]?.name, 'Other possible sections')
   assert.match(embed.fields?.[0]?.value ?? '', /Now Playing information/)
   assert.equal(row.components.length, 1)
+  assert.equal(content, 'Not totally sure on this one, but this is my best lead:')
+})
+
+test('uses the same voice when no Wiki section matches', () => {
+  const output = renderWikiResponse({
+    query: 'mysterious thing',
+    confidence: 'low',
+    results: [],
+  })
+
+  assert.equal(
+    output.content,
+    'I couldn’t pin that one down. Try naming the feature, setting, or what went wrong.',
+  )
 })

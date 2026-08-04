@@ -12,6 +12,12 @@ const ASTRA_COLOR = 0x8b5cf6
 const SNIPPET_LIMIT = 300
 const MAX_SNIPPET_SENTENCES = 3
 
+const RESULT_LEADS = {
+  high: 'Yep — this should be the one:',
+  medium: 'I think this is the bit you’re after:',
+  low: 'Not totally sure on this one, but this is my best lead:',
+} as const
+
 function resultTitle(result: RankedWikiResult): string {
   return result.chunk.heading === result.chunk.pageTitle
     ? result.chunk.pageTitle
@@ -77,7 +83,7 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
   const primary = response.results[0]
   if (!primary) {
     return {
-      content: 'I could not find a relevant Astra Wiki section. Try naming the feature or the symptom more specifically.',
+      content: 'I couldn’t pin that one down. Try naming the feature, setting, or what went wrong.',
       allowedMentions: { parse: [] },
     }
   }
@@ -106,9 +112,10 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
   const button = new ButtonBuilder()
     .setStyle(ButtonStyle.Link)
     .setURL(primary.chunk.url)
-    .setLabel('Open Wiki Section')
+    .setLabel('Read this section')
 
   return {
+    content: RESULT_LEADS[response.confidence],
     embeds: [embed],
     components: [new ActionRowBuilder<ButtonBuilder>().addComponents(button)],
     allowedMentions: { parse: [] },

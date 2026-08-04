@@ -18,7 +18,7 @@ async function runSearch(
 ): Promise<void> {
   if (!query.trim()) {
     await interaction.reply({
-      content: 'That message has no searchable text.',
+      content: 'That message isn’t giving me much to search.',
       flags: MessageFlags.Ephemeral,
       allowedMentions: { parse: [] },
     })
@@ -32,7 +32,7 @@ async function runSearch(
   } catch (error) {
     console.error('Wiki search failed.', error)
     await interaction.editReply({
-      content: 'The Astra Wiki index is temporarily unavailable. Please try again in a moment.',
+      content: 'I lost track of the Wiki for a second. Try that again in a moment.',
       allowedMentions: { parse: [] },
     })
   }
