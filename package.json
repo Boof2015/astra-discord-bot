@@ -1,0 +1,46 @@
+{
+  "name": "astra-discord-bot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Discord retrieval bot for the Astra user guide",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build --silent && node --test dist/test/**/*.test.js",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/src/index.js",
+    "commands:register": "npm run build --silent && node dist/src/discord/registerCommands.js",
+    "search": "npm run build --silent && node dist/src/cli/search.js",
+    "evaluate": "npm run build --silent && node dist/src/cli/evaluate.js"
+  },
+  "dependencies": {
+    "discord.js": "14.27.0",
+    "fastembed": "2.1.0",
+    "github-slugger": "2.0.0",
+    "mdast-util-to-string": "4.0.0",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "tar": "7.5.22",
+    "unified": "11.0.5",
+    "yaml": "2.9.0"
+  },
+  "devDependencies": {
+    "@types/mdast": "4.0.4",
+    "@types/node": "26.1.2",
+    "tsx": "4.23.5",
+    "typescript": "7.0.2"
+  },
+  "overrides": {
+    "@anush008/tokenizers": "0.6.0",
+    "tar": "7.5.22"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "fsevents": false,
+    "onnxruntime-node@1.21.0": true
+  }
+}

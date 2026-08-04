@@ -1,0 +1,136 @@
+aliases:
+  Audio-Output-and-Bit-Perfect-Playback#bit-perfect-exclusive:
+    - bit perfect
+    - bit-perfect
+    - exclusive mode
+    - exclusive playback
+    - WASAPI exclusive
+    - CoreAudio hog mode
+    - direct hardware output
+  Audio-Output-and-Bit-Perfect-Playback#format-changes-and-device-support:
+    - DAC changes sample rate
+    - automatic sample rate switching
+    - sample rate keeps changing
+  Audio-Output-and-Bit-Perfect-Playback#common-problems:
+    - another app has no sound
+    - device busy
+    - exclusive mode failed
+  Audio-Output-and-Bit-Perfect-Playback#another-app-becomes-silent:
+    - another app has no sound when exclusive mode is on
+    - other applications are silent
+    - exclusive mode muted another app
+  Multichannel-Audio#binaural-mode-and-the-virtual-speaker-room:
+    - headphone spatial audio
+    - virtual surround
+    - HRTF
+    - MIT KEMAR
+  Multichannel-Audio#manual-channel-routing:
+    - swap speakers
+    - remap channels
+    - wrong speaker channel
+    - route the left channel to a different speaker
+    - send a channel to another output
+  Output-Delay-and-Calibration:
+    - bluetooth delay
+    - wireless speaker latency
+    - lip sync
+    - audio video sync
+  Output-Delay-and-Calibration#audio-is-still-early-or-late:
+    - bluetooth speaker is late
+    - bluetooth audio is late
+    - wireless output is late
+  Parallax:
+    - multi room
+    - multi-room
+    - network speakers
+    - synchronized computers
+    - synced playback
+  Parallax#tune-speaker-timing:
+    - parallax echo
+    - speaker sounds late
+    - speaker sounds early
+    - trim
+    - timing trim
+    - synced but delayed
+  Parallax#a-paired-speaker-keeps-going-offline-or-disappearing:
+    - parallax node disappears
+    - speaker keeps disconnecting
+    - receiver offline
+  Discord-Rich-Presence:
+    - discord rpc
+    - discord status
+    - discord activity
+  Discord-Rich-Presence#cover-art:
+    - discord wrong cover
+    - discord album art
+    - discord artwork cache
+    - iTunes cover
+    - MusicBrainz cover
+    - Cover Art Archive
+    - TheAudioDB
+  Managing-your-music-library#artist-images:
+    - artist.jpg
+    - artist image folder
+    - poster.jpg
+    - custom artist picture
+  Managing-your-music-library#scanning-for-changes:
+    - music missing
+    - rescan library
+    - force rescan
+  Lyrics#where-astra-looks:
+    - lrc file
+    - sidecar lyrics
+    - embedded lyrics
+    - lyric source order
+  Lyrics#correct-lyrics-that-appear-early-or-late:
+    - lyrics out of sync
+    - lyrics too early
+    - lyrics too late
+    - lyric offset
+  Visualizers#performance-and-troubleshooting:
+    - visualizer high CPU
+    - analyzer slow
+    - native DSP unavailable
+  Visualizers#spectrum-settings:
+    - FFT size
+    - spectrum detail
+    - spectrum CPU
+  Remote-Libraries:
+    - Navidrome
+    - Jellyfin
+    - Subsonic
+    - network library
+    - music server
+  Remote-Libraries#add-a-server:
+    - add a Navidrome server
+    - connect a Jellyfin server
+    - set up a Subsonic server
+  Scrobbling:
+    - Last.fm
+    - ListenBrainz
+    - AudioScrobbler
+  Scrobbling#troubleshooting:
+    - Last.fm will not scrobble
+    - scrobbling does not work
+    - missing scrobbles
+  Astra-API:
+    - companion API
+    - local API
+    - API key
+  Phone-Remote-and-Library-Sync:
+    - phone controller
+    - mobile remote
+    - QR pairing
+  Queue-and-Playback-Controls#open-audio-files-from-the-file-manager:
+    - open a song without adding its folder to my library
+    - play a file outside the library
+    - Open with Astra
+  Library-Integrity-Scanner:
+    - corrupt music
+    - broken files
+    - duplicate tracks
+    - check FLAC
+  Playlists#dynamic-playlists:
+    - smart playlist
+    - automatic playlist
+    - playlist rules

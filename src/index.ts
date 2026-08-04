@@ -1,0 +1,23 @@
+import { WikiService } from './app/wikiService.js'
+import { loadConfig, loadLocalEnvironment } from './config.js'
+import { startDiscordBot } from './discord/bot.js'
+
+loadLocalEnvironment()
+const config = loadConfig({ requireDiscord: true })
+const wikiService = new WikiService(config)
+
+console.info('Preparing the Astra Wiki index...')
+await wikiService.start()
+const client = await startDiscordBot(config, wikiService)
+
+let shuttingDown = false
+const shutdown = async (signal: string): Promise<void> => {
+  if (shuttingDown) return
+  shuttingDown = true
+  console.info(`Received ${signal}; shutting down.`)
+  wikiService.stop()
+  client.destroy()
+}
+
+process.once('SIGINT', () => void shutdown('SIGINT'))
+process.once('SIGTERM', () => void shutdown('SIGTERM'))

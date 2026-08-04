@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the bot
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run check
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev
+
+      - name: Check out the current Astra Wiki
+        run: git clone --depth=1 https://github.com/Boof2015/astra.wiki.git data/wiki
+
+      - name: Run retrieval regression suite
+        env:
+          WIKI_SYNC_ENABLED: "false"
+          SEMANTIC_SEARCH_ENABLED: "false"
+        run: npm run evaluate
