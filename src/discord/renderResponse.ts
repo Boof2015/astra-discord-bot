@@ -6,8 +6,11 @@ import {
   type InteractionEditReplyOptions,
 } from 'discord.js'
 import type { RankedWikiResult, WikiSearchResponse } from '../search/types.js'
+import { tokenize } from '../search/tokenize.js'
 
 const ASTRA_COLOR = 0x8b5cf6
+const SNIPPET_LIMIT = 300
+const MAX_SNIPPET_SENTENCES = 3
 
 function resultTitle(result: RankedWikiResult): string {
   return result.chunk.heading === result.chunk.pageTitle
@@ -21,6 +24,55 @@ function shortLabel(value: string, fallback: string): string {
   return compact.length <= 70 ? compact : `${compact.slice(0, 67).trimEnd()}…`
 }
 
+function sentencesFrom(value: string): string[] {
+  return value
+    .replace(/\s+/g, ' ')
+    .trim()
+    .match(/[^.!?]+(?:[.!?]+|$)/g)
+    ?.map((sentence) => sentence.trim())
+    .filter(Boolean) ?? []
+}
+
+function truncateSnippet(value: string): string {
+  if (value.length <= SNIPPET_LIMIT) return value
+  const candidate = value.slice(0, SNIPPET_LIMIT)
+  const wordEnd = candidate.lastIndexOf(' ')
+  return `${candidate.slice(0, wordEnd > 0 ? wordEnd : SNIPPET_LIMIT).trimEnd()}…`
+}
+
+function relevantSnippet(result: RankedWikiResult, query: string): string {
+  const sentences = sentencesFrom(result.chunk.text)
+  if (sentences.length === 0) return truncateSnippet(result.chunk.excerpt)
+
+  const queryTokens = new Set(tokenize(query))
+  let bestIndex = 0
+  let bestScore = 0
+  sentences.forEach((sentence, index) => {
+    const sentenceTokens = new Set(tokenize(sentence))
+    const score = [...queryTokens].filter((token) => sentenceTokens.has(token)).length
+    if (score > bestScore) {
+      bestIndex = index
+      bestScore = score
+    }
+  })
+
+  const selected: string[] = []
+  for (
+    let index = bestIndex;
+    index < sentences.length && selected.length < MAX_SNIPPET_SENTENCES;
+    index += 1
+  ) {
+    const sentence = sentences[index]
+    if (!sentence) continue
+    const candidate = [...selected, sentence].join(' ')
+    if (candidate.length > SNIPPET_LIMIT && selected.length > 0) break
+    selected.push(sentence)
+    if (candidate.length >= SNIPPET_LIMIT) break
+  }
+
+  return truncateSnippet(selected.join(' '))
+}
+
 export function renderWikiResponse(response: WikiSearchResponse): InteractionEditReplyOptions {
   const primary = response.results[0]
   if (!primary) {
@@ -30,37 +82,35 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
     }
   }
 
-  const confidenceLead = response.confidence === 'high'
-    ? 'This is the closest section in the Astra user guide.'
-    : response.confidence === 'medium'
-      ? 'This looks relevant. I included other possible matches below.'
-      : 'I am not confident enough to choose one section, but these are the closest matches.'
-
   const embed = new EmbedBuilder()
     .setColor(ASTRA_COLOR)
-    .setTitle(shortLabel(resultTitle(primary), 'Astra Wiki'))
+    .setAuthor({
+      name: primary.chunk.heading === primary.chunk.pageTitle
+        ? 'Astra Wiki'
+        : shortLabel(primary.chunk.pageTitle, 'Astra Wiki'),
+    })
+    .setTitle(shortLabel(primary.chunk.heading, 'Astra Wiki'))
     .setURL(primary.chunk.url)
-    .setDescription(`${confidenceLead}\n\n${primary.chunk.excerpt}`)
-    .setFooter({ text: `Astra Wiki · ${response.confidence} confidence` })
+    .setDescription(relevantSnippet(primary, response.query))
 
-  const alternatives = response.results.slice(1)
+  const alternatives = response.confidence === 'low' ? response.results.slice(1) : []
   if (alternatives.length > 0) {
     embed.addFields({
-      name: 'Other possible matches',
+      name: 'Other possible sections',
       value: alternatives
-        .map((result) => `• [${resultTitle(result)}](${result.chunk.url})`)
+        .map((result) => `• [${shortLabel(resultTitle(result), 'Wiki section')}](${result.chunk.url})`)
         .join('\n'),
     })
   }
 
-  const buttons = response.results.slice(0, 3).map((result, index) => new ButtonBuilder()
+  const button = new ButtonBuilder()
     .setStyle(ButtonStyle.Link)
-    .setURL(result.chunk.url)
-    .setLabel(index === 0 ? 'Open Wiki Section' : shortLabel(result.chunk.heading, `Alternative ${index}`)))
+    .setURL(primary.chunk.url)
+    .setLabel('Open Wiki Section')
 
   return {
     embeds: [embed],
-    components: [new ActionRowBuilder<ButtonBuilder>().addComponents(buttons)],
+    components: [new ActionRowBuilder<ButtonBuilder>().addComponents(button)],
     allowedMentions: { parse: [] },
   }
 }
