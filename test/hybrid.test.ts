@@ -58,7 +58,7 @@ test('semantic-only matches are returned when lexical search has no match', asyn
   const result = chunk('Lyrics#offset', 'Correct lyric timing', 'Move timed lyrics earlier or later.')
   const engine = new WikiSearchEngine(
     new LexicalIndex([result]),
-    new FixedSemanticSearch([{ chunk: result, similarity: 0.7 }]),
+    new FixedSemanticSearch([{ chunk: result, similarity: 0.9 }]),
   )
 
   const response = await engine.search('the words are ahead of the singer')
@@ -66,4 +66,21 @@ test('semantic-only matches are returned when lexical search has no match', asyn
   assert.equal(response.results[0]?.chunk.id, result.id)
   assert.equal(response.results[0]?.lexicalRank, null)
   assert.equal(response.results[0]?.semanticRank, 1)
+})
+
+test('abstains when an unrelated word has only a weak semantic match', async () => {
+  const result = chunk(
+    'Experimental#activity-indicator',
+    'Activity indicator',
+    'Shows whether Astra is playing or scanning.',
+  )
+  const engine = new WikiSearchEngine(
+    new LexicalIndex([result]),
+    new FixedSemanticSearch([{ chunk: result, similarity: 0.64 }]),
+  )
+
+  const response = await engine.search('bread')
+
+  assert.equal(response.confidence, 'low')
+  assert.deepEqual(response.results, [])
 })

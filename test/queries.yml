@@ -45,3 +45,13 @@ queries:
       - Output-Delay-and-Calibration
       - Output-Delay-and-Calibration#manual-mode
       - Output-Delay-and-Calibration#audio-is-still-early-or-late
+  - query: bread
+    expected: []
+  - query: sandwich recipe
+    expected: []
+  - query: weather tomorrow
+    expected: []
+  - query: who is the president
+    expected: []
+  - query: make me coffee
+    expected: []

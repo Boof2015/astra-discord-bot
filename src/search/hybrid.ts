@@ -1,4 +1,5 @@
 import { LexicalIndex } from './lexical.js'
+import { tokenize } from './tokenize.js'
 import type {
   LexicalHit,
   RankedWikiResult,
@@ -12,6 +13,10 @@ const FUSION_K = 45
 const LEXICAL_WEIGHT = 1.2
 const SEMANTIC_WEIGHT = 1
 const LEXICAL_SCORE_BONUS = 0.012
+const STRONG_LEXICAL_SCORE = 8
+const SUPPORTING_LEXICAL_SCORE = 5.5
+const SUPPORTING_SEMANTIC_SIMILARITY = 0.72
+const SEMANTIC_ONLY_SIMILARITY = 0.84
 
 interface MutableFusionResult {
   chunk: LexicalHit['chunk']
@@ -37,9 +42,33 @@ function classifyConfidence(results: RankedWikiResult[]): SearchConfidence {
   if (
     first.exactBoost > 0
     || (first.lexicalRank !== null && first.lexicalRank <= 5)
-    || (first.semanticSimilarity !== null && first.semanticSimilarity >= 0.42)
+    || (
+      first.semanticSimilarity !== null
+      && first.semanticSimilarity >= SUPPORTING_SEMANTIC_SIMILARITY
+    )
   ) return 'medium'
   return 'low'
+}
+
+function hasEnoughEvidence(query: string, results: RankedWikiResult[]): boolean {
+  const first = results[0]
+  if (!first) return false
+  if (first.exactBoost > 0) return true
+
+  const lexicalScore = first.lexicalScore ?? 0
+  if (lexicalScore >= STRONG_LEXICAL_SCORE) return true
+
+  const queryTokenCount = new Set(tokenize(query)).size
+  if (queryTokenCount < 2) return false
+
+  const semanticSimilarity = first.semanticSimilarity ?? 0
+  if (
+    lexicalScore >= SUPPORTING_LEXICAL_SCORE
+    && semanticSimilarity >= SUPPORTING_SEMANTIC_SIMILARITY
+  ) return true
+
+  return first.lexicalRank === null
+    && semanticSimilarity >= SEMANTIC_ONLY_SIMILARITY
 }
 
 function addLexicalHits(target: Map<string, MutableFusionResult>, hits: LexicalHit[]): void {
@@ -107,6 +136,10 @@ export class WikiSearchEngine {
     const results = [...fused.values()]
       .sort((left, right) => right.score - left.score || left.chunk.id.localeCompare(right.chunk.id))
       .slice(0, Math.max(0, limit))
+
+    if (!hasEnoughEvidence(trimmedQuery, results)) {
+      return { query: trimmedQuery, confidence: 'low', results: [] }
+    }
 
     return {
       query: trimmedQuery,

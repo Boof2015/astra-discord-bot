@@ -2,15 +2,16 @@
 
 A Discord bot that turns a natural-language question into the most relevant section of the [Astra Wiki](https://github.com/Boof2015/astra/wiki).
 
-It is a documentation retriever, not a support-answer generator. The bot quotes an excerpt already written in the Wiki and links directly to its page and heading. It does not use an LLM, monitor ordinary messages, or store a history of people's questions.
+It is a documentation retriever, not a support-answer generator. The bot quotes an excerpt already written in the Wiki and links directly to its page and heading. It does not use an LLM, request privileged access to unmentioned message content, or store a history of people's questions.
 
 ## What people can do
 
 - Run `/wiki question:<their question>`.
+- Mention the bot followed by a question, such as `@Astra Bot why is my sample rate weird?`.
 - Right-click a Discord message, open **Apps**, and choose **Search Astra Wiki**.
 - Open the best matching Wiki section or one of the other likely matches.
 
-The bot reads only explicit interactions. It uses the basic `Guilds` gateway intent and does not require Discord's privileged Message Content intent.
+The bot reads only explicit interactions and messages that directly mention it. It uses the non-privileged `Guilds` and `GuildMessages` gateway intents. Discord provides content for messages that mention an app, so the bot does not require the privileged Message Content intent and cannot inspect ordinary unmentioned conversation.
 
 ## How retrieval works
 
@@ -38,7 +39,7 @@ The production image uses Debian rather than Alpine because the local ONNX runti
 1. Create an application in the [Discord Developer Portal](https://discord.com/developers/applications), then add a bot.
 2. Copy the application ID into `DISCORD_CLIENT_ID` and the bot token into `DISCORD_TOKEN`.
 3. On the application's **Installation** page, enable the `bot` and `applications.commands` scopes.
-4. Give the bot **View Channels**, **Send Messages**, and **Embed Links** in the channels where it will be used.
+4. Give the bot **View Channels**, **Send Messages**, **Embed Links**, and **Read Message History** in the channels where it will be used. Add **Send Messages in Threads** if it should answer mentions inside threads.
 5. Install the application in the server.
 
 Keep the token only in `.env`; that file is ignored by Git. If a token is ever committed or shared, reset it in the Developer Portal.

@@ -27,7 +27,7 @@ function parseEvaluationQueries(value: unknown): EvaluationQuery[] {
       : Array.isArray(expectedValue) && expectedValue.every((item) => typeof item === 'string')
         ? expectedValue
         : null
-    if (typeof query !== 'string' || !query.trim() || !expected || expected.length === 0) {
+    if (typeof query !== 'string' || !query.trim() || !expected) {
       throw new Error(`Evaluation query ${index + 1} is invalid.`)
     }
     return { query, expected }
@@ -54,15 +54,20 @@ let topThreeHits = 0
 for (const evaluation of queries) {
   const response = await created.engine.search(evaluation.query, 3)
   const ids = response.results.map((result) => result.chunk.id)
-  const topOneMatch = ids[0] ? evaluation.expected.includes(ids[0]) : false
-  const topThreeMatch = ids.some((id) => evaluation.expected.includes(id))
+  const expectsNoResult = evaluation.expected.length === 0
+  const topOneMatch = expectsNoResult
+    ? ids.length === 0
+    : ids[0] ? evaluation.expected.includes(ids[0]) : false
+  const topThreeMatch = expectsNoResult
+    ? ids.length === 0
+    : ids.some((id) => evaluation.expected.includes(id))
   if (topOneMatch) topOneHits += 1
   if (topThreeMatch) topThreeHits += 1
 
   const marker = topOneMatch ? '✓' : topThreeMatch ? '~' : '✗'
   console.info(`${marker} ${evaluation.query}`)
   if (!topOneMatch) {
-    console.info(`  expected: ${evaluation.expected.join(' OR ')}`)
+    console.info(`  expected: ${evaluation.expected.join(' OR ') || '(no result)'}`)
     console.info(`  received: ${ids.join(', ') || '(none)'}`)
   }
 }
