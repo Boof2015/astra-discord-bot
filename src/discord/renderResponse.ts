@@ -7,13 +7,13 @@ import {
 } from 'discord.js'
 import type { RankedWikiResult, WikiSearchResponse } from '../search/types.js'
 import { tokenize } from '../search/tokenize.js'
+import { personalityLines } from './personality.js'
 
 const ASTRA_COLOR = 0x8b5cf6
 const SNIPPET_LIMIT = 300
 const MAX_SNIPPET_SENTENCES = 3
 
-const RESULT_LEADS = {
-  high: 'Yep — this should be the one:',
+const FIXED_RESULT_LEADS = {
   medium: 'I think this is the bit you’re after:',
   low: 'Not totally sure on this one, but this is my best lead:',
 } as const
@@ -83,7 +83,7 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
   const primary = response.results[0]
   if (!primary) {
     return {
-      content: 'I couldn’t pin that one down. Try naming the feature, setting, or what went wrong.',
+      content: personalityLines.pick('noResult'),
       allowedMentions: { parse: [] },
     }
   }
@@ -115,7 +115,9 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
     .setLabel('Read this section')
 
   return {
-    content: RESULT_LEADS[response.confidence],
+    content: response.confidence === 'high'
+      ? personalityLines.pick('highResult')
+      : FIXED_RESULT_LEADS[response.confidence],
     embeds: [embed],
     components: [new ActionRowBuilder<ButtonBuilder>().addComponents(button)],
     allowedMentions: { parse: [] },

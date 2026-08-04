@@ -11,6 +11,7 @@ import type { BotConfig } from '../config.js'
 import type { WikiService } from '../app/wikiService.js'
 import { WIKI_MESSAGE_COMMAND, WIKI_SLASH_COMMAND } from './commands.js'
 import { queryFromMention } from './mention.js'
+import { personalityLines } from './personality.js'
 import { renderWikiResponse } from './renderResponse.js'
 
 async function runSearch(
@@ -34,7 +35,7 @@ async function runSearch(
   } catch (error) {
     console.error('Wiki search failed.', error)
     await interaction.editReply({
-      content: 'I lost track of the Wiki for a second. Try that again in a moment.',
+      content: personalityLines.pick('error'),
       allowedMentions: { parse: [] },
     })
   }
@@ -47,7 +48,7 @@ async function runMentionSearch(
 ): Promise<void> {
   if (!query) {
     await message.reply({
-      content: 'You’ve got me — ask a question after the mention and I’ll look through the Wiki.',
+      content: personalityLines.pick('bareMention'),
       allowedMentions: { parse: [], repliedUser: false },
     })
     return
@@ -68,7 +69,7 @@ async function runMentionSearch(
   } catch (error) {
     console.error('Mentioned Wiki search failed.', error)
     await message.reply({
-      content: 'I lost track of the Wiki for a second. Try that again in a moment.',
+      content: personalityLines.pick('error'),
       allowedMentions: { parse: [], repliedUser: false },
     })
   }

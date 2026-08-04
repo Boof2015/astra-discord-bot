@@ -106,8 +106,9 @@ test('uses the same voice when no Wiki section matches', () => {
     results: [],
   })
 
-  assert.equal(
-    output.content,
-    'I couldn’t pin that one down. Try naming the feature, setting, or what went wrong.',
-  )
+  assert.ok([
+    'I couldn’t pin that one down.',
+    'I checked under the couch. Nothing.',
+    'The Wiki has no idea what you’re talking about. Neither do I.',
+  ].includes(String(output.content)))
 })
