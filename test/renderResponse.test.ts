@@ -58,7 +58,7 @@ function rendered(response: WikiSearchResponse): {
   }
 }
 
-test('renders a compact, query-relevant result without medium-confidence clutter', () => {
+test('renders a compact result with the next-best section as a button', () => {
   const primary = rankedResult()
   const alternative = rankedResult({
     id: 'Queue#now-playing',
@@ -77,12 +77,16 @@ test('renders a compact, query-relevant result without medium-confidence clutter
   assert.ok((embed.description?.length ?? Infinity) <= 300)
   assert.equal(embed.fields, undefined)
   assert.equal(embed.footer, undefined)
-  assert.equal(row.components.length, 1)
+  assert.equal(row.components.length, 2)
   assert.equal(content, 'I think this is the bit you’re after:')
   assert.equal('label' in row.components[0]! ? row.components[0].label : undefined, 'Read this section')
+  assert.equal(
+    'label' in row.components[1]! ? row.components[1].label : undefined,
+    '2. Audio Output and Bit-Perfect Playback › Now Playing information',
+  )
 })
 
-test('shows compact alternatives only for low-confidence results', () => {
+test('keeps low-confidence alternatives out of the embed', () => {
   const { content, embed, row } = rendered({
     query: 'something strange',
     confidence: 'low',
@@ -96,10 +100,41 @@ test('shows compact alternatives only for low-confidence results', () => {
     ],
   })
 
-  assert.equal(embed.fields?.[0]?.name, 'Other possible sections')
-  assert.match(embed.fields?.[0]?.value ?? '', /Now Playing information/)
-  assert.equal(row.components.length, 1)
+  assert.equal(embed.fields, undefined)
+  assert.equal(row.components.length, 2)
   assert.equal(content, 'Not totally sure on this one, but this is my best lead:')
+})
+
+test('offers at most three total section buttons', () => {
+  const { row } = rendered({
+    query: 'sample rate trouble',
+    confidence: 'high',
+    results: [
+      rankedResult(),
+      rankedResult({
+        id: 'Pipeline#resampler',
+        pageTitle: 'Audio Pipeline Shelf',
+        heading: 'Resampler',
+        url: 'https://example.test/wiki/Pipeline#resampler',
+      }),
+      rankedResult({
+        id: 'Troubleshooting#playback',
+        pageTitle: 'Troubleshooting',
+        heading: 'Playback problems',
+        url: 'https://example.test/wiki/Troubleshooting#playback',
+      }),
+      rankedResult({
+        id: 'Queue#now-playing',
+        pageTitle: 'Queue',
+        heading: 'Now Playing',
+        url: 'https://example.test/wiki/Queue#now-playing',
+      }),
+    ],
+  })
+
+  assert.equal(row.components.length, 3)
+  assert.match('label' in row.components[1]! ? row.components[1].label ?? '' : '', /^2\./)
+  assert.match('label' in row.components[2]! ? row.components[2].label ?? '' : '', /^3\./)
 })
 
 test('uses the same voice when no Wiki section matches', () => {

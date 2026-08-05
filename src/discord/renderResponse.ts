@@ -99,27 +99,26 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
     .setURL(primary.chunk.url)
     .setDescription(relevantSnippet(primary, response.query))
 
-  const alternatives = response.confidence === 'low' ? response.results.slice(1) : []
-  if (alternatives.length > 0) {
-    embed.addFields({
-      name: 'Other possible sections',
-      value: alternatives
-        .map((result) => `• [${shortLabel(resultTitle(result), 'Wiki section')}](${result.chunk.url})`)
-        .join('\n'),
-    })
-  }
-
-  const button = new ButtonBuilder()
+  const primaryButton = new ButtonBuilder()
     .setStyle(ButtonStyle.Link)
     .setURL(primary.chunk.url)
     .setLabel('Read this section')
+  const buttons = [primaryButton]
+  response.results.slice(1, 3).forEach((result, index) => {
+    buttons.push(
+      new ButtonBuilder()
+        .setStyle(ButtonStyle.Link)
+        .setURL(result.chunk.url)
+        .setLabel(shortLabel(`${index + 2}. ${resultTitle(result)}`, `Option ${index + 2}`)),
+    )
+  })
 
   return {
     content: response.confidence === 'high'
       ? personalityLines.pick('highResult')
       : FIXED_RESULT_LEADS[response.confidence],
     embeds: [embed],
-    components: [new ActionRowBuilder<ButtonBuilder>().addComponents(button)],
+    components: [new ActionRowBuilder<ButtonBuilder>().addComponents(...buttons)],
     allowedMentions: { parse: [] },
   }
 }
