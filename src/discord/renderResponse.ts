@@ -18,12 +18,6 @@ const FIXED_RESULT_LEADS = {
   low: 'Not totally sure on this one, but this is my best lead:',
 } as const
 
-function resultTitle(result: RankedWikiResult): string {
-  return result.chunk.heading === result.chunk.pageTitle
-    ? result.chunk.pageTitle
-    : `${result.chunk.pageTitle} › ${result.chunk.heading}`
-}
-
 function shortLabel(value: string, fallback: string): string {
   const compact = value.replace(/\s+/g, ' ').trim()
   if (!compact) return fallback
@@ -104,12 +98,18 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
     .setURL(primary.chunk.url)
     .setLabel('Read this section')
   const buttons = [primaryButton]
-  response.results.slice(1, 3).forEach((result, index) => {
+  const alternatives = response.results.slice(1, 3)
+  if (alternatives.length > 0) {
+    embed.setFooter({
+      text: `${alternatives.length} other possible ${alternatives.length === 1 ? 'match' : 'matches'} below.`,
+    })
+  }
+  alternatives.forEach((result, index) => {
     buttons.push(
       new ButtonBuilder()
         .setStyle(ButtonStyle.Link)
         .setURL(result.chunk.url)
-        .setLabel(shortLabel(`${index + 2}. ${resultTitle(result)}`, `Option ${index + 2}`)),
+        .setLabel(shortLabel(result.chunk.pageTitle, `Other result ${index + 1}`)),
     )
   })
 

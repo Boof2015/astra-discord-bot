@@ -76,13 +76,13 @@ test('renders a compact result with the next-best section as a button', () => {
   assert.match(embed.description ?? '', /^Astra changes the DAC sample rate/)
   assert.ok((embed.description?.length ?? Infinity) <= 300)
   assert.equal(embed.fields, undefined)
-  assert.equal(embed.footer, undefined)
+  assert.equal(embed.footer?.text, '1 other possible match below.')
   assert.equal(row.components.length, 2)
   assert.equal(content, 'I think this is the bit you’re after:')
   assert.equal('label' in row.components[0]! ? row.components[0].label : undefined, 'Read this section')
   assert.equal(
     'label' in row.components[1]! ? row.components[1].label : undefined,
-    '2. Audio Output and Bit-Perfect Playback › Now Playing information',
+    'Audio Output and Bit-Perfect Playback',
   )
 })
 
@@ -101,12 +101,13 @@ test('keeps low-confidence alternatives out of the embed', () => {
   })
 
   assert.equal(embed.fields, undefined)
+  assert.equal(embed.footer?.text, '1 other possible match below.')
   assert.equal(row.components.length, 2)
   assert.equal(content, 'Not totally sure on this one, but this is my best lead:')
 })
 
 test('offers at most three total section buttons', () => {
-  const { row } = rendered({
+  const { embed, row } = rendered({
     query: 'sample rate trouble',
     confidence: 'high',
     results: [
@@ -133,8 +134,15 @@ test('offers at most three total section buttons', () => {
   })
 
   assert.equal(row.components.length, 3)
-  assert.match('label' in row.components[1]! ? row.components[1].label ?? '' : '', /^2\./)
-  assert.match('label' in row.components[2]! ? row.components[2].label ?? '' : '', /^3\./)
+  assert.equal(embed.footer?.text, '2 other possible matches below.')
+  assert.equal(
+    'label' in row.components[1]! ? row.components[1].label : undefined,
+    'Audio Pipeline Shelf',
+  )
+  assert.equal(
+    'label' in row.components[2]! ? row.components[2].label : undefined,
+    'Troubleshooting',
+  )
 })
 
 test('uses the same voice when no Wiki section matches', () => {
