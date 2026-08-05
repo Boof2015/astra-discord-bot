@@ -1,0 +1,225 @@
+intents:
+  - name: astra-api-overview
+    expected: Astra-API
+    variants:
+      - where is the Astra API
+      - what is the companion API
+      - help me set up the local API
+      - how do external apps talk to Astra
+
+  - name: astra-signal-overview
+    expected: Astra-Signal
+    variants:
+      - where is Astra Signal
+      - what is an Astra Signal
+      - help with song sharing signals
+      - how do Astra music links work
+
+  - name: audio-output-overview
+    expected: Audio-Output-and-Bit-Perfect-Playback
+    variants:
+      - where are the audio output settings
+      - explain Astra playback modes
+      - help with bit perfect audio
+      - how does Astra send sound to my DAC
+
+  - name: audio-pipeline-overview
+    expected: Audio-Pipeline-Shelf
+    variants:
+      - where is the audio pipeline shelf
+      - what does the pipeline shelf show
+      - help me understand the audio path
+      - where can I see what Astra does to the sound
+
+  - name: bluetooth-calibration-overview
+    expected: Bluetooth-Calibration
+    variants:
+      - where is Bluetooth calibration
+      - how does Bluetooth calibration work
+      - help with Bluetooth audio delay
+      - my wireless speaker is behind the video
+
+  - name: discord-rpc-overview
+    expected: Discord-Rich-Presence
+    variants:
+      - where is Discord rich presence
+      - how does Astra show what I am playing on Discord
+      - help with Discord RPC
+      - can Astra update my Discord activity
+
+  - name: equalizer-overview
+    expected: Equalizer
+    variants:
+      - where is the equalizer
+      - how does the EQ work
+      - help me change how my music sounds
+      - where do I adjust bass and treble
+
+  - name: experimental-features-overview
+    expected: Experimental-Features
+    variants:
+      - where are experimental features
+      - what experiments does Astra have
+      - help with beta features
+      - where do I enable unfinished features
+
+  - name: getting-started-overview
+    expected: Getting-Started
+    variants:
+      - where do I start with Astra
+      - how do I set up Astra for the first time
+      - I just installed Astra now what
+      - beginner guide
+
+  - name: controls-overview
+    expected: Keyboard-and-Controller-Controls
+    variants:
+      - where are keyboard controls
+      - what shortcuts does Astra have
+      - help with controller controls
+      - how do I control Astra without clicking everything
+
+  - name: library-graph-overview
+    expected: Library-Graph
+    variants:
+      - where is the library graph
+      - what is the artist graph
+      - help with the music map
+      - how can I see connections between artists
+
+  - name: integrity-scanner-overview
+    expected: Library-Integrity-Scanner
+    variants:
+      - where is the library integrity scanner
+      - what does the integrity scanner do
+      - help me check my music files
+      - how do I find broken or duplicate songs
+
+  - name: lyrics-overview
+    expected: Lyrics
+    variants:
+      - where are lyrics
+      - how do lyrics work in Astra
+      - help with song words
+      - does Astra show timed lyrics
+
+  - name: library-management-overview
+    expected: Managing-your-music-library
+    variants:
+      - where are the library settings
+      - how does the music library work
+      - help me manage my music collection
+      - where do I configure my local music
+
+  - name: multichannel-overview
+    expected: Multichannel-Audio
+    variants:
+      - where are the surround sound settings
+      - how does multichannel audio work
+      - help with spatial audio
+      - can Astra play 5.1 music
+
+  - name: output-delay-overview
+    expected: Output-Delay-and-Calibration
+    variants:
+      - where is output delay
+      - how does audio calibration work
+      - help with lip sync
+      - where do I fix audio video timing
+
+  - name: parallax-overview
+    expected: Parallax
+    variants:
+      - where is parallax
+      - what is Parallax
+      - help me with Parallax
+      - how do I use another computer as a speaker
+
+  - name: phone-remote-overview
+    expected: Phone-Remote-and-Library-Sync
+    variants:
+      - where is the phone remote
+      - how do I control Astra from my phone
+      - help with mobile library sync
+      - can I use a browser as an Astra remote
+
+  - name: playlist-import-overview
+    expected: Playlist-Import
+    variants:
+      - where is playlist import
+      - how does importing playlists work
+      - help me bring a playlist file into Astra
+      - can Astra read an m3u file
+
+  - name: playlists-overview
+    expected: Playlists
+    variants:
+      - where are playlists
+      - how do playlists work
+      - help me organize songs into a list
+      - what can I do with Astra playlists
+
+  - name: queue-overview
+    expected: Queue-and-Playback-Controls
+    variants:
+      - where is the queue
+      - how do playback controls work
+      - help with now playing
+      - where do I control what plays next
+
+  - name: listening-stats-overview
+    expected: Ratings-and-Listening-Stats
+    variants:
+      - where are listening stats
+      - how do ratings and play counts work
+      - help with my listening history
+      - can Astra track what I listen to
+
+  - name: remote-libraries-overview
+    expected: Remote-Libraries
+    variants:
+      - where are remote libraries
+      - how do music servers work in Astra
+      - help with Navidrome or Jellyfin
+      - can Astra stream from a Subsonic server
+
+  - name: scrobbling-overview
+    expected: Scrobbling
+    variants:
+      - where are scrobbling settings
+      - how does scrobbling work
+      - help with Last.fm
+      - can Astra send listens to ListenBrainz
+
+  - name: settings-transfer-overview
+    expected: Settings-Transfer
+    variants:
+      - where is settings transfer
+      - how do I move my Astra settings
+      - help me back up my configuration
+      - can I copy settings to another computer
+
+  - name: themes-overview
+    expected: Themes-and-Appearance
+    variants:
+      - where are themes
+      - how do I change Astra's appearance
+      - help with colors and UI size
+      - where are the visual customization settings
+
+  - name: troubleshooting-overview
+    expected: Troubleshooting
+    variants:
+      - where is troubleshooting
+      - Astra is not working
+      - help me diagnose a problem
+      - where do I report or fix something broken
+
+  - name: visualizers-overview
+    expected: Visualizers
+    variants:
+      - where are visualizers
+      - how do the scopes work
+      - help with music visualizations
+      - what visualizers does Astra have
+

@@ -1,0 +1,224 @@
+intents:
+  - name: direct-versus-binaural
+    expected: Multichannel-Audio#direct-or-binaural
+    variants:
+      - should I use direct or binaural mode
+      - what is the difference between direct and headphone spatial audio
+      - choose a surround rendering mode
+      - I have headphones which spatial mode should I pick
+
+  - name: input-card
+    expected: Multichannel-Audio#understanding-the-input-card
+    variants:
+      - what does the multichannel input card mean
+      - how many channels are in this track
+      - where can I see the detected speaker layout
+      - explain the input layout badges
+
+  - name: stereo-safe
+    expected: Multichannel-Audio#stereo-safe
+    variants:
+      - what is stereo safe
+      - keep multichannel files on two speakers
+      - fold surround audio down to stereo safely
+      - I only have stereo speakers but the file is 5.1
+
+  - name: multichannel-on
+    expected: Multichannel-Audio#multichannel-on
+    variants:
+      - what does multichannel on do
+      - send every channel to my surround interface
+      - enable discrete 5.1 output
+      - I want native speaker channels instead of stereo
+
+  - name: lfe-fold
+    expected: Multichannel-Audio#lfe-fold
+    variants:
+      - what is LFE fold
+      - mix the subwoofer channel into my main speakers
+      - I have no subwoofer what happens to the LFE channel
+      - keep bass from a 5.1 file on stereo speakers
+
+  - name: ambient-upmix
+    expected: Multichannel-Audio#ambient-upmix
+    variants:
+      - what is ambient upmix
+      - make stereo use my surround speakers
+      - send ambience to the rear channels
+      - why are surrounds active on a two channel song
+
+  - name: manual-channel-routing
+    expected: Multichannel-Audio#manual-channel-routing
+    variants:
+      - route the left channel to a different speaker
+      - swap my speaker channels
+      - manually remap a 5.1 output
+      - the interface channel order does not match my speakers
+
+  - name: virtual-speaker-room
+    expected: Multichannel-Audio#binaural-mode-and-the-virtual-speaker-room
+    variants:
+      - what is the virtual speaker room
+      - how does Astra make surround work on headphones
+      - explain HRTF binaural playback
+      - where are the fake speakers for headphone audio
+
+  - name: move-virtual-speakers
+    expected: Multichannel-Audio#move-virtual-speakers
+    variants:
+      - how do I move a virtual speaker
+      - change the headphone speaker positions
+      - adjust distance and angle in the virtual room
+      - the binaural surround placement feels wrong
+
+  - name: binaural-renderer-unavailable
+    expected: Multichannel-Audio#if-the-binaural-renderer-is-unavailable
+    variants:
+      - the binaural renderer is unavailable
+      - HRTF could not start
+      - headphone spatial mode falls back to direct
+      - native spatial resources are missing
+
+  - name: spatial-formats
+    expected:
+      - Multichannel-Audio#atmos-joc
+      - Multichannel-Audio#eclipsa-audio-and-iamf
+    variants:
+      - can Astra play Atmos JOC
+      - does Astra support Eclipsa Audio
+      - how are IAMF files rendered
+      - what immersive audio formats work
+
+  - name: surround-setup-examples
+    expected:
+      - Multichannel-Audio#ordinary-headphones
+      - Multichannel-Audio#51-receiver-or-interface
+      - Multichannel-Audio#stereo-speakers-with-surround-files
+    variants:
+      - best settings for normal headphones
+      - set up a 5.1 receiver
+      - play surround files on stereo speakers
+      - which multichannel settings fit my hardware
+
+  - name: only-stereo-outputs
+    expected: Multichannel-Audio#only-stereo-outputs-appear
+    variants:
+      - only stereo outputs appear
+      - Astra cannot see all channels on my interface
+      - why is 5.1 unavailable
+      - my surround receiver is listed as two channel
+
+  - name: swapped-speakers
+    expected: Multichannel-Audio#speakers-are-swapped
+    variants:
+      - my speakers are swapped
+      - audio comes from the wrong surround channel
+      - left and right outputs are reversed
+      - center audio plays from a rear speaker
+
+  - name: surrounds-on-stereo
+    expected: Multichannel-Audio#surrounds-play-on-a-stereo-song
+    variants:
+      - surround speakers play during a stereo song
+      - why are the rears active on two channel music
+      - turn off upmix for stereo tracks
+      - a stereo file is coming from every speaker
+
+  - name: exaggerated-spatial-audio
+    expected: Multichannel-Audio#spatial-audio-sounds-inside-out-or-exaggerated
+    variants:
+      - spatial audio sounds inside out
+      - headphone surround is exaggerated
+      - binaural audio feels backwards
+      - virtual speakers sound like they are in the wrong place
+
+  - name: delay-values
+    expected: Output-Delay-and-Calibration#what-the-values-mean
+    variants:
+      - what do the output delay values mean
+      - explain measured device and manual trim delay
+      - which latency number does Astra actually use
+      - how is final audio delay calculated
+
+  - name: manual-delay
+    expected: Output-Delay-and-Calibration#manual-mode
+    variants:
+      - how do I set output delay manually
+      - add a fixed delay to my speakers
+      - I already know the latency in milliseconds
+      - enter my own audio offset
+
+  - name: auto-guess-delay
+    expected: Output-Delay-and-Calibration#auto-guess-mode
+    variants:
+      - what is auto guess calibration
+      - estimate delay without a microphone
+      - let Astra guess Bluetooth latency
+      - choose a rough device delay automatically
+
+  - name: differential-calibration
+    expected:
+      - Output-Delay-and-Calibration#new-differential-calibration
+      - Output-Delay-and-Calibration#run-it
+    variants:
+      - how do I run differential calibration
+      - measure speaker latency with the microphone
+      - use reference and delayed captures to calculate offset
+      - start the new output calibration test
+
+  - name: legacy-calibration
+    expected: Output-Delay-and-Calibration#old-legacy-calibration
+    variants:
+      - where is legacy calibration
+      - use the old single recording latency test
+      - what is the previous calibration method
+      - run classic output delay measurement
+
+  - name: fine-tune-delay
+    expected: Output-Delay-and-Calibration#fine-tune-by-ear-and-eye
+    variants:
+      - fine tune lip sync by eye
+      - adjust audio timing while watching a video
+      - the measured delay is close but not perfect
+      - nudge the offset until speech matches mouths
+
+  - name: recalibrate-output
+    expected: Output-Delay-and-Calibration#when-to-recalibrate
+    variants:
+      - when should I recalibrate audio delay
+      - do I need to calibrate after changing devices
+      - my Bluetooth codec changed should I measure again
+      - does a new soundbar need a new latency profile
+
+  - name: calibration-cannot-hear
+    expected: Output-Delay-and-Calibration#calibration-cannot-hear-the-signal
+    variants:
+      - calibration cannot hear the signal
+      - the microphone does not detect the test sound
+      - output delay measurement gets no pulse
+      - differential calibration cannot find the reference
+
+  - name: calibration-low-confidence
+    expected: Output-Delay-and-Calibration#confidence-is-low-or-results-vary-widely
+    variants:
+      - calibration confidence is low
+      - every latency measurement is different
+      - output delay results vary wildly
+      - why is the calibration estimate unstable
+
+  - name: audio-still-early-or-late
+    expected: Output-Delay-and-Calibration#audio-is-still-early-or-late
+    variants:
+      - my Bluetooth speaker is always late
+      - audio is still early after calibration
+      - the measured offset did not fix lip sync
+      - sound is behind the picture even with delay enabled
+
+  - name: delay-controls-disabled
+    expected: Output-Delay-and-Calibration#the-controls-are-disabled
+    variants:
+      - output delay controls are disabled
+      - why can I not change latency in exclusive mode
+      - the calibration button is greyed out
+      - manual trim is unavailable for this output
+

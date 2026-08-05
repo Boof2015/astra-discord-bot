@@ -1,4 +1,28 @@
 aliases:
+  Equalizer:
+    - EQ
+    - bass and treble
+  Multichannel-Audio:
+    - multichannel audio
+    - surround sound
+    - spatial audio
+  Keyboard-and-Controller-Controls:
+    - keyboard controls
+    - controller controls
+    - keyboard shortcuts
+  Playlist-Import:
+    - playlist import
+    - importing playlists
+  Playlists:
+    - Astra playlists
+  Queue-and-Playback-Controls:
+    - queue
+    - playback controls
+    - now playing controls
+  Ratings-and-Listening-Stats:
+    - listening stats
+    - listening history
+    - ratings and play counts
   Audio-Output-and-Bit-Perfect-Playback#bit-perfect-exclusive:
     - bit perfect
     - bit-perfect
@@ -7,10 +31,24 @@ aliases:
     - WASAPI exclusive
     - CoreAudio hog mode
     - direct hardware output
+    - enable exclusive mode
+    - send the file directly to my DAC
+    - do not resample anything
+  Audio-Output-and-Bit-Perfect-Playback#standard-playback:
+    - shared playback
+    - everyday playback mode
+    - use EQ and volume control
+    - let other apps share the device
+  Audio-Output-and-Bit-Perfect-Playback#what-exclusive-mode-disables:
+    - what stops working in exclusive mode
+    - volume disabled in bit perfect playback
+    - processing disabled in exclusive mode
   Audio-Output-and-Bit-Perfect-Playback#format-changes-and-device-support:
     - DAC changes sample rate
+    - DAC keeps changing sample rate
     - automatic sample rate switching
     - sample rate keeps changing
+    - sample rate weird
   Audio-Output-and-Bit-Perfect-Playback#common-problems:
     - another app has no sound
     - device busy
@@ -31,6 +69,9 @@ aliases:
     - route the left channel to a different speaker
     - send a channel to another output
   Output-Delay-and-Calibration:
+    - output delay
+    - audio calibration
+    - audio video timing
     - bluetooth delay
     - wireless speaker latency
     - lip sync
@@ -77,6 +118,17 @@ aliases:
     - music missing
     - rescan library
     - force rescan
+    - new music is not appearing
+    - new tracks are not showing up
+    - library did not update
+    - detect added moved and deleted tracks
+  Managing-your-music-library#add-a-folder:
+    - point Astra at my music directory
+    - choose a library folder
+    - music collection on another drive
+  Managing-your-music-library#exclude-subfolders:
+    - stop indexing part of my collection
+    - ignore a music subfolder
   Lyrics#where-astra-looks:
     - lrc file
     - sidecar lyrics
@@ -106,6 +158,7 @@ aliases:
     - connect a Jellyfin server
     - set up a Subsonic server
   Scrobbling:
+    - scrobbling settings
     - Last.fm
     - ListenBrainz
     - AudioScrobbler
@@ -117,7 +170,21 @@ aliases:
     - companion API
     - local API
     - API key
+  Astra-API#choose-permissions:
+    - make an API key read only
+    - control what a companion app can do
+    - API client permissions
+  Astra-API#connect-a-companion-app:
+    - API URL and key
+    - local integration authentication
+    - point another program at Astra
+  Astra-API#key-and-port-safety:
+    - expose the Astra API port
+    - forward the local API through my router
+    - companion API key security
   Phone-Remote-and-Library-Sync:
+    - phone remote
+    - mobile library sync
     - phone controller
     - mobile remote
     - QR pairing
@@ -134,3 +201,23 @@ aliases:
     - smart playlist
     - automatic playlist
     - playlist rules
+  Playlist-Import#supported-formats:
+    - playlist file formats
+    - playlist file extensions
+    - M3U PLS and CSV support
+  Playlist-Import#import-a-file:
+    - open an M3U in Astra
+    - playlist import button
+    - bring a saved track list into Astra
+  Playlist-Import#how-matching-works:
+    - match imported playlist tracks
+    - playlist paths or metadata
+  Multichannel-Audio#understanding-the-input-card:
+    - channels in this track
+    - detected speaker layout
+  Multichannel-Audio#stereo-safe:
+    - surround file on stereo speakers
+    - fold surround down to stereo
+  Multichannel-Audio#multichannel-on:
+    - discrete 5.1 output
+    - send every channel to my surround interface

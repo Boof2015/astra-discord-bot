@@ -2,7 +2,7 @@ import { applyAliases, loadAliases } from '../wiki/aliases.js'
 import { parseWikiDirectory } from '../wiki/parser.js'
 import { WikiSearchEngine } from './hybrid.js'
 import { LexicalIndex } from './lexical.js'
-import { LocalEmbeddingModel, LocalSemanticIndex } from './semantic.js'
+import { EmbeddingGemmaModel, LocalSemanticIndex } from './semantic.js'
 
 export interface CreateSearchEngineOptions {
   wikiDirectory: string
@@ -39,10 +39,13 @@ export async function createSearchEngine(
   }
 
   try {
-    const embeddingModel = new LocalEmbeddingModel(
-      options.embeddingModel,
-      options.modelCacheDirectory,
-    )
+    if (options.embeddingModel.trim().toLocaleLowerCase() !== 'google/embeddinggemma-300m') {
+      throw new Error(
+        `Unsupported embedding model ${options.embeddingModel}. `
+        + 'Use google/embeddinggemma-300m.',
+      )
+    }
+    const embeddingModel = new EmbeddingGemmaModel(options.modelCacheDirectory)
     const semanticIndex = await LocalSemanticIndex.build({
       chunks,
       embeddingModel,

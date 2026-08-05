@@ -63,7 +63,7 @@ export function loadConfig(options: { requireDiscord?: boolean } = {}): BotConfi
     aliasesFile: resolve(process.env.ALIASES_FILE?.trim() || './config/aliases.yml'),
     semanticEnabled: booleanFromEnvironment('SEMANTIC_SEARCH_ENABLED', true),
     embeddingModel: process.env.EMBEDDING_MODEL?.trim()
-      || 'sentence-transformers/all-MiniLM-L6-v2',
+      || 'google/embeddinggemma-300m',
     modelCacheDirectory: resolve(
       process.env.MODEL_CACHE_DIRECTORY?.trim() || './data/model-cache',
     ),

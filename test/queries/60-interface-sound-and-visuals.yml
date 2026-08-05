@@ -1,0 +1,563 @@
+intents:
+  - name: getting-started-install
+    expected: Getting-Started#install-astra
+    variants:
+      - how do I install Astra
+      - where can I get the music player
+      - what platforms does Astra run on
+      - first step for setting up Astra
+
+  - name: getting-started-add-music
+    expected: Getting-Started#add-your-music
+    variants:
+      - add my music to Astra
+      - how do I choose a library folder
+      - make Astra scan my music collection
+      - I installed it but none of my songs are there
+
+  - name: getting-started-browse
+    expected: Getting-Started#browse-the-library
+    variants:
+      - how do I browse my library
+      - find albums artists and tracks
+      - where is my music collection after scanning
+      - show the different library views
+
+  - name: getting-started-play
+    expected: Getting-Started#play-music
+    variants:
+      - how do I start playing music
+      - play my first album in Astra
+      - what do the basic playback controls do
+      - I added songs now how do I listen
+
+  - name: getting-started-window
+    expected: Getting-Started#understand-the-main-window
+    variants:
+      - explain the main window
+      - what are the sections of the Astra interface
+      - where are library queue and settings
+      - give me a tour of the app
+
+  - name: getting-started-settings
+    expected: Getting-Started#a-few-useful-first-settings
+    variants:
+      - which settings should I change first
+      - recommended setup for a new Astra install
+      - what should a beginner configure
+      - useful first preferences
+
+  - name: getting-started-updates
+    expected: Getting-Started#keep-astra-updated
+    variants:
+      - how do I update Astra
+      - check for a newer version
+      - where are application updates
+      - keep Astra current
+
+  - name: enable-equalizer
+    expected: Equalizer#open-and-enable-the-eq
+    variants:
+      - how do I enable the equalizer
+      - open the EQ editor
+      - turn sound adjustments on
+      - where is the equalizer switch
+
+  - name: read-equalizer-editor
+    expected: Equalizer#read-the-editor
+    variants:
+      - explain the equalizer graph
+      - what do the EQ curve and control points mean
+      - how do I read the frequency response editor
+      - what is shown in the EQ window
+
+  - name: equalizer-preamp
+    expected: Equalizer#preamp
+    variants:
+      - what does EQ preamp do
+      - lower the signal before boosting bands
+      - avoid clipping with the preamp
+      - why should I reduce preamp after adding bass
+
+  - name: equalizer-frequency
+    expected: Equalizer#frequency
+    variants:
+      - what does frequency mean for an EQ band
+      - choose which pitch an equalizer band affects
+      - move an EQ point left or right
+      - adjust bass versus treble frequency
+
+  - name: equalizer-gain
+    expected: Equalizer#gain
+    variants:
+      - what does gain mean on an EQ band
+      - boost or cut a frequency
+      - move an equalizer point up or down
+      - how many decibels should an EQ band add
+
+  - name: equalizer-q
+    expected: Equalizer#q
+    variants:
+      - what does Q mean in the equalizer
+      - make an EQ adjustment wider or narrower
+      - how broad is an equalizer band
+      - explain bandwidth and Q
+
+  - name: equalizer-filter-types
+    expected: Equalizer#filter-types
+    variants:
+      - what EQ filter types are available
+      - difference between peaking shelf and pass filters
+      - when should I use a low shelf
+      - choose the shape of an equalizer band
+
+  - name: equalizer-add-remove-bands
+    expected: Equalizer#add-and-remove-bands
+    variants:
+      - add another EQ band
+      - remove an equalizer control point
+      - how many filters can I create
+      - manage bands in the EQ editor
+
+  - name: equalizer-built-in-presets
+    expected: Equalizer#built-in-presets
+    variants:
+      - use a built in EQ preset
+      - where are the equalizer presets
+      - choose a ready made sound profile
+      - apply one of Astra's included EQ curves
+
+  - name: equalizer-custom-presets
+    expected: Equalizer#save-custom-presets
+    variants:
+      - save my own EQ preset
+      - name a custom equalizer curve
+      - reuse my sound settings later
+      - update a preset I made
+
+  - name: equalizer-preset-transfer
+    expected: Equalizer#import-and-export-astra-presets
+    variants:
+      - export an Astra EQ preset
+      - import somebody else's equalizer settings
+      - move an EQ curve to another computer
+      - share a custom Astra preset file
+
+  - name: equalizer-autoeq
+    expected: Equalizer#import-autoeq
+    variants:
+      - import an AutoEQ profile
+      - use headphone correction from AutoEQ
+      - load parametric EQ filters from a text file
+      - does Astra support AutoEQ results
+
+  - name: equalizer-reset
+    expected: Equalizer#reset
+    variants:
+      - reset the equalizer
+      - remove all of my EQ changes
+      - restore a flat sound curve
+      - start the EQ over
+
+  - name: equalizer-tuning-method
+    expected: Equalizer#a-practical-tuning-method
+    variants:
+      - how should I tune the equalizer
+      - beginner method for adjusting EQ
+      - fix a harsh or boomy sound with EQ
+      - make careful equalizer changes without clipping
+
+  - name: equalizer-no-effect
+    expected: Equalizer#eq-has-no-audible-effect
+    variants:
+      - the EQ does nothing
+      - I enabled the equalizer but sound did not change
+      - why can I not hear my EQ curve
+      - equalizer has no audible effect
+
+  - name: equalizer-distortion
+    expected: Equalizer#audio-distorts-after-boosting
+    variants:
+      - audio clips after I boost the EQ
+      - equalizer makes music distorted
+      - bass boost causes crackling
+      - my EQ settings are too loud
+
+  - name: equalizer-autoeq-import-failure
+    expected: Equalizer#an-autoeq-file-imports-too-few-or-no-bands
+    variants:
+      - AutoEQ imported no bands
+      - some filters are missing from my AutoEQ file
+      - Astra did not understand the equalizer text file
+      - headphone EQ profile imports too few filters
+
+  - name: equalizer-wrong-device-preset
+    expected: Equalizer#the-wrong-preset-appears-after-changing-devices
+    variants:
+      - wrong EQ preset after switching outputs
+      - why did my equalizer curve change with the device
+      - another DAC loaded a different preset
+      - EQ profile does not match the selected output
+
+  - name: keyboard-customize-bindings
+    expected: Keyboard-and-Controller-Controls#customize-keyboard-and-mouse-bindings
+    variants:
+      - customize keyboard shortcuts
+      - change a mouse binding
+      - remap Astra controls
+      - where is the key binding editor
+
+  - name: keyboard-default-bindings
+    expected:
+      - Keyboard-and-Controller-Controls#app
+      - Keyboard-and-Controller-Controls#playback
+      - Keyboard-and-Controller-Controls#navigation
+    variants:
+      - show the default keyboard shortcuts
+      - which keys control playback
+      - list the built in Astra bindings
+      - what does the space bar do in Astra
+
+  - name: quick-launch
+    expected: Keyboard-and-Controller-Controls#quick-launch-and-search
+    variants:
+      - open Quick Launch
+      - search Astra with the keyboard
+      - what does control K do
+      - quickly jump to a page or command
+
+  - name: jump-now-playing
+    expected: Keyboard-and-Controller-Controls#jump-to-now-playing
+    variants:
+      - keyboard shortcut for now playing
+      - jump back to the current song
+      - focus the playing track without using the mouse
+      - where is the now playing shortcut
+
+  - name: global-shortcuts
+    expected: Keyboard-and-Controller-Controls#global-shortcuts
+    variants:
+      - control Astra while another app is focused
+      - set global media shortcuts
+      - do hotkeys work when Astra is in the background
+      - pause music with a system wide key
+
+  - name: controller-support
+    expected: Keyboard-and-Controller-Controls#controller-support
+    variants:
+      - use a game controller with Astra
+      - does Astra support a gamepad
+      - navigate the music player from the couch
+      - explain controller controls
+
+  - name: controller-radial-menu
+    expected: Keyboard-and-Controller-Controls#radial-menu
+    variants:
+      - open the controller radial menu
+      - what is the gamepad wheel
+      - use quick actions with a controller
+      - choose Astra commands from the radial menu
+
+  - name: controller-not-reacting
+    expected: Keyboard-and-Controller-Controls#astra-does-not-react
+    variants:
+      - Astra does not react to my controller
+      - gamepad buttons do nothing
+      - controller is connected but cannot control playback
+      - troubleshoot an unresponsive gamepad
+
+  - name: controller-wrong-prompts
+    expected: Keyboard-and-Controller-Controls#prompts-show-the-wrong-family
+    variants:
+      - controller prompts show the wrong buttons
+      - Astra displays Xbox labels for my PlayStation pad
+      - change the gamepad icon family
+      - button hints do not match my controller
+
+  - name: controller-focus-trapped
+    expected: Keyboard-and-Controller-Controls#focus-seems-trapped
+    variants:
+      - controller focus is stuck
+      - I cannot navigate away from one panel with the gamepad
+      - focus seems trapped in Astra
+      - controller selection will not leave a popup
+
+  - name: graph-global-local
+    expected: Library-Graph#global-and-local-graphs
+    variants:
+      - difference between global and local library graph
+      - show the whole artist map
+      - graph only artists near this one
+      - what do global and local mean in the music graph
+
+  - name: graph-navigation
+    expected: Library-Graph#navigate-the-map
+    variants:
+      - how do I move around the library graph
+      - zoom and pan the artist map
+      - open an artist from the graph
+      - navigate connections between musicians
+
+  - name: graph-edge-strength
+    expected: Library-Graph#edge-strength
+    variants:
+      - what does edge strength mean in the graph
+      - why are some artist connections thicker
+      - adjust how related artists must be
+      - explain lines in the music map
+
+  - name: graph-search-inspect
+    expected: Library-Graph#search-and-inspect-artists
+    variants:
+      - search for an artist in the graph
+      - inspect a node on the music map
+      - find one musician in the library graph
+      - show details for a connected artist
+
+  - name: graph-empty
+    expected: Library-Graph#if-the-graph-is-empty
+    variants:
+      - my library graph is empty
+      - no artists appear on the music map
+      - why does the graph have no connections
+      - artist graph is blank
+
+  - name: visualizer-analyzer-rack
+    expected: Visualizers#the-analyzer-rack
+    variants:
+      - what is the analyzer rack
+      - put multiple visualizers together
+      - where do scopes live
+      - explain the visualization rack
+
+  - name: visualizer-choose-scope
+    expected: Visualizers#choosing-a-scope
+    variants:
+      - how do I choose a scope
+      - add a visualizer to the rack
+      - switch between visualization types
+      - where is the scope picker
+
+  - name: visualizer-spectrum
+    expected: Visualizers#spectrum
+    variants:
+      - what does the spectrum visualizer show
+      - view music by frequency
+      - explain the frequency analyzer
+      - which scope shows bass mids and treble
+
+  - name: visualizer-spectrum-settings
+    expected: Visualizers#spectrum-settings
+    variants:
+      - what FFT size should I use
+      - trade detail for CPU in the spectrum
+      - why does 16384 look detailed but run heavier
+      - make the frequency analyzer lighter on my computer
+
+  - name: visualizer-oscilloscope
+    expected: Visualizers#oscilloscope
+    variants:
+      - what does the oscilloscope show
+      - view the audio waveform moving over time
+      - which scope draws left and right signals
+      - explain the line waveform visualizer
+
+  - name: visualizer-oscilloscope-settings
+    expected: Visualizers#oscilloscope-settings
+    variants:
+      - change oscilloscope settings
+      - adjust waveform time scale and triggering
+      - make the oscilloscope trace easier to read
+      - configure the moving line scope
+
+  - name: visualizer-vectorscope
+    expected: Visualizers#vectorscope
+    variants:
+      - what is a vectorscope
+      - visualize stereo width and phase
+      - tell if my music is mono or out of phase
+      - which scope shows the stereo image
+
+  - name: visualizer-vectorscope-modes
+    expected: Visualizers#vectorscope-modes
+    variants:
+      - what vectorscope modes are available
+      - switch the stereo scope display style
+      - choose how left and right channels are plotted
+      - configure the vectorscope view
+
+  - name: visualizer-spectrogram
+    expected: Visualizers#spectrogram
+    variants:
+      - what is a spectrogram
+      - show frequency over time
+      - which visualizer makes a scrolling heat map
+      - inspect how the spectrum changes through a song
+
+  - name: visualizer-spectrogram-settings
+    expected: Visualizers#spectrogram-settings
+    variants:
+      - change spectrogram settings
+      - adjust the heat map detail and speed
+      - configure colors and frequency range for the spectrogram
+      - make the scrolling spectrum use less CPU
+
+  - name: visualizer-vu-meter
+    expected: Visualizers#vu-meter
+    variants:
+      - where is the VU meter
+      - show old style needle level meters
+      - what does the VU scope measure
+      - use an analog looking volume visualizer
+
+  - name: visualizer-lufs-meter
+    expected: Visualizers#lufs-meter
+    variants:
+      - where is the LUFS meter
+      - measure perceived loudness
+      - what do momentary short term and integrated loudness mean
+      - which visualizer shows LUFS
+
+  - name: visualizer-waveform
+    expected: Visualizers#waveform
+    variants:
+      - show the whole track waveform
+      - which scope displays song peaks and progress
+      - view the shape of the current file
+      - explain the waveform visualizer
+
+  - name: visualizer-waveform-settings
+    expected: Visualizers#waveform-settings
+    variants:
+      - change waveform settings
+      - configure the full track waveform display
+      - adjust waveform detail and colors
+      - make the song overview scope lighter to render
+
+  - name: visualizer-profiles
+    expected: Visualizers#profiles
+    variants:
+      - save a visualizer profile
+      - keep different analyzer rack layouts
+      - switch between scope configurations
+      - reuse my visualization setup
+
+  - name: visualizer-performance
+    expected: Visualizers#performance-and-troubleshooting
+    variants:
+      - visualizers use too much CPU
+      - the analyzer is slow or frozen
+      - make scopes run better on my computer
+      - troubleshoot a blank visualization
+
+  - name: theme-presets
+    expected: Themes-and-Appearance#theme-presets
+    variants:
+      - choose a theme preset
+      - switch Astra between light and dark styles
+      - where are the included appearance themes
+      - apply a ready made look
+
+  - name: theme-accent-color
+    expected: Themes-and-Appearance#accent-color
+    variants:
+      - change the accent color
+      - make Astra use a blue highlight
+      - enter a custom interface color
+      - where is the app color setting
+
+  - name: theme-accent-source
+    expected: Themes-and-Appearance#accent-source
+    variants:
+      - what does accent source mean
+      - use album art colors for the interface
+      - choose between custom and automatic accent
+      - why does Astra's highlight color keep changing
+
+  - name: theme-cover-art-method
+    expected: Themes-and-Appearance#cover-art-method
+    variants:
+      - what is cover art method
+      - change how album colors are extracted
+      - tune appearance colors from artwork
+      - choose the palette method for cover art
+
+  - name: theme-ui-scale
+    expected: Themes-and-Appearance#ui-scale
+    variants:
+      - make Astra's interface bigger
+      - change UI scale
+      - text and controls are too small
+      - resize the whole app interface
+
+  - name: theme-home-greeting
+    expected: Themes-and-Appearance#home-greeting
+    variants:
+      - change the home greeting
+      - customize the message on Astra's home screen
+      - where do the playful welcome lines come from
+      - turn off or adjust the home page greeting
+
+  - name: theme-info-line
+    expected: Themes-and-Appearance#transport-bar-info-line
+    variants:
+      - customize the transport bar info line
+      - choose what appears below the playing track
+      - show codec or sample rate in the bottom bar
+      - change now playing secondary information
+
+  - name: theme-transfer
+    expected: Themes-and-Appearance#moving-appearance-settings
+    variants:
+      - move my theme to another computer
+      - export appearance settings
+      - back up custom colors and UI scale
+      - transfer an Astra look to a new install
+
+  - name: theme-wrong-accent
+    expected: Themes-and-Appearance#the-accent-is-not-the-color-i-entered
+    variants:
+      - accent is not the color I entered
+      - Astra ignored my custom highlight color
+      - album art keeps overriding the selected accent
+      - why is the interface using a different color
+
+  - name: theme-visualizer-colors
+    expected: Themes-and-Appearance#a-visualizer-uses-different-colors
+    variants:
+      - visualizer uses different colors from the theme
+      - my scopes do not match Astra's accent
+      - analyzer has its own color settings
+      - why did changing the theme not recolor a visualizer
+
+  - name: theme-scope-reset
+    expected: Themes-and-Appearance#reset-did-not-change-a-custom-scope-layout
+    variants:
+      - reset did not change my custom scope layout
+      - theme reset left the analyzer rack alone
+      - why are visualizer profiles still customized
+      - restore my scope arrangement separately
+
+  - name: experiments-available
+    expected: Experimental-Features#available-experiments
+    variants:
+      - which experimental features are available
+      - list Astra's current experiments
+      - what unfinished tools can I try
+      - show beta features
+
+  - name: activity-indicator
+    expected: Experimental-Features#activity-indicator
+    variants:
+      - what is the activity indicator
+      - show when Astra is busy
+      - explain the experimental loading animation
+      - where do I enable the activity indicator
+
+  - name: experimental-caution
+    expected: Experimental-Features#before-relying-on-an-experiment
+    variants:
+      - are experimental features safe to rely on
+      - should I use an experiment every day
+      - what should I know before enabling beta features
+      - can unfinished settings change between updates

@@ -18,13 +18,12 @@
     "evaluate": "npm run build --silent && node dist/src/cli/evaluate.js"
   },
   "dependencies": {
+    "@huggingface/transformers": "4.2.0",
     "discord.js": "14.27.0",
-    "fastembed": "2.1.0",
     "github-slugger": "2.0.0",
     "mdast-util-to-string": "4.0.0",
     "remark-gfm": "4.0.1",
     "remark-parse": "11.0.0",
-    "tar": "7.5.22",
     "unified": "11.0.5",
     "yaml": "2.9.0"
   },
@@ -34,13 +33,11 @@
     "tsx": "4.23.5",
     "typescript": "7.0.2"
   },
-  "overrides": {
-    "@anush008/tokenizers": "0.6.0",
-    "tar": "7.5.22"
-  },
   "allowScripts": {
     "esbuild@0.28.1": true,
     "fsevents": false,
-    "onnxruntime-node@1.21.0": true
+    "onnxruntime-node@1.24.3": true,
+    "protobufjs@7.6.5": true,
+    "sharp@0.34.5": true
   }
 }

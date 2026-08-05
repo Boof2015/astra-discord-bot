@@ -1,0 +1,157 @@
+intents:
+  - name: missing-local-track
+    expected:
+      - Troubleshooting#a-local-track-is-missing
+      - Managing-your-music-library#scanning-for-changes
+      - Managing-your-music-library#scan-errors
+    variants:
+      - a local track is missing
+      - I copied in an album but Astra cannot find it
+      - one of my music files is not in the library
+      - new songs did not show up after a scan
+
+  - name: wrong-metadata-or-art
+    expected:
+      - Troubleshooting#metadata-or-artwork-is-wrong
+      - Managing-your-music-library#metadata-editing
+      - Managing-your-music-library#artwork
+    variants:
+      - metadata or artwork is wrong
+      - this album has the wrong title and cover
+      - Astra grouped a song under the wrong artist
+      - fix incorrect tags or art in the library
+
+  - name: playback-no-sound
+    expected:
+      - Troubleshooting#playback-starts-but-there-is-no-sound
+      - Audio-Output-and-Bit-Perfect-Playback#choose-an-output-device
+    variants:
+      - playback starts but there is no sound
+      - the progress bar moves but I hear nothing
+      - Astra looks like it is playing silently
+      - music is running but no audio comes out
+
+  - name: exclusive-playback-failure
+    expected:
+      - Troubleshooting#exclusive-or-bit-perfect-playback-fails
+      - Audio-Output-and-Bit-Perfect-Playback#exclusive-playback-cannot-start
+      - Audio-Output-and-Bit-Perfect-Playback#format-changes-and-device-support
+    variants:
+      - exclusive or bit perfect playback fails
+      - direct output cannot open this track
+      - my DAC rejects some songs in exclusive mode
+      - bit perfect works at one sample rate but not another
+
+  - name: playback-performance
+    expected:
+      - Troubleshooting#playback-stutters-crackles-or-uses-too-much-cpu
+    variants:
+      - playback stutters and crackles
+      - Astra uses too much CPU while music is playing
+      - sound keeps dropping out under load
+      - troubleshoot choppy audio performance
+
+  - name: unexpected-queue
+    expected:
+      - Troubleshooting#the-queue-behaves-unexpectedly
+      - Queue-and-Playback-Controls
+    variants:
+      - the queue behaves unexpectedly
+      - songs play in an order I did not expect
+      - shuffle or repeat is confusing my queue
+      - why did Astra replace what I had queued
+
+  - name: remote-library-failure
+    expected:
+      - Troubleshooting#a-remote-library-will-not-connect-or-play
+      - Remote-Libraries#troubleshooting
+    variants:
+      - a remote library will not connect or play
+      - my music server signs in but songs fail
+      - Astra cannot reach my remote collection
+      - network library sync or playback is broken
+
+  - name: phone-remote-unreachable
+    expected:
+      - Troubleshooting#phone-remote-cannot-reach-astra
+      - Phone-Remote-and-Library-Sync#troubleshooting
+    variants:
+      - phone remote cannot reach Astra
+      - my mobile controller stopped connecting
+      - the remote QR code pairs but the phone is offline
+      - browser controller cannot find the desktop app
+
+  - name: parallax-node-disappears
+    expected:
+      - Troubleshooting#a-parallax-node-disappears
+      - Parallax#a-paired-speaker-keeps-going-offline-or-disappearing
+    variants:
+      - a Parallax node disappears
+      - network speaker keeps going offline
+      - my paired receiver vanishes after a while
+      - troubleshoot a flaky Parallax zone
+
+  - name: lyrics-missing-or-mistimed
+    expected:
+      - Troubleshooting#lyrics-are-missing-or-mistimed
+      - Lyrics#no-lyrics-are-found
+      - Lyrics#correct-lyrics-that-appear-early-or-late
+    variants:
+      - lyrics are missing or mistimed
+      - Astra has no words for this song
+      - synced lyrics do not match the singer
+      - troubleshoot missing and out of sync lyrics
+
+  - name: input-control-failure
+    expected:
+      - Troubleshooting#a-shortcut-or-controller-does-not-work
+      - Keyboard-and-Controller-Controls#astra-does-not-react
+    variants:
+      - a shortcut or controller does not work
+      - Astra ignores my keyboard command
+      - gamepad input suddenly stopped working
+      - troubleshoot controls that do nothing
+
+  - name: visualizer-blank-frozen
+    expected:
+      - Troubleshooting#a-visualizer-is-blank-or-frozen
+      - Visualizers#performance-and-troubleshooting
+    variants:
+      - a visualizer is blank or frozen
+      - the scope stopped moving with the music
+      - analyzer rack shows nothing
+      - troubleshoot a stuck visualization
+
+  - name: settings-after-move-reset
+    expected:
+      - Troubleshooting#settings-appear-wrong-after-a-move-or-reset
+      - Settings-Transfer#safety-and-troubleshooting
+    variants:
+      - settings appear wrong after a move or reset
+      - my preferences changed after migrating Astra
+      - imported configuration does not look right
+      - restore settings after moving to another computer
+
+  - name: report-problem
+    expected: Troubleshooting#report-a-problem
+    variants:
+      - how do I report a problem
+      - where should I file an Astra bug
+      - what details should I include in an issue
+      - get help for something the guide did not solve
+
+  - name: api-troubleshooting
+    expected: Astra-API#troubleshooting
+    variants:
+      - companion API is not responding
+      - my local Astra integration gets unauthorized
+      - API client cannot connect to the port
+      - troubleshoot the Astra API
+
+  - name: signal-troubleshooting
+    expected: Astra-Signal#troubleshooting
+    variants:
+      - an Astra Signal will not open
+      - shared song QR code does not scan
+      - the Signal link cannot match this track
+      - troubleshoot music sharing signals

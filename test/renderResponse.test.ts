@@ -35,6 +35,9 @@ function rankedResult(overrides: Partial<WikiChunk> = {}): RankedWikiResult {
     semanticRank: 1,
     semanticSimilarity: 0.8,
     exactBoost: 0,
+    queryTokenCount: 3,
+    matchedQueryTokenCount: 2,
+    matchedMetadataTokenCount: 1,
   }
 }
 

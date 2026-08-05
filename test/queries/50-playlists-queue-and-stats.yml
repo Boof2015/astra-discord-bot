@@ -1,0 +1,361 @@
+intents:
+  - name: playlist-import-formats
+    expected: Playlist-Import#supported-formats
+    variants:
+      - which playlist file formats can Astra import
+      - does playlist import support m3u pls and csv
+      - can I open an exported playlist from another player
+      - what extensions work for playlist files
+
+  - name: import-playlist-file
+    expected: Playlist-Import#import-a-file
+    variants:
+      - how do I import a playlist file
+      - open an m3u in Astra
+      - bring a saved track list into my library
+      - where is the playlist import button
+
+  - name: playlist-matching
+    expected: Playlist-Import#how-matching-works
+    variants:
+      - how does Astra match imported playlist tracks
+      - does playlist import use paths or metadata
+      - match a playlist made on another computer
+      - why did an imported entry choose this song
+
+  - name: playlist-import-missing
+    expected: Playlist-Import#missing-and-skipped-entries
+    variants:
+      - imported playlist has missing entries
+      - why were some playlist songs skipped
+      - Astra could not match tracks from an m3u
+      - review unresolved playlist import items
+
+  - name: import-playlist-csv
+    expected: Playlist-Import#importing-csv
+    variants:
+      - import a playlist from CSV
+      - which columns should a playlist spreadsheet have
+      - make a comma separated track list for Astra
+      - my CSV playlist is not matching songs
+
+  - name: portable-playlist
+    expected: Playlist-Import#making-portable-playlists
+    variants:
+      - make a playlist portable between computers
+      - avoid absolute paths in an m3u
+      - export a playlist that still matches after moving music
+      - best format for sharing a playlist file
+
+  - name: create-playlist
+    expected: Playlists#create-a-playlist
+    variants:
+      - create a playlist
+      - make a new list of songs
+      - where is new playlist
+      - start an empty playlist in Astra
+
+  - name: add-playlist-tracks
+    expected: Playlists#add-tracks
+    variants:
+      - add tracks to a playlist
+      - put an album into my song list
+      - append selected music to an existing playlist
+      - drag songs into a playlist
+
+  - name: play-and-queue-playlist
+    expected: Playlists#play-and-queue-a-playlist
+    variants:
+      - play a playlist
+      - add an entire playlist to the queue
+      - shuffle this playlist now
+      - play a saved list next
+
+  - name: reorder-playlist
+    expected: Playlists#reorder-a-standard-playlist
+    variants:
+      - reorder a playlist
+      - drag songs into a different playlist order
+      - move a track higher in a standard playlist
+      - why can I not manually order a dynamic playlist
+
+  - name: manage-playlist
+    expected: Playlists#rename-cover-export-or-delete
+    variants:
+      - rename a playlist
+      - change playlist cover art
+      - export or delete a playlist
+      - where are playlist management actions
+
+  - name: dynamic-playlist
+    expected: Playlists#dynamic-playlists
+    variants:
+      - how do I make a smart playlist
+      - create an automatic playlist from rules
+      - what is a dynamic playlist
+      - keep a playlist updated from my library
+
+  - name: dynamic-playlist-presets
+    expected: Playlists#start-with-a-preset
+    variants:
+      - start a dynamic playlist from a preset
+      - make a recently added smart playlist
+      - use a built in rule template
+      - where are dynamic playlist presets
+
+  - name: dynamic-playlist-filters
+    expected: Playlists#build-filters
+    variants:
+      - add filters to a smart playlist
+      - make rules for genre rating and play count
+      - combine all and any conditions
+      - exclude tracks from a dynamic playlist
+
+  - name: dynamic-order-and-limit
+    expected: Playlists#choose-result-order-and-limit
+    variants:
+      - limit a dynamic playlist to 50 songs
+      - sort smart playlist results randomly
+      - choose the order of automatic playlist tracks
+      - make a rule playlist return only the newest albums
+
+  - name: dynamic-edit-rules
+    expected: Playlists#edit-rules-later
+    variants:
+      - edit dynamic playlist rules
+      - change a smart playlist after creating it
+      - update filters on an automatic playlist
+      - why did my rule playlist contents change
+
+  - name: playlist-missing-entries
+    expected: Playlists#missing-entries
+    variants:
+      - a playlist has missing entries
+      - songs disappeared from my playlist
+      - a saved list references tracks no longer in the library
+      - how does Astra show unavailable playlist music
+
+  - name: playlist-history
+    expected: Playlists#playlists-and-play-history
+    variants:
+      - do playlists affect play history
+      - does a track count as played when started from a playlist
+      - smart playlist rules using listening stats
+      - are playlist listens tracked normally
+
+  - name: transport-bar
+    expected: Queue-and-Playback-Controls#the-transport-bar
+    variants:
+      - explain the transport bar
+      - where are play pause seek and volume
+      - what information appears below the current track
+      - how do I use the bottom playback controls
+
+  - name: open-queue
+    expected: Queue-and-Playback-Controls#opening-the-queue
+    variants:
+      - how do I open the queue
+      - show what is playing next
+      - where is the upcoming track list
+      - open now playing and queue controls
+
+  - name: now-playing-info
+    expected: Queue-and-Playback-Controls#now-playing-information
+    variants:
+      - where is now playing information
+      - show codec bit depth and path for the current song
+      - how do I reveal the playing file in its folder
+      - open details for the current track
+
+  - name: play-collection
+    expected: Queue-and-Playback-Controls#playing-a-collection
+    variants:
+      - play an album from the beginning
+      - what happens when I play an artist or folder
+      - replace the queue with a collection
+      - start playback from this track in an album
+
+  - name: play-external-file
+    expected: Queue-and-Playback-Controls#open-audio-files-from-the-file-manager
+    variants:
+      - open a song without adding its folder to my library
+      - use Open With Astra from the file manager
+      - play a loose audio file
+      - can Astra play music outside the indexed library
+
+  - name: queue-and-play-next
+    expected: Queue-and-Playback-Controls#add-to-queue-and-play-next
+    variants:
+      - difference between add to queue and play next
+      - put a song immediately after the current one
+      - append tracks to the end of playback
+      - queue an album without replacing what is already there
+
+  - name: shuffle
+    expected: Queue-and-Playback-Controls#shuffle
+    variants:
+      - how does shuffle work
+      - randomize the current queue
+      - turn shuffle off without losing my order
+      - why did the next track change after enabling shuffle
+
+  - name: repeat
+    expected: Queue-and-Playback-Controls#repeat
+    variants:
+      - repeat one song
+      - loop the entire queue
+      - what are the repeat modes
+      - stop playback from looping
+
+  - name: previous-next
+    expected: Queue-and-Playback-Controls#previous-and-next
+    variants:
+      - what does previous do halfway through a song
+      - skip to the next track
+      - restart the current song with the back button
+      - how do previous and next behave
+
+  - name: seek-volume-mute
+    expected: Queue-and-Playback-Controls#seek-volume-and-mute
+    variants:
+      - seek to another part of a song
+      - mute Astra
+      - change playback volume
+      - why is seeking or volume unavailable
+
+  - name: fullscreen-mini-player
+    expected: Queue-and-Playback-Controls#fullscreen-and-mini-player
+    variants:
+      - open the mini player
+      - use fullscreen now playing
+      - switch to a compact playback window
+      - where are fullscreen and mini player modes
+
+  - name: sleep-timer
+    expected: Queue-and-Playback-Controls#sleep-timer
+    variants:
+      - set a sleep timer
+      - stop music after this album
+      - pause playback in 30 minutes
+      - where can I see remaining sleep timer time
+
+  - name: gapless
+    expected: Queue-and-Playback-Controls#gapless-playback
+    variants:
+      - enable gapless playback
+      - remove pauses between album tracks
+      - why is there a gap between songs
+      - does Astra support seamless live albums
+
+  - name: queued-track-unavailable
+    expected: Queue-and-Playback-Controls#when-a-queued-track-is-unavailable
+    variants:
+      - a queued track is unavailable
+      - playback skipped a missing song
+      - remote music in the queue cannot load
+      - what happens when a file is moved after queuing it
+
+  - name: favorites-and-ratings
+    expected: Ratings-and-Listening-Stats#favorites-and-ratings
+    variants:
+      - favorite a song
+      - rate an album from one to five stars
+      - how are favorites different from ratings
+      - where can I see my highly rated music
+
+  - name: what-counts-as-play
+    expected: Ratings-and-Listening-Stats#what-counts-as-a-play
+    variants:
+      - what counts as a play
+      - how long must I listen before play count increases
+      - does skipping early count as listening
+      - when does Astra record a completed listen
+
+  - name: enable-stats
+    expected: Ratings-and-Listening-Stats#enable-listening-stats
+    variants:
+      - enable listening stats
+      - turn on detailed play history
+      - where is listening analytics
+      - let Astra track my listening time
+
+  - name: read-stats
+    expected: Ratings-and-Listening-Stats#read-the-stats-page
+    variants:
+      - how do I read the Stats page
+      - show my top artists and albums
+      - where is the listening activity chart
+      - compare plays and listening time
+
+  - name: counts-versus-history
+    expected: Ratings-and-Listening-Stats#play-counts-and-detailed-history-are-different
+    variants:
+      - why do play counts and history differ
+      - I have plays but no listening time
+      - difference between aggregate counts and detailed sessions
+      - why does imported data show totals without dates
+
+  - name: imported-listening-data
+    expected: Ratings-and-Listening-Stats#imported-listening-data
+    variants:
+      - import listening history
+      - bring play counts from another music app
+      - what is the Astra listening import format
+      - add old scrobbles to my stats
+
+  - name: stats-in-library
+    expected: Ratings-and-Listening-Stats#use-listening-data-in-the-library
+    variants:
+      - sort my library by play count
+      - filter music using listening history
+      - make a playlist from least played songs
+      - where do ratings and recent activity appear in the library
+
+  - name: reset-listening-data
+    expected: Ratings-and-Listening-Stats#resetting-data
+    variants:
+      - reset my listening history
+      - clear play counts
+      - delete detailed stats but keep ratings
+      - start listening data over from zero
+
+  - name: export-settings
+    expected: Settings-Transfer#export-settings
+    variants:
+      - export Astra settings
+      - back up my configuration to a file
+      - move preferences off this computer
+      - which settings categories can I include in an export
+
+  - name: import-settings
+    expected: Settings-Transfer#import-settings
+    variants:
+      - import Astra settings
+      - restore my configuration backup
+      - move preferences to a new installation
+      - choose which settings categories to replace
+
+  - name: transfer-exclusions
+    expected: Settings-Transfer#what-is-not-included
+    variants:
+      - what is not included in settings transfer
+      - does a settings backup contain my music files
+      - are passwords and API keys exported
+      - will library folders move to another computer
+
+  - name: transfer-external-history
+    expected: Settings-Transfer#imported-listening-data-from-other-services
+    variants:
+      - import listening data from another service
+      - are external play counts part of settings transfer
+      - move old listening history separately
+      - use the public listening import format
+
+  - name: transfer-safety
+    expected: Settings-Transfer#safety-and-troubleshooting
+    variants:
+      - settings import looks wrong
+      - is it safe to import an old configuration
+      - back up before replacing Astra settings
+      - recover from a failed settings transfer
+

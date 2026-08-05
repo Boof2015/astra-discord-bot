@@ -1,0 +1,241 @@
+intents:
+  - name: add-library-folder
+    expected: Managing-your-music-library#add-a-folder
+    variants:
+      - how do I add a music folder
+      - point Astra at my Music directory
+      - my collection is on another drive
+      - where do I choose folders to scan
+
+  - name: exclude-subfolders
+    expected: Managing-your-music-library#exclude-subfolders
+    variants:
+      - exclude a subfolder from the library
+      - ignore my music downloads directory
+      - scan a folder except for one child folder
+      - stop Astra indexing part of my collection
+
+  - name: hide-library-folder
+    expected: Managing-your-music-library#hide-a-library-folder
+    variants:
+      - hide a library folder
+      - keep music indexed but hide its folder entry
+      - remove a source from the folders view without deleting tracks
+      - what does hiding a music folder do
+
+  - name: remove-library-folder
+    expected: Managing-your-music-library#remove-a-folder
+    variants:
+      - remove a folder from my library
+      - stop managing music from this drive
+      - what happens when I delete a library source
+      - unwatch a music directory
+
+  - name: scan-library
+    expected: Managing-your-music-library#scanning-for-changes
+    variants:
+      - rescan my library
+      - new music is not appearing
+      - force Astra to look for file changes
+      - how are added moved and deleted tracks detected
+
+  - name: library-scan-errors
+    expected: Managing-your-music-library#scan-errors
+    variants:
+      - my library scan has errors
+      - Astra could not read some music files
+      - where can I see files skipped during scanning
+      - why did the music scan fail
+
+  - name: supported-music-formats
+    expected: Managing-your-music-library#supported-library-formats
+    variants:
+      - which audio formats can Astra scan
+      - does Astra support FLAC and Opus
+      - what music file types work
+      - can I add lossless and lossy files to the same library
+
+  - name: library-views
+    expected:
+      - Managing-your-music-library#tracks
+      - Managing-your-music-library#albums
+      - Managing-your-music-library#artists
+      - Managing-your-music-library#genres
+      - Managing-your-music-library#years
+      - Managing-your-music-library#folders
+    variants:
+      - how can I browse tracks albums and artists
+      - where are genre and year views
+      - show my library by folders
+      - what sections are available in the music library
+
+  - name: library-search
+    expected: Managing-your-music-library#search-and-quick-launch
+    variants:
+      - how do I search my library
+      - find an album quickly
+      - what is Quick Launch
+      - search tracks artists and playlists from anywhere
+
+  - name: edit-metadata
+    expected: Managing-your-music-library#metadata-editing
+    variants:
+      - edit a song's metadata
+      - fix the title or artist shown for a track
+      - change tags inside Astra
+      - correct a misspelled album name
+
+  - name: library-artwork
+    expected: Managing-your-music-library#artwork
+    variants:
+      - how does Astra choose album artwork
+      - use a local folder cover
+      - the album cover in my library is wrong
+      - where does library artwork come from
+
+  - name: artist-images
+    expected: Managing-your-music-library#artist-images
+    variants:
+      - where do I put artist.jpg
+      - how are custom artist images scanned
+      - use poster.jpg for a band picture
+      - does Astra check the album folder and its parent for artist art
+
+  - name: library-remote-sources
+    expected: Managing-your-music-library#remote-sources
+    variants:
+      - how do remote songs appear in the library
+      - can local and server music be shown together
+      - identify which library source a track came from
+      - what are remote sources in library views
+
+  - name: quick-integrity-scan
+    expected:
+      - Library-Integrity-Scanner#quick
+    variants:
+      - run a quick integrity scan
+      - check basic tags and paths without decoding everything
+      - fast library health check
+      - which scanner mode is light and quick
+
+  - name: deep-integrity-scan
+    expected:
+      - Library-Integrity-Scanner#deep
+      - Library-Integrity-Scanner
+    variants:
+      - find corrupt FLAC files
+      - run a deep integrity scan
+      - decode every track to check for damage
+      - thoroughly verify my music collection
+
+  - name: duplicate-scan
+    expected: Library-Integrity-Scanner#duplicates
+    variants:
+      - find duplicate tracks
+      - scan my library for repeated songs
+      - which files have the same music under different names
+      - run duplicate detection
+
+  - name: read-integrity-report
+    expected: Library-Integrity-Scanner#read-a-scan-report
+    variants:
+      - how do I read an integrity scan report
+      - what is the difference between error warning and info
+      - show only scanner errors
+      - explain confidence in a library finding
+
+  - name: scan-progress-and-results
+    expected: Library-Integrity-Scanner#during-and-after-a-scan
+    variants:
+      - can I use Astra while an integrity scan runs
+      - what happens when a library scan finishes
+      - cancel or review an integrity scan
+      - are scanner results saved after closing the panel
+
+  - name: open-lyrics
+    expected: Lyrics#open-lyrics
+    variants:
+      - how do I open lyrics
+      - where is the lyrics panel
+      - show the words for the current song
+      - open the expanded lyrics window
+
+  - name: lyric-source-order
+    expected: Lyrics#where-astra-looks
+    variants:
+      - where does Astra look for lyrics
+      - does embedded text beat an lrc file
+      - explain lyric source priority
+      - will Astra use sidecar lyrics next to the song
+
+  - name: online-lyrics
+    expected: Lyrics#enable-online-lookup
+    variants:
+      - enable online lyric lookup
+      - fetch missing lyrics from the internet
+      - where is the online lyrics setting
+      - why does Astra not search online for words
+
+  - name: lyric-display-settings
+    expected: Lyrics#display-settings
+    variants:
+      - change lyric font size
+      - adjust lyric alignment and animation
+      - make the current lyric line easier to read
+      - where are lyrics appearance settings
+
+  - name: edit-lyrics
+    expected: Lyrics#add-or-edit-lyrics-manually
+    variants:
+      - add lyrics manually
+      - edit the words Astra shows
+      - create a sidecar lyric file
+      - paste my own lyrics for a song
+
+  - name: lyric-formats
+    expected: Lyrics#plain-lrc-or-xlrc
+    variants:
+      - should I use plain lyrics LRC or XLRC
+      - what lyric format supports word timing
+      - difference between line synced and enhanced lyrics
+      - does XLRC include individual word timestamps
+
+  - name: lyric-offset
+    expected: Lyrics#correct-lyrics-that-appear-early-or-late
+    variants:
+      - my lyrics appear too early
+      - the words are behind the singer
+      - adjust the lyric timing offset
+      - synced lyrics do not line up with the vocals
+
+  - name: no-lyrics
+    expected: Lyrics#no-lyrics-are-found
+    variants:
+      - no lyrics are found
+      - Astra says this song has no words
+      - my lrc file is being ignored
+      - online and local lyric lookup both return nothing
+
+  - name: wrong-lyrics
+    expected: Lyrics#the-wrong-version-is-shown
+    variants:
+      - Astra shows the wrong lyrics
+      - the live version has studio lyrics
+      - refresh an incorrect lyric match
+      - why are the words for another version of the song
+
+  - name: xlrc-extras-missing
+    expected: Lyrics#xlrc-extras-do-not-appear
+    variants:
+      - XLRC word timing does not appear
+      - background and translation lyrics are missing
+      - enhanced lyric extras are not shown
+      - my file has word timestamps but Astra only highlights lines
+
+  - name: lyrics-window-missing
+    expected: Lyrics#the-lyrics-window-is-not-visible
+    variants:
+      - the lyrics window is not visible
+      - expanded lyrics opened off screen
+      - I closed the lyric window and cannot find it
+      - restore the separate lyrics display

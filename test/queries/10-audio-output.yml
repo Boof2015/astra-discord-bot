@@ -1,0 +1,203 @@
+intents:
+  - name: standard-playback
+    expected: Audio-Output-and-Bit-Perfect-Playback#standard-playback
+    variants:
+      - what is standard playback
+      - when should I use standard mode
+      - I want EQ and volume control to work
+      - which playback mode lets other apps share the device
+
+  - name: bit-perfect-playback
+    expected: Audio-Output-and-Bit-Perfect-Playback#bit-perfect-exclusive
+    variants:
+      - what is bit perfect playback
+      - how do I enable exclusive mode
+      - send the file directly to my DAC
+      - I do not want Astra to resample anything
+
+  - name: exclusive-mode-limitations
+    expected: Audio-Output-and-Bit-Perfect-Playback#what-exclusive-mode-disables
+    variants:
+      - what stops working in exclusive mode
+      - why is volume disabled in bit perfect playback
+      - can I use EQ while output is exclusive
+      - Parallax and routing are greyed out in bit perfect mode
+
+  - name: format-and-sample-rate-changes
+    expected: Audio-Output-and-Bit-Perfect-Playback#format-changes-and-device-support
+    variants:
+      - why does my DAC keep changing sample rate
+      - why is my sample rate weird
+      - Astra switches formats between songs
+      - which sample rates does my output device support
+
+  - name: native-status
+    expected: Audio-Output-and-Bit-Perfect-Playback#reading-native-status
+    variants:
+      - what does native status mean
+      - where can I tell if playback is really bit perfect
+      - why does native status say unavailable
+      - explain the native output badges
+
+  - name: choose-output-device
+    expected: Audio-Output-and-Bit-Perfect-Playback#choose-an-output-device
+    variants:
+      - how do I pick an audio output
+      - switch Astra to my USB DAC
+      - music is playing through the wrong device
+      - where is the speaker selection
+
+  - name: normalization
+    expected:
+      - Audio-Output-and-Bit-Perfect-Playback#normalization
+      - Audio-Output-and-Bit-Perfect-Playback#replaygain-preference
+    variants:
+      - how does volume normalization work
+      - what is ReplayGain preference
+      - make quiet and loud albums more even
+      - should Astra use track gain or album gain
+
+  - name: exclusive-silences-other-apps
+    expected: Audio-Output-and-Bit-Perfect-Playback#another-app-becomes-silent
+    variants:
+      - another app has no sound when exclusive mode is on
+      - YouTube goes silent while Astra is playing
+      - my browser cannot use the DAC with bit perfect enabled
+      - why does exclusive playback mute everything else
+
+  - name: exclusive-cannot-start
+    expected: Audio-Output-and-Bit-Perfect-Playback#exclusive-playback-cannot-start
+    variants:
+      - exclusive playback cannot start
+      - bit perfect mode fails to open my device
+      - Astra says the output is busy
+      - my DAC refuses exclusive mode
+
+  - name: processing-disabled-by-exclusive
+    expected: Audio-Output-and-Bit-Perfect-Playback#eq-volume-routing-or-parallax-is-disabled
+    variants:
+      - why is EQ disabled
+      - the volume slider is locked
+      - manual channel routing is unavailable
+      - why can I not turn on Parallax in exclusive mode
+
+  - name: high-resolution-resampling
+    expected: Audio-Output-and-Bit-Perfect-Playback#a-high-resolution-track-shows-resampling-in-standard
+    variants:
+      - why is my high resolution song being resampled
+      - a 96 kHz track shows 48 kHz output
+      - standard playback changes the sample rate
+      - is shared mode resampling normal
+
+  - name: read-audio-pipeline
+    expected: Audio-Pipeline-Shelf#how-to-read-it
+    variants:
+      - how do I read the audio pipeline
+      - what do the cards from source to output mean
+      - explain the signal path display
+      - how can I see every processing stage
+
+  - name: source-and-decoder-cards
+    expected:
+      - Audio-Pipeline-Shelf#source
+      - Audio-Pipeline-Shelf#decoder
+    variants:
+      - what does the source card show
+      - what is the decoder stage
+      - where can I see the file format and bitrate
+      - how do I tell what decoded audio Astra produced
+
+  - name: resampler-card
+    expected: Audio-Pipeline-Shelf#resampler
+    variants:
+      - what does the resampler card mean
+      - why is resampler in my audio path
+      - where can I see input and output sample rates
+      - is Astra converting 96 kHz to 48 kHz
+
+  - name: routing-and-upmix-cards
+    expected:
+      - Audio-Pipeline-Shelf#routing
+      - Audio-Pipeline-Shelf#upmix
+    variants:
+      - what does routing mean in the pipeline
+      - why is an upmix stage showing
+      - where can I see channel mapping
+      - did Astra turn my stereo track into surround
+
+  - name: spatial-pipeline-card
+    expected: Audio-Pipeline-Shelf#spatial
+    variants:
+      - what does spatial mean in the pipeline
+      - is the binaural renderer active
+      - where can I see Atmos or Eclipsa processing
+      - why is there a spatial card in my audio path
+
+  - name: pipeline-normalization-and-eq
+    expected:
+      - Audio-Pipeline-Shelf#normalization-or-replaygain
+      - Audio-Pipeline-Shelf#eq
+    variants:
+      - where does ReplayGain appear in the pipeline
+      - how can I see if EQ is processing audio
+      - why is there a gain stage in my signal path
+      - show me whether normalization and EQ are active
+
+  - name: delay-compensation-card
+    expected: Audio-Pipeline-Shelf#delay-comp
+    variants:
+      - what is delay comp in the pipeline
+      - why does Astra delay audio for video
+      - where can I see output latency compensation
+      - explain the delay compensation card
+
+  - name: output-card
+    expected: Audio-Pipeline-Shelf#output
+    variants:
+      - what does the output card show
+      - where can I see the active device rate
+      - is my DAC receiving the native format
+      - compare the source and final output format
+
+  - name: unexpected-volume-pipeline
+    expected: Audio-Pipeline-Shelf#the-sound-is-louder-or-quieter-than-expected
+    variants:
+      - why is this song louder than expected
+      - the pipeline changed my volume
+      - which stage is making playback quiet
+      - troubleshoot unexpected gain in the audio path
+
+  - name: wrong-surround-pipeline
+    expected: Audio-Pipeline-Shelf#surround-or-headphone-spatial-playback-sounds-wrong
+    variants:
+      - surround sounds wrong what pipeline cards should I check
+      - headphone spatial audio sounds strange
+      - the audio path shows unexpected routing and spatial stages
+      - troubleshoot bad multichannel processing with the pipeline shelf
+
+  - name: video-sync-pipeline
+    expected: Audio-Pipeline-Shelf#a-video-is-out-of-sync
+    variants:
+      - a video is out of sync what should the pipeline show
+      - sound and picture do not line up
+      - where can I check delay compensation for a movie
+      - use the pipeline shelf to diagnose lip sync
+
+  - name: not-bit-perfect-pipeline
+    expected: Audio-Pipeline-Shelf#a-file-is-not-bit-perfect
+    variants:
+      - why is this file not bit perfect
+      - the pipeline has extra processing in exclusive mode
+      - how do I verify the shortest native audio path
+      - a supposedly direct file shows DSP cards
+
+  - name: bluetooth-calibration
+    expected:
+      - Bluetooth-Calibration
+      - Output-Delay-and-Calibration
+    variants:
+      - calibrate Bluetooth delay
+      - my wireless headphones lag behind video
+      - measure latency for a Bluetooth speaker
+      - fix lip sync caused by Bluetooth
+

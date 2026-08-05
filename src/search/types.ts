@@ -4,6 +4,9 @@ export interface LexicalHit {
   chunk: WikiChunk
   score: number
   exactBoost: number
+  queryTokenCount: number
+  matchedQueryTokenCount: number
+  matchedMetadataTokenCount: number
 }
 
 export interface SemanticHit {
@@ -19,6 +22,9 @@ export interface RankedWikiResult {
   semanticRank: number | null
   semanticSimilarity: number | null
   exactBoost: number
+  queryTokenCount: number
+  matchedQueryTokenCount: number
+  matchedMetadataTokenCount: number
 }
 
 export type SearchConfidence = 'high' | 'medium' | 'low'
@@ -30,5 +36,7 @@ export interface WikiSearchResponse {
 }
 
 export interface SemanticSearcher {
+  readonly minimumSimilarity?: number
+  readonly strongSimilarity?: number
   search(query: string, limit: number): Promise<SemanticHit[]>
 }

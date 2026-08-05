@@ -1,0 +1,345 @@
+intents:
+  - name: enable-api
+    expected: Astra-API#enable-the-api
+    variants:
+      - how do I enable the Astra API
+      - turn on companion API access
+      - where is the local API switch
+      - start Astra's HTTP API
+
+  - name: api-permissions
+    expected: Astra-API#choose-permissions
+    variants:
+      - choose API permissions
+      - make an API key read only
+      - control what a companion app can do
+      - should this API client be allowed to change playback
+
+  - name: connect-api-client
+    expected: Astra-API#connect-a-companion-app
+    variants:
+      - connect a companion app to the API
+      - what URL and key should an API client use
+      - point another program at Astra
+      - how does a local integration authenticate
+
+  - name: api-security
+    expected: Astra-API#key-and-port-safety
+    variants:
+      - is it safe to expose the Astra API port
+      - keep my companion API key secure
+      - should I forward the local API through my router
+      - someone got my API key what should I do
+
+  - name: api-versus-phone
+    expected: Astra-API#local-api-versus-phone-pairing
+    variants:
+      - should I use the API or phone pairing
+      - difference between companion API and mobile remote
+      - I am building an integration which connection should I use
+      - does phone pairing use the API key
+
+  - name: create-signal
+    expected: Astra-Signal#create-a-signal
+    variants:
+      - how do I create an Astra Signal
+      - share the song I am playing
+      - make a QR code for this track
+      - generate a music link from now playing
+
+  - name: signal-contents
+    expected: Astra-Signal#what-a-signal-contains
+    variants:
+      - what information is inside an Astra Signal
+      - does a Signal upload my audio file
+      - what gets shared with a music QR code
+      - is an Astra Signal private
+
+  - name: open-signal
+    expected: Astra-Signal#open-or-scan-a-signal
+    variants:
+      - how do I open an Astra Signal
+      - scan a song QR code
+      - someone sent me a Signal link
+      - import a shared track identity into Astra
+
+  - name: discord-activity-content
+    expected: Discord-Rich-Presence#what-astra-can-show
+    variants:
+      - what can Astra put in my Discord activity
+      - does Discord show song album and artist
+      - what information is shared by rich presence
+      - can friends see whether playback is paused
+
+  - name: discord-cover-art
+    expected: Discord-Rich-Presence#cover-art
+    variants:
+      - Discord shows the wrong album cover
+      - which websites does Discord use to find artwork
+      - where does rich presence cover art come from
+      - does Astra try iTunes MusicBrainz Cover Art Archive and TheAudioDB
+
+  - name: discord-privacy
+    expected: Discord-Rich-Presence#privacy
+    variants:
+      - is Discord rich presence private
+      - stop showing local file details on Discord
+      - what music information leaves my computer
+      - can I hide what I am listening to
+
+  - name: discord-not-appearing
+    expected: Discord-Rich-Presence#if-it-does-not-appear
+    variants:
+      - Astra rich presence does not appear
+      - Discord is not showing my song
+      - my listening activity vanished
+      - troubleshoot Discord RPC
+
+  - name: parallax-terms
+    expected: Parallax#terms
+    variants:
+      - what is a Parallax host and receiver
+      - explain host speaker and zone display
+      - which computer controls Parallax
+      - what does receiver mean in network playback
+
+  - name: parallax-requirements
+    expected: Parallax#before-you-start
+    variants:
+      - what do I need before using Parallax
+      - which playback mode works with network speakers
+      - do Parallax computers need the same network
+      - can I use exclusive mode with Parallax
+
+  - name: enable-parallax
+    expected: Parallax#enable-parallax
+    variants:
+      - how do I enable Parallax
+      - turn this computer into a Parallax receiver
+      - where is speaker mode
+      - start network audio on the host
+
+  - name: pair-parallax-speaker
+    expected: Parallax#pair-a-speaker
+    variants:
+      - how do I pair a Parallax speaker
+      - connect a receiver to my host
+      - accept the pairing code on another computer
+      - add a network speaker to Astra
+
+  - name: add-parallax-by-address
+    expected: Parallax#add-by-address
+    variants:
+      - add a Parallax receiver by IP address
+      - discovery cannot find my speaker but I know its address
+      - manually connect to a network speaker
+      - where do I enter the receiver host name
+
+  - name: parallax-playback-selection
+    expected: Parallax#speaker-status-and-playback-selection
+    variants:
+      - choose which Parallax speakers are playing
+      - what do play here and playing mean
+      - send music to one receiver but not another
+      - read the online and playback status for a zone
+
+  - name: rename-parallax-speaker
+    expected: Parallax#rename-a-speaker
+    variants:
+      - rename a Parallax speaker
+      - change the receiver name shown on the host
+      - call this zone Living Room
+      - does renaming affect the zone display
+
+  - name: tune-parallax-timing
+    expected: Parallax#tune-speaker-timing
+    variants:
+      - parallax says synced but my television has an echo
+      - why does Parallax need trim if it syncs itself
+      - one network speaker is a little late
+      - tune fixed timing offsets between receivers
+
+  - name: parallax-zone-display
+    expected: Parallax#zone-display
+    variants:
+      - what is the Parallax zone display
+      - show now playing on the receiver television
+      - open the speaker screen automatically
+      - use a Parallax computer as a dedicated display
+
+  - name: disconnect-forget-remove-parallax
+    expected: Parallax#disconnecting-forgetting-and-removing
+    variants:
+      - difference between disconnect forget and remove speaker
+      - temporarily disconnect a Parallax receiver
+      - revoke a network speaker pairing
+      - clear a stale Parallax status without forgetting credentials
+
+  - name: parallax-advanced
+    expected: Parallax#advanced-settings
+    variants:
+      - where are advanced Parallax settings
+      - change network audio buffering
+      - configure receiver startup behavior
+      - advanced options for synchronized speakers
+
+  - name: parallax-not-discovered
+    expected: Parallax#a-speaker-does-not-appear-during-pairing
+    variants:
+      - a speaker does not appear during Parallax pairing
+      - my receiver is missing from discovery
+      - Astra cannot find the other computer on my network
+      - a firewall or VLAN blocks Parallax discovery
+
+  - name: parallax-keeps-disappearing
+    expected: Parallax#a-paired-speaker-keeps-going-offline-or-disappearing
+    variants:
+      - my network speaker keeps disappearing
+      - a paired Parallax node repeatedly goes offline
+      - the receiver vanishes after its IP changes
+      - my zone disconnects whenever the computer sleeps
+
+  - name: parallax-silent
+    expected: Parallax#the-speaker-is-online-but-silent
+    variants:
+      - the Parallax speaker is online but silent
+      - receiver says connected but no audio plays
+      - test sound works nowhere on the network speaker
+      - my zone is online but not selected for playback
+
+  - name: parallax-consistent-offset
+    expected: Parallax#the-speaker-is-consistently-early-or-late
+    variants:
+      - a Parallax speaker is consistently early
+      - one receiver always plays late
+      - the network speakers echo even though they are synchronized
+      - fix a stable timing difference between zones
+
+  - name: parallax-pairing-fails
+    expected: Parallax#pairing-fails
+    variants:
+      - Parallax pairing fails
+      - the receiver rejects the pairing code
+      - host and speaker will not establish trust
+      - I removed a zone and cannot pair it again
+
+  - name: pair-phone
+    expected: Phone-Remote-and-Library-Sync#pair-a-phone
+    variants:
+      - how do I pair my phone
+      - scan the Astra remote QR code
+      - connect the mobile controller
+      - open phone remote pairing
+
+  - name: mobile-versus-browser
+    expected: Phone-Remote-and-Library-Sync#mobile-versus-browser-controller
+    variants:
+      - should I use the mobile app or browser controller
+      - difference between phone remote and web remote
+      - can I control Astra without installing an app
+      - which remote works in a mobile browser
+
+  - name: phone-pairing-permissions
+    expected: Phone-Remote-and-Library-Sync#pairing-permissions
+    variants:
+      - choose phone remote permissions
+      - let my phone control playback but not settings
+      - what access does a paired mobile device get
+      - change what the remote is allowed to do
+
+  - name: manage-phone-remote
+    expected: Phone-Remote-and-Library-Sync#use-and-manage-the-remote
+    variants:
+      - remove a paired phone
+      - manage devices connected to Astra remote
+      - use my phone to browse and control playback
+      - revoke an old mobile controller
+
+  - name: phone-library-sync
+    expected: Phone-Remote-and-Library-Sync#library-sync
+    variants:
+      - sync Astra's library to my phone
+      - what music data is copied to the mobile app
+      - update the phone after changing my library
+      - does library sync copy the actual audio files
+
+  - name: phone-playlist-conflicts
+    expected: Phone-Remote-and-Library-Sync#resolve-playlist-conflicts
+    variants:
+      - resolve a phone playlist conflict
+      - the same playlist changed on mobile and desktop
+      - choose which version wins during library sync
+      - my remote created a duplicate playlist after syncing
+
+  - name: add-remote-server
+    expected: Remote-Libraries#add-a-server
+    variants:
+      - how do I add a Navidrome server
+      - connect Astra to Jellyfin
+      - set up a Subsonic music source
+      - where do I enter my server URL and login
+
+  - name: remote-sync
+    expected: Remote-Libraries#what-sync-does
+    variants:
+      - what does remote library sync do
+      - does Astra download songs from Navidrome
+      - refresh metadata from my music server
+      - how are remote tracks cached locally
+
+  - name: manage-remote-source
+    expected: Remote-Libraries#names-disabled-sources-and-deletion
+    variants:
+      - rename a remote library
+      - temporarily disable my Jellyfin source
+      - remove a Subsonic server from Astra
+      - what happens to synced tracks when I delete a remote source
+
+  - name: remote-playback
+    expected: Remote-Libraries#playback-behavior
+    variants:
+      - how does remote track playback work
+      - does Astra stream or download server music
+      - what happens when the network drops during a song
+      - can remote files use normal playback features
+
+  - name: remote-library-trouble
+    expected: Remote-Libraries#troubleshooting
+    variants:
+      - my Navidrome library will not connect
+      - Jellyfin tracks do not play
+      - remote sync keeps failing
+      - Astra cannot log into my Subsonic server
+
+  - name: add-scrobble-destination
+    expected: Scrobbling#add-a-destination
+    variants:
+      - connect Last.fm
+      - add ListenBrainz scrobbling
+      - where do I sign into a scrobble service
+      - send my Astra listens to another site
+
+  - name: scrobble-qualification
+    expected: Scrobbling#when-a-listen-becomes-a-scrobble
+    variants:
+      - when does a song get scrobbled
+      - how much of a track must play before Last.fm gets it
+      - does seeking affect scrobble qualification
+      - why was a short listen not submitted
+
+  - name: pending-scrobbles
+    expected: Scrobbling#multiple-destinations-and-pending-scrobbles
+    variants:
+      - what are pending scrobbles
+      - send listens to multiple services
+      - will Astra retry Last.fm after the internet returns
+      - one scrobble destination works and another is offline
+
+  - name: scrobble-trouble
+    expected: Scrobbling#troubleshooting
+    variants:
+      - Last.fm will not scrobble
+      - ListenBrainz is missing my plays
+      - scrobbles stay pending forever
+      - my account is connected but listens are not sent
+

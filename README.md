@@ -17,11 +17,12 @@ The bot reads only explicit interactions and messages that directly mention it. 
 
 Each Markdown page is divided into searchable sections at its headings. The index preserves GitHub Wiki page names and heading anchors, so every result can link to the exact section it quotes.
 
-Two local rankings are combined:
+Retrieval stays local and uses two complementary paths:
 
-1. A weighted lexical index favors headings, documented aliases, and exact phrases while still searching the section body.
-2. A small local `all-MiniLM-L6-v2` embedding model catches questions that use different wording.
-3. Reciprocal-rank fusion combines both rankings. If the model cannot start, the bot remains available with lexical search only.
+1. A q8 `EmbeddingGemma 300M` model ranks Wiki sections by the meaning of the question. It is the primary ranking because it handles ordinary user wording substantially better than keyword fusion.
+2. A weighted lexical index supplies deterministic exact-title, exact-heading, and documented-alias overrides. It also remains available as a fallback if the semantic model cannot start.
+
+The ONNX model repository and revision are pinned in the source. EmbeddingGemma is provided under the [Gemma terms of use](https://ai.google.dev/gemma/terms).
 
 The Wiki clone is polled on a timer. A changed commit is parsed and indexed before the live index is replaced, so a failed refresh does not discard the working index.
 
@@ -93,7 +94,9 @@ Add `--semantic` to exercise the complete hybrid engine:
 npm run search -- "the words are ahead of the singer" --semantic
 ```
 
-On its first semantic run, the bot downloads an approximately 80 MB model archive, verifies its pinned SHA-256 digest, and extracts it under `data/model-cache`. Embeddings are cached in `data/embeddings.json`; only changed Wiki sections need to be embedded after a refresh.
+On its first semantic run, the bot downloads approximately 330 MB: 309 MB of q8 ONNX weights plus the tokenizer and model metadata. It keeps those files at the pinned revision under `data/model-cache`. Embeddings are cached in `data/embeddings.json`; only changed Wiki sections need to be embedded after a refresh. The model cache lives in the Docker data volume, so container rebuilds do not download it again.
+
+Allow roughly 2 GB of RAM for the bot with semantic search enabled. A measured 305-section Astra index used about 1.7 GiB RSS; the exact number varies by platform and ONNX Runtime version. The model makes no network requests after its files have been downloaded, aside from the bot's normal Discord and Wiki traffic.
 
 Run all local checks with:
 
@@ -104,7 +107,7 @@ npm run evaluate
 npm run evaluate -- --semantic
 ```
 
-The evaluation corpus in [`test/queries.yml`](test/queries.yml) contains real support-style questions and their expected Wiki sections. Add a case there whenever a real question exposes an ambiguous ranking. Add user vocabulary or product-specific synonyms to [`config/aliases.yml`](config/aliases.yml) instead of hard-coding query behavior in the Discord layer.
+The grouped evaluation corpus in [`test/queries`](test/queries) contains natural query variants and their expected Wiki sections. Add a variant whenever a real question exposes an ambiguous ranking, or add a new intent when an area of the Wiki has no coverage. Add user vocabulary or product-specific synonyms to [`config/aliases.yml`](config/aliases.yml) instead of hard-coding query behavior in the Discord layer. Pass `--verbose` to print every result or `--summary-only` to print per-topic and overall scores.
 
 ## Deploy on an Oracle Ampere VPS
 
@@ -154,8 +157,8 @@ docker compose up -d --build
 | `WIKI_SYNC_ENABLED` | `true` | Clone and fast-forward the Wiki automatically |
 | `WIKI_POLL_MINUTES` | `5` | Wiki refresh interval; values below one minute are clamped |
 | `ALIASES_FILE` | `./config/aliases.yml` | Product vocabulary and exact support phrases |
-| `SEMANTIC_SEARCH_ENABLED` | `true` | Enable local embeddings in addition to lexical search |
-| `EMBEDDING_MODEL` | `sentence-transformers/all-MiniLM-L6-v2` | Local embedding model; currently this pinned model is supported |
+| `SEMANTIC_SEARCH_ENABLED` | `true` | Enable local semantic ranking with exact lexical overrides |
+| `EMBEDDING_MODEL` | `google/embeddinggemma-300m` | Local embedding model; currently this pinned model is supported |
 | `MODEL_CACHE_DIRECTORY` | `./data/model-cache` | Downloaded model files |
 | `EMBEDDING_CACHE_FILE` | `./data/embeddings.json` | Per-section embedding cache |
 

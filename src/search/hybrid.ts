@@ -1,5 +1,4 @@
 import { LexicalIndex } from './lexical.js'
-import { tokenize } from './tokenize.js'
 import type {
   LexicalHit,
   RankedWikiResult,
@@ -9,13 +8,7 @@ import type {
   WikiSearchResponse,
 } from './types.js'
 
-const FUSION_K = 45
-const LEXICAL_WEIGHT = 1.2
-const SEMANTIC_WEIGHT = 1
-const LEXICAL_SCORE_BONUS = 0.012
 const STRONG_LEXICAL_SCORE = 8
-const SUPPORTING_LEXICAL_SCORE = 5.5
-const SUPPORTING_SEMANTIC_SIMILARITY = 0.72
 const SEMANTIC_ONLY_SIMILARITY = 0.84
 
 interface MutableFusionResult {
@@ -26,68 +19,85 @@ interface MutableFusionResult {
   semanticRank: number | null
   semanticSimilarity: number | null
   exactBoost: number
+  queryTokenCount: number
+  matchedQueryTokenCount: number
+  matchedMetadataTokenCount: number
 }
 
-function classifyConfidence(results: RankedWikiResult[]): SearchConfidence {
+function classifyConfidence(
+  results: RankedWikiResult[],
+  semanticSearcher: SemanticSearcher | null,
+): SearchConfidence {
   const first = results[0]
   if (!first) return 'low'
   const second = results[1]
-  const margin = second ? (first.score - second.score) / Math.max(first.score, Number.EPSILON) : 1
+  const margin = second ? first.score - second.score : 1
   const lexicalSemanticAgreement = first.lexicalRank !== null
     && first.lexicalRank <= 3
     && first.semanticRank !== null
     && first.semanticRank <= 3
 
-  if (first.exactBoost >= 10 || (lexicalSemanticAgreement && margin >= 0.08)) return 'high'
+  const strongSimilarity = semanticSearcher?.strongSimilarity ?? 0.88
+  const minimumSimilarity = semanticSearcher?.minimumSimilarity ?? SEMANTIC_ONLY_SIMILARITY
   if (
-    first.exactBoost > 0
-    || (first.lexicalRank !== null && first.lexicalRank <= 5)
+    first.exactBoost >= 10
     || (
       first.semanticSimilarity !== null
-      && first.semanticSimilarity >= SUPPORTING_SEMANTIC_SIMILARITY
+      && first.semanticSimilarity >= strongSimilarity
+      && margin >= 0.025
+    )
+    || (lexicalSemanticAgreement && margin >= 0.08)
+  ) return 'high'
+  if (
+    first.exactBoost > 0
+    || (!semanticSearcher && first.lexicalRank !== null && first.lexicalRank <= 5)
+    || (
+      first.semanticSimilarity !== null
+      && first.semanticSimilarity >= minimumSimilarity
     )
   ) return 'medium'
   return 'low'
 }
 
-function hasEnoughEvidence(query: string, results: RankedWikiResult[]): boolean {
+function hasEnoughEvidence(
+  results: RankedWikiResult[],
+  semanticSearcher: SemanticSearcher | null,
+): boolean {
   const first = results[0]
   if (!first) return false
   if (first.exactBoost > 0) return true
 
+  if (semanticSearcher && first.semanticSimilarity !== null) {
+    return first.semanticSimilarity
+      >= (semanticSearcher.minimumSimilarity ?? SEMANTIC_ONLY_SIMILARITY)
+  }
+
   const lexicalScore = first.lexicalScore ?? 0
   if (lexicalScore >= STRONG_LEXICAL_SCORE) return true
-
-  const queryTokenCount = new Set(tokenize(query)).size
-  if (queryTokenCount < 2) return false
-
-  const semanticSimilarity = first.semanticSimilarity ?? 0
-  if (
-    lexicalScore >= SUPPORTING_LEXICAL_SCORE
-    && semanticSimilarity >= SUPPORTING_SEMANTIC_SIMILARITY
-  ) return true
-
-  return first.lexicalRank === null
-    && semanticSimilarity >= SEMANTIC_ONLY_SIMILARITY
+  return false
 }
 
-function addLexicalHits(target: Map<string, MutableFusionResult>, hits: LexicalHit[]): void {
-  const strongestLexicalScore = hits[0]?.score ?? 0
+function addLexicalHits(
+  target: Map<string, MutableFusionResult>,
+  hits: LexicalHit[],
+  semanticActive: boolean,
+): void {
   hits.forEach((hit, index) => {
     const rank = index + 1
-    const relativeLexicalStrength = strongestLexicalScore > 0
-      ? hit.score / strongestLexicalScore
+    const exactOverride = semanticActive && hit.exactBoost >= 10
+      ? 1 + hit.exactBoost / 100
       : 0
     target.set(hit.chunk.id, {
       chunk: hit.chunk,
-      score: LEXICAL_WEIGHT / (FUSION_K + rank)
-        + relativeLexicalStrength * LEXICAL_SCORE_BONUS
-        + hit.exactBoost * 0.004,
+      score: semanticActive ? exactOverride : hit.score,
       lexicalRank: rank,
       lexicalScore: hit.score,
       semanticRank: null,
       semanticSimilarity: null,
       exactBoost: hit.exactBoost,
+      queryTokenCount: hit.queryTokenCount,
+      matchedQueryTokenCount: hit.matchedQueryTokenCount,
+      matchedMetadataTokenCount: hit.matchedMetadataTokenCount,
     })
   })
 }
@@ -97,7 +107,7 @@ function addSemanticHits(target: Map<string, MutableFusionResult>, hits: Semanti
     const rank = index + 1
     const existing = target.get(hit.chunk.id)
     if (existing) {
-      existing.score += SEMANTIC_WEIGHT / (FUSION_K + rank)
+      if (existing.exactBoost < 10) existing.score = hit.similarity
       existing.semanticRank = rank
       existing.semanticSimilarity = hit.similarity
       return
@@ -105,12 +115,15 @@ function addSemanticHits(target: Map<string, MutableFusionResult>, hits: Semanti
 
     target.set(hit.chunk.id, {
       chunk: hit.chunk,
-      score: SEMANTIC_WEIGHT / (FUSION_K + rank),
+      score: hit.similarity,
       lexicalRank: null,
       lexicalScore: null,
       semanticRank: rank,
       semanticSimilarity: hit.similarity,
       exactBoost: 0,
+      queryTokenCount: 0,
+      matchedQueryTokenCount: 0,
+      matchedMetadataTokenCount: 0,
     })
   })
 }
@@ -130,20 +143,20 @@ export class WikiSearchEngine {
       ? await this.semanticSearcher.search(trimmedQuery, 50)
       : []
     const fused = new Map<string, MutableFusionResult>()
-    addLexicalHits(fused, lexicalHits)
+    addLexicalHits(fused, lexicalHits, semanticHits.length > 0)
     addSemanticHits(fused, semanticHits)
 
     const results = [...fused.values()]
       .sort((left, right) => right.score - left.score || left.chunk.id.localeCompare(right.chunk.id))
       .slice(0, Math.max(0, limit))
 
-    if (!hasEnoughEvidence(trimmedQuery, results)) {
+    if (!hasEnoughEvidence(results, this.semanticSearcher)) {
       return { query: trimmedQuery, confidence: 'low', results: [] }
     }
 
     return {
       query: trimmedQuery,
-      confidence: classifyConfidence(results),
+      confidence: classifyConfidence(results, this.semanticSearcher),
       results,
     }
   }
