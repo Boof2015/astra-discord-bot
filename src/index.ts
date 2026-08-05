@@ -1,14 +1,16 @@
 import { WikiService } from './app/wikiService.js'
+import { MaintenanceMode } from './app/maintenanceMode.js'
 import { loadConfig, loadLocalEnvironment } from './config.js'
 import { startDiscordBot } from './discord/bot.js'
 
 loadLocalEnvironment()
 const config = loadConfig({ requireDiscord: true })
 const wikiService = new WikiService(config)
+const maintenanceMode = await MaintenanceMode.open(config.botStateFile)
 
 console.info('Preparing the Astra Wiki index...')
 await wikiService.start()
-const client = await startDiscordBot(config, wikiService)
+const client = await startDiscordBot(config, wikiService, maintenanceMode)
 
 let shuttingDown = false
 const shutdown = async (signal: string): Promise<void> => {

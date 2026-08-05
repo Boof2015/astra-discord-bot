@@ -14,6 +14,7 @@ export interface BotConfig {
   embeddingModel: string
   modelCacheDirectory: string
   embeddingCacheFile: string
+  botStateFile: string
 }
 
 function booleanFromEnvironment(name: string, fallback: boolean): boolean {
@@ -70,5 +71,6 @@ export function loadConfig(options: { requireDiscord?: boolean } = {}): BotConfi
     embeddingCacheFile: resolve(
       process.env.EMBEDDING_CACHE_FILE?.trim() || './data/embeddings.json',
     ),
+    botStateFile: resolve(process.env.BOT_STATE_FILE?.trim() || './data/bot-state.json'),
   }
 }

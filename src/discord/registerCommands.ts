@@ -1,11 +1,11 @@
 import { REST, Routes } from 'discord.js'
 import { loadConfig, loadLocalEnvironment } from '../config.js'
-import { commandDefinitions } from './commands.js'
+import { commandPayloads } from './commands.js'
 
 loadLocalEnvironment()
 const config = loadConfig({ requireDiscord: true })
 const rest = new REST({ version: '10' }).setToken(config.discordToken)
-const body = commandDefinitions.map((command) => command.toJSON())
+const body = commandPayloads(Boolean(config.discordGuildId))
 
 if (config.discordGuildId) {
   await rest.put(

@@ -45,6 +45,21 @@ The production image uses Debian rather than Alpine because the local ONNX runti
 
 Keep the token only in `.env`; that file is ignored by Git. If a token is ever committed or shared, reset it in the Developer Portal.
 
+## Admin commands
+
+The guild-only `/astra` command is hidden from members who do not have Discord's **Manage Server** permission. The bot checks that permission again when handling the command, and every admin response is ephemeral.
+
+| Command | Purpose |
+| --- | --- |
+| `/astra status` | Show whether public searches are active, the configured and active search mode, Wiki commit, section count, last refresh, and uptime |
+| `/astra refresh` | Pull the Wiki and rebuild the live index while reusing cached embeddings |
+| `/astra inspect question:` | Show the top retrieval results, confidence, scores, ranks, and winning retrieval path without posting publicly |
+| `/astra pause` | Stop `/wiki`, message-menu, and mentioned searches until manually resumed |
+| `/astra pause minutes: reason:` | Pause public searches with an optional explanation and automatic resume time |
+| `/astra resume` | Resume public searches immediately |
+
+Maintenance mode does not disconnect the bot, unload the model, or stop background Wiki polling. Admin commands remain available, searches already in progress may finish, and new public requests receive a short maintenance response without running retrieval. Pause details are stored in `data/bot-state.json`, so manual and timed pauses survive container restarts.
+
 ## Local setup
 
 ```sh
@@ -161,6 +176,7 @@ docker compose up -d --build
 | `EMBEDDING_MODEL` | `google/embeddinggemma-300m` | Local embedding model; currently this pinned model is supported |
 | `MODEL_CACHE_DIRECTORY` | `./data/model-cache` | Downloaded model files |
 | `EMBEDDING_CACHE_FILE` | `./data/embeddings.json` | Per-section embedding cache |
+| `BOT_STATE_FILE` | `./data/bot-state.json` | Persistent maintenance-mode state |
 
 When sync is enabled, `WIKI_DIRECTORY` must either not exist or already be the bot's Git clone. The bot will not overwrite a normal directory. Updates use `git pull --ff-only`; a rewritten or conflicting checkout fails safely and leaves the previous search index online.
 
