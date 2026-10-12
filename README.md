@@ -1,14 +1,14 @@
-# Astra Wiki Bot
+# Astra and Prism Wiki Bots
 
-A Discord bot that turns a natural-language question into the most relevant section of the [Astra Wiki](https://github.com/Boof2015/astra/wiki).
+A shared Discord retrieval backend that turns a natural-language question into the most relevant section of either the [Astra Wiki](https://github.com/Boof2015/astra/wiki) or the [Prism Wiki](https://github.com/Boof2015/prism/wiki). The production Compose setup runs two separately branded Discord applications from the same image.
 
 It is a documentation retriever, not a support-answer generator. The bot quotes an excerpt already written in the Wiki and links directly to its page and heading. It does not use an LLM, request privileged access to unmentioned message content, or store a history of people's questions.
 
 ## What people can do
 
 - Run `/wiki question:<their question>`.
-- Mention the bot followed by a question, such as `@Astra Bot why is my sample rate weird?`.
-- Right-click a Discord message, open **Apps**, and choose **Search Astra Wiki**.
+- Mention either bot followed by a question, such as `@Astra Bot why is my sample rate weird?`.
+- Right-click a Discord message, open **Apps**, and choose **Search Astra Wiki** or **Search Prism Wiki**.
 - Open the best matching Wiki section or one of the other likely matches.
 
 The bot reads only explicit interactions and messages that directly mention it. It uses the non-privileged `Guilds` and `GuildMessages` gateway intents. Discord provides content for messages that mention an app, so the bot does not require the privileged Message Content intent and cannot inspect ordinary unmentioned conversation.
@@ -37,28 +37,28 @@ The production image uses Debian rather than Alpine because the local ONNX runti
 
 ## Discord setup
 
-1. Create an application in the [Discord Developer Portal](https://discord.com/developers/applications), then add a bot.
+1. Create one application for Astra and one for Prism in the [Discord Developer Portal](https://discord.com/developers/applications), then add a bot to each application.
 2. Copy the application ID into `DISCORD_CLIENT_ID` and the bot token into `DISCORD_TOKEN`.
 3. On the application's **Installation** page, enable the `bot` and `applications.commands` scopes.
 4. Give the bot **View Channels**, **Send Messages**, **Embed Links**, and **Read Message History** in the channels where it will be used. Add **Send Messages in Threads** if it should answer mentions inside threads.
 5. Install the application in the server.
 
-Keep the token only in `.env`; that file is ignored by Git. If a token is ever committed or shared, reset it in the Developer Portal.
+Keep the Astra token only in `.env` and the Prism token only in `.env.prism`; both files are ignored by Git. If a token is ever committed or shared, reset it in the Developer Portal.
 
 ## Admin commands
 
-The guild-only `/astra` command is hidden from members who do not have Discord's **Manage Server** permission. The bot checks that permission again when handling the command, and every admin response is ephemeral.
+The guild-only `/astra` and `/prism` commands are hidden from members who do not have Discord's **Manage Server** permission. Each bot checks that permission again when handling its command, and every admin response is ephemeral.
 
 | Command | Purpose |
 | --- | --- |
-| `/astra status` | Show whether public searches are active, the configured and active search mode, Wiki commit, section count, last refresh, and uptime |
-| `/astra refresh` | Pull the Wiki and rebuild the live index while reusing cached embeddings |
-| `/astra inspect question:` | Show the top retrieval results, confidence, scores, ranks, and winning retrieval path without posting publicly |
-| `/astra pause` | Stop `/wiki`, message-menu, and mentioned searches until manually resumed |
-| `/astra pause minutes: reason:` | Pause public searches with an optional explanation and automatic resume time |
-| `/astra resume` | Resume public searches immediately |
+| `/<product> status` | Show whether public searches are active, the configured and active search mode, Wiki commit, section count, last refresh, and uptime |
+| `/<product> refresh` | Pull that product's Wiki and rebuild the live index while reusing cached embeddings |
+| `/<product> inspect question:` | Show the top retrieval results, confidence, scores, ranks, and winning retrieval path without posting publicly |
+| `/<product> pause` | Stop that bot's `/wiki`, message-menu, and mentioned searches until manually resumed |
+| `/<product> pause minutes: reason:` | Pause that bot with an optional explanation and automatic resume time |
+| `/<product> resume` | Resume that bot's public searches immediately |
 
-Maintenance mode does not disconnect the bot, unload the model, or stop background Wiki polling. Admin commands remain available, searches already in progress may finish, and new public requests receive a short maintenance response without running retrieval. Pause details are stored in `data/bot-state.json`, so manual and timed pauses survive container restarts.
+Use `astra` or `prism` for `<product>`. Maintenance mode does not disconnect the bot, unload the model, or stop background Wiki polling. The two services store state independently, so pausing one does not affect the other.
 
 ## Local setup
 
@@ -111,7 +111,7 @@ npm run search -- "the words are ahead of the singer" --semantic
 
 On its first semantic run, the bot downloads approximately 330 MB: 309 MB of q8 ONNX weights plus the tokenizer and model metadata. It keeps those files at the pinned revision under `data/model-cache`. Embeddings are cached in `data/embeddings.json`; only changed Wiki sections need to be embedded after a refresh. The model cache lives in the Docker data volume, so container rebuilds do not download it again.
 
-Allow roughly 2 GB of RAM for the bot with semantic search enabled. A measured 305-section Astra index used about 1.7 GiB RSS; the exact number varies by platform and ONNX Runtime version. The model makes no network requests after its files have been downloaded, aside from the bot's normal Discord and Wiki traffic.
+Allow roughly 2 GB of RAM per bot with semantic search enabled. A measured 305-section Astra index used about 1.7 GiB RSS; budget at least 5-6 GiB for both bots plus the VPS operating system and Docker. Each service keeps its own model cache, using approximately 660 MB total before Wiki embeddings. The model makes no network requests after its files have been downloaded, aside from normal Discord and Wiki traffic.
 
 Run all local checks with:
 
@@ -122,35 +122,61 @@ npm run evaluate
 npm run evaluate -- --semantic
 ```
 
-The grouped evaluation corpus in [`test/queries`](test/queries) contains natural query variants and their expected Wiki sections. Add a variant whenever a real question exposes an ambiguous ranking, or add a new intent when an area of the Wiki has no coverage. Add user vocabulary or product-specific synonyms to [`config/aliases.yml`](config/aliases.yml) instead of hard-coding query behavior in the Discord layer. Pass `--verbose` to print every result or `--summary-only` to print per-topic and overall scores.
+The grouped evaluation corpora in [`test/queries`](test/queries) and [`test/queries-prism`](test/queries-prism) contain natural query variants and their expected Wiki sections. Add product vocabulary to [`config/aliases.yml`](config/aliases.yml) for Astra or [`config/prism-aliases.yml`](config/prism-aliases.yml) for Prism instead of hard-coding it in the Discord layer. Pass `--verbose` to print every result or `--summary-only` to print per-topic and overall scores.
+
+Prism retrieval can be tested before creating a Discord application. Clone its Wiki into `data/prism-wiki`, then use these environment variables (PowerShell example):
+
+```powershell
+git clone --depth=1 https://github.com/Boof2015/prism.wiki.git data/prism-wiki
+$env:BOT_PRODUCT_NAME = 'Prism'
+$env:WIKI_DIRECTORY = 'data/prism-wiki'
+$env:WIKI_BASE_URL = 'https://github.com/Boof2015/prism/wiki'
+$env:ALIASES_FILE = 'config/prism-aliases.yml'
+$env:EVALUATION_PATH = 'test/queries-prism'
+$env:EMBEDDING_CACHE_FILE = 'data/prism-embeddings.json'
+npm.cmd run evaluate -- --semantic --summary-only
+npm.cmd run search -- "how do I send a DAW track to the desktop rack" --semantic
+```
+
+Omit `--semantic` to check the keyword fallback. A semantic evaluation fails if the model cannot initialize, so fallback results cannot be mistaken for a successful semantic benchmark. The first semantic run downloads the model; subsequent runs use the pinned local cache. The Prism suite covers capture, Bridge, analyzers, reference tracks, desktop workflows, the TUI, and unrelated requests. `90-validation.yml` contains fresh paraphrases added after vocabulary tuning. Scores on different products' query sets are useful comparisons, not proof of identical performance on real Discord questions.
 
 ## Deploy on an Oracle Ampere VPS
 
-Install Docker Engine and the Compose plugin on the VPS, clone this repository, and create the environment file:
+Install Docker Engine and the Compose plugin on the VPS, clone this repository, and create both environment files:
 
 ```sh
 git clone https://github.com/Boof2015/astra-discord-bot.git
 cd astra-discord-bot
 cp .env.example .env
+cp .env.prism.example .env.prism
 ```
 
-Fill in `DISCORD_TOKEN` and `DISCORD_CLIENT_ID`. The defaults already point to the public Astra Wiki and are suitable for production.
+Fill in each file with the token and application ID for its corresponding Discord application. The templates already point to the correct public Wiki and select the appropriate branding.
 
 Build the ARM64 image and register the commands once:
 
 ```sh
 docker compose build
-docker compose run --rm bot node dist/src/discord/registerCommands.js
+docker compose run --rm astra node dist/src/discord/registerCommands.js
+docker compose run --rm prism node dist/src/discord/registerCommands.js
 ```
 
 Then start the service:
 
 ```sh
 docker compose up -d
-docker compose logs -f bot
+docker compose logs -f astra prism
 ```
 
-No inbound port or reverse proxy is needed; Discord interactions arrive over the bot's outbound gateway connection. The named `bot-data` volume keeps the Wiki clone, model, and embedding cache across container replacements.
+No inbound port or reverse proxy is needed; Discord interactions arrive over each bot's outbound gateway connection. The `astra-data` and `prism-data` volumes independently keep each Wiki clone, model, embedding cache, and maintenance state across container replacements.
+
+Operate one bot without disrupting the other by naming its service, for example:
+
+```sh
+docker compose logs -f prism
+docker compose restart prism
+docker compose run --rm prism node dist/src/discord/registerCommands.js
+```
 
 To deploy a new revision:
 
@@ -166,6 +192,9 @@ docker compose up -d --build
 | `DISCORD_TOKEN` | required | Discord bot token |
 | `DISCORD_CLIENT_ID` | required | Discord application ID |
 | `DISCORD_GUILD_ID` | empty | Register commands in one development server instead of globally |
+| `BOT_PRODUCT_NAME` | `Astra` | Product name used in Discord commands, messages, logs, and search normalization |
+| `BOT_ADMIN_COMMAND_NAME` | `astra` | Guild admin slash command; 1-32 lowercase letters, numbers, hyphens, or underscores |
+| `BOT_ACCENT_COLOR` | `#8B5CF6` | Result embed color in `#RRGGBB` format; quote it in environment files |
 | `WIKI_REMOTE_URL` | Astra Wiki Git URL | Wiki repository cloned and polled by the bot |
 | `WIKI_BASE_URL` | Astra Wiki URL | Prefix used to build result links |
 | `WIKI_DIRECTORY` | `./data/wiki` | Bot-owned Wiki checkout or local Markdown directory |
@@ -183,10 +212,11 @@ When sync is enabled, `WIKI_DIRECTORY` must either not exist or already be the b
 ## Project layout
 
 ```text
-config/aliases.yml       Product vocabulary and common phrasing
+config/aliases.yml       Astra vocabulary and common phrasing
+config/prism-aliases.yml Prism vocabulary and common phrasing
 src/app/                 Refreshable Wiki service
 src/discord/             Commands and Discord response rendering
 src/search/              Lexical, semantic, and fused ranking
 src/wiki/                Markdown parsing, links, aliases, and Git sync
-test/                    Unit and retrieval regression tests
+test/                    Unit and Astra/Prism retrieval regression tests
 ```

@@ -1,0 +1,109 @@
+intents:
+  - name: profile-exclusions
+    expected: Profiles#what-stays-outside-the-profile
+    variants:
+      - why does switching profiles not change my audio device or theme
+      - are my provider credentials and recording settings included in a shared profile
+  - name: profile-import
+    expected: Profiles#importing-and-sharing-prsm-files
+    variants:
+      - where are my prsm files stored so I can send a layout to a friend
+      - will importing the same profile again create a duplicate
+  - name: profile-unsaved
+    expected: Profiles#switching-profiles
+    variants:
+      - what does the dot next to my active profile mean
+      - can I switch layouts without losing my unsaved edits
+  - name: terminal-profile-separation
+    expected:
+      - Profiles#desktop-and-tui-profiles-are-separate
+      - Terminal-UI#tui-profiles
+    variants:
+      - can I load my desktop prsm layout into the terminal version
+      - are terminal profiles shared with the desktop rack
+  - name: clip-location
+    expected: Rolling-Audio-Capture#creating-a-clip
+    variants:
+      - where are the WAV files saved after I drag the Clip chip
+      - how do I get the last captured audio into my DAW
+  - name: clip-format
+    expected: Rolling-Audio-Capture#wav-format
+    variants:
+      - can I export 32 bit float instead of 16 bit WAV
+      - will switching WAV format erase my rolling buffer
+  - name: clip-short
+    expected:
+      - Rolling-Audio-Capture#enabling-the-buffer
+      - Rolling-Audio-Capture#if-the-clip-chip-is-unavailable
+      - Troubleshooting#rolling-capture-will-not-drag-a-full-clip
+    variants:
+      - I selected sixty seconds but my exported clip is much shorter
+      - why did my rolling recording disappear when I changed audio devices
+  - name: clip-disk
+    expected: Rolling-Audio-Capture#memory-and-storage-behavior
+    variants:
+      - is Prism constantly writing the rolling audio buffer to disk
+      - do dragged clips stay in the captures folder after I import them elsewhere
+  - name: spotify-key
+    expected: Now-Playing-Integrations#spotify
+    variants:
+      - do I need a Spotify developer key to show the current song
+      - why does Spotify ask for Automation permission on my Mac
+  - name: tidal-controls
+    expected: Now-Playing-Integrations#tidal
+    variants:
+      - why are TIDAL playback buttons missing on macOS
+      - can Prism read TIDAL from a browser tab
+  - name: provider-priority
+    expected: Now-Playing-Integrations#provider-priority
+    variants:
+      - both Spotify and Astra are open how do I choose which song title is shown
+      - how do I reorder the now playing providers
+  - name: astra-token
+    expected: Now-Playing-Integrations#astra
+    variants:
+      - if I leave the Astra token field empty will it erase the saved token
+      - what address do I use for the local Astra now playing API
+  - name: detached-window
+    expected: Rack-Layout-and-Windows#detaching-a-module
+    variants:
+      - can I put one meter in its own window
+      - how do I return a popped out scope to the main rack
+  - name: windows-reservation
+    expected:
+      - Rack-Layout-and-Windows#reserve-screen-space-on-windows
+      - Troubleshooting#windows-screen-space-reservation-is-unavailable-or-unexpected
+    variants:
+      - can I stop maximized Windows apps from covering the Prism dock
+      - how do I reserve an edge of my screen for the rack
+  - name: obs-overlay
+    expected:
+      - Themes-and-Transparent-Overlays#building-a-stream-overlay
+      - Themes-and-Transparent-Overlays#window-background-modes
+    variants:
+      - how do I put a transparent analyzer over my OBS stream
+      - which window background should I use for a stream overlay
+  - name: terminal-output
+    expected: Terminal-UI#starting-and-selecting-an-output
+    variants:
+      - how do I list audio output IDs without opening the terminal dashboard
+      - how do I choose a different output while prism tui is running
+  - name: terminal-layout
+    expected: Terminal-UI#editing-the-rack
+    variants:
+      - how do I add Waterfall to my terminal rack
+      - how can I rearrange panels with the keyboard in prism tui
+  - name: terminal-colors
+    expected:
+      - Terminal-UI#terminal-modes-and-refresh-rate
+      - Troubleshooting#the-tui-is-garbled-too-small-or-too-expensive
+    variants:
+      - the terminal colors are broken which compatibility mode should I try
+      - why is my TUI stuck at thirty FPS when I selected 120
+  - name: terminal-install
+    expected:
+      - Terminal-UI#installation-notes
+      - Troubleshooting#prism-tui-is-not-found
+    variants:
+      - I installed the AppImage but prism-tui is not found
+      - the portable Windows version did not add prism-tui to my PATH

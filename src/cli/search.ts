@@ -10,6 +10,7 @@ if (!query) {
   const config = loadConfig({ requireDiscord: false })
   const semanticEnabled = process.argv.includes('--semantic')
   const created = await createSearchEngine({
+    productName: config.identity.productName,
     wikiDirectory: config.wikiDirectory,
     wikiBaseUrl: config.wikiBaseUrl,
     aliasesFile: config.aliasesFile,

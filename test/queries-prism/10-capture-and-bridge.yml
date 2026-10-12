@@ -1,0 +1,88 @@
+intents:
+  - name: microphone-source
+    expected: Audio-Sources-and-Capture#output-and-input-sources
+    variants:
+      - how can I analyze my microphone instead of computer playback
+      - where do I switch from speakers to an input device
+  - name: unexpected-microphone
+    expected: Audio-Sources-and-Capture#output-and-input-sources
+    variants:
+      - why did Prism start listening to my room when output capture failed
+      - I dismissed the fallback notice but it is still using my mic
+  - name: routing
+    expected: Audio-Sources-and-Capture#channel-routing
+    variants:
+      - my interface has eight inputs and I only want to see channels three and four
+      - can I send the same input channel to both sides of the analyzer
+  - name: routing-silence
+    expected:
+      - Audio-Sources-and-Capture#channel-routing
+      - Troubleshooting#channels-are-missing-or-the-matrix-moves-but-the-scopes-are-silent
+    variants:
+      - the routing squares light up but my scopes are silent
+      - why are some interface channels missing from the routing matrix
+  - name: input-trim
+    expected: Audio-Sources-and-Capture#input-trim
+    variants:
+      - can I boost a quiet microphone in the analyzers without making playback louder
+      - does audio trim change the volume I hear through my speakers
+  - name: windows-capture
+    expected: Audio-Sources-and-Capture#windows
+    variants:
+      - does Prism support ASIO or exclusive mode capture on Windows
+      - which Windows audio backend does Prism use
+  - name: mac-permission
+    expected:
+      - Audio-Sources-and-Capture#macos
+      - Troubleshooting#macos-cannot-capture-system-audio
+    variants:
+      - I denied the Mac audio recording permission how do I enable it again
+      - my Mac will not let Prism capture system sound
+  - name: linux-capture
+    expected:
+      - Audio-Sources-and-Capture#linux
+      - Troubleshooting#linux-shows-no-usable-outputs
+    variants:
+      - PipeWire is installed but Prism cannot find any output monitor
+      - why does Linux need the PulseAudio compatibility service
+  - name: bridge-setup
+    expected:
+      - Prism-Bridge
+      - Prism-Bridge#install-and-connect
+    variants:
+      - how do I send just my DAW master bus to the standalone rack
+      - I want my desktop scopes to follow one track in Ableton
+  - name: bridge-status
+    expected: Prism-Bridge#names-and-status
+    variants:
+      - what do the blue green and gray dots on Bridge mean
+      - how do I rename a Bridge instance so I can tell my tracks apart
+  - name: bridge-disconnect
+    expected: Prism-Bridge#switching-disconnecting-and-reopening-projects
+    variants:
+      - after closing my DAW project Prism stays waiting instead of switching to speakers
+      - will Bridge reconnect when I reopen the same project
+  - name: bridge-timeline
+    expected:
+      - Prism-Bridge#bars-beats-and-seconds
+      - Troubleshooting#a-daw-timeline-is-missing-or-shows-seconds-instead-of-beats
+    variants:
+      - why does the waveform ruler show seconds instead of bars and beats
+      - can I see the DAW tempo and timeline in my desktop spectrogram
+  - name: bridge-local
+    expected: Prism-Bridge#local-connection
+    variants:
+      - can Bridge send audio from my studio computer to a second computer
+      - do I need a virtual audio cable to connect Prism Bridge
+  - name: missing-plugins
+    expected:
+      - DAW-Plugins#rescanning-and-missing-plugins
+      - Troubleshooting#a-daw-cannot-find-prism-plugins
+    variants:
+      - I installed the plugins but my DAW cannot find any of them
+      - how do I get my host to rescan Prism after installation
+  - name: plugin-audio
+    expected: DAW-Plugins#desktop-capture-versus-plugin-audio
+    variants:
+      - does the Spectrum plugin hear my whole computer or just its track
+      - do I need to change the desktop audio source for a DAW analyzer plugin

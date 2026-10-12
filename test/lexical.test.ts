@@ -147,3 +147,33 @@ test('question-wrapper matching does not turn a longer symptom into a page-title
 
   assert.equal(hits.find((hit) => hit.chunk.id === root.id)?.exactBoost, 0)
 })
+
+test('product suffix matching uses the configured product name', () => {
+  const profile = chunk({
+    id: 'Profiles',
+    heading: 'Profiles',
+    text: 'Save and restore the current rack layout.',
+  })
+  const index = new LexicalIndex([profile], 'Prism')
+
+  const prismHit = index.search('where are profiles in Prism')[0]
+  const astraHit = index.search('where are profiles in Astra')[0]
+
+  assert.ok((prismHit?.exactBoost ?? 0) >= 10)
+  assert.equal(astraHit?.exactBoost, 0)
+})
+
+test('direct modal questions still allow an exact alias match', () => {
+  const plugins = chunk({
+    id: 'DAW-Plugins',
+    heading: 'DAW Plugins',
+    text: 'Load Prism analyzers in an audio workstation.',
+    aliases: ['use a Prism analyzer in my DAW'],
+  })
+  const index = new LexicalIndex([plugins], 'Prism')
+
+  assert.equal(
+    index.search('can I use a Prism analyzer in my DAW')[0]?.exactBoost,
+    14,
+  )
+})

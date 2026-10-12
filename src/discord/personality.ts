@@ -29,7 +29,7 @@ const PERSONALITY_LINES: Record<PersonalityCategory, readonly WeightedLine[]> = 
     },
     {
       id: 'bare-ask',
-      text: 'Ask me something. Preferably about Astra.',
+      text: 'Ask me something. Preferably about {productName}.',
       weight: 1,
     },
   ],
@@ -51,6 +51,14 @@ export class PersonalityLinePicker {
   readonly #previousByCategory = new Map<PersonalityCategory, string>()
 
   pick(category: PersonalityCategory, random: () => number = Math.random): string {
+    return this.pickForProduct(category, 'Astra', random)
+  }
+
+  pickForProduct(
+    category: PersonalityCategory,
+    productName: string,
+    random: () => number = Math.random,
+  ): string {
     const lines = PERSONALITY_LINES[category]
     const previousId = this.#previousByCategory.get(category)
     const withoutPrevious = previousId
@@ -70,7 +78,7 @@ export class PersonalityLinePicker {
     }
 
     this.#previousByCategory.set(category, selected.id)
-    return selected.text
+    return selected.text.replaceAll('{productName}', productName)
   }
 }
 

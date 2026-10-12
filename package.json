@@ -2,7 +2,7 @@
   "name": "astra-discord-bot",
   "version": "0.1.0",
   "private": true,
-  "description": "Discord retrieval bot for the Astra user guide",
+  "description": "Discord retrieval bots for the Astra and Prism user guides",
   "type": "module",
   "engines": {
     "node": ">=22"

@@ -1,0 +1,57 @@
+# Fresh paraphrases added after vocabulary tuning. Keep separate to distinguish
+# these checks from the queries used to diagnose and improve retrieval.
+intents:
+  - name: bridge-reconnect
+    expected: Prism-Bridge#switching-disconnecting-and-reopening-projects
+    variants:
+      - I reopened my session will the rack remember which Bridge insert it was using
+      - does losing the Bridge connection automatically turn on my microphone
+  - name: channel-pair
+    expected: Audio-Sources-and-Capture#channel-routing
+    variants:
+      - can Prism analyze the fifth and sixth channels of my interface
+      - how can I put input five on both the left and right meters
+  - name: reference-level
+    expected:
+      - Spectrum-Reference-Tracks#trim-and-match-level
+      - Spectrum-Reference-Tracks#overlay-and-difference
+    variants:
+      - my reference is much louder than the live song how do I line up their levels
+      - is zero in the spectrum comparison absolute loudness or the difference between recordings
+  - name: vu-calibration
+    expected: Level-and-Loudness-Meters#reference-level
+    variants:
+      - should I worry when the VU needle passes zero but the peaks have room left
+      - where can I calibrate the VU meter to minus eighteen dBFS
+  - name: reference-file-retention
+    expected: Spectrum-Reference-Tracks#profiles-projects-and-sharing
+    variants:
+      - will my saved reference curve still work if the original song file is unavailable
+      - can someone extract the reference song audio from my shared rack profile
+  - name: rolling-retention
+    expected: Rolling-Audio-Capture#memory-and-storage-behavior
+    variants:
+      - do I have to clean up old Prism clips myself
+      - is the most recent minute kept in RAM before I export it
+  - name: phase-meter
+    expected:
+      - Level-and-Loudness-Meters#correlation
+      - Vectorscope#use-correlation-as-a-second-opinion
+    variants:
+      - the correlation bar is below zero should I check my mix in mono
+      - what does plus one on the stereo correlation meter tell me
+  - name: terminal-setup
+    expected: Terminal-UI#editing-the-rack
+    variants:
+      - which keys resize a scope panel in the terminal
+      - I removed an analyzer from prism-tui how do I bring it back
+  - name: floating-meter
+    expected: Rack-Layout-and-Windows#detaching-a-module
+    variants:
+      - I want a floating loudness meter separate from the other modules
+      - where is the button that docks a detached analyzer again
+  - name: spotify-permissions
+    expected: Now-Playing-Integrations#spotify
+    variants:
+      - does connecting the Spotify song display require registering a developer application
+      - what does Prism use to read Spotify metadata on Linux

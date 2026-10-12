@@ -5,11 +5,11 @@ import {
   EmbedBuilder,
   type InteractionEditReplyOptions,
 } from 'discord.js'
+import type { BotIdentity } from '../config.js'
 import type { RankedWikiResult, WikiSearchResponse } from '../search/types.js'
 import { tokenize } from '../search/tokenize.js'
 import { personalityLines } from './personality.js'
 
-const ASTRA_COLOR = 0x8b5cf6
 const SNIPPET_LIMIT = 300
 const MAX_SNIPPET_SENTENCES = 3
 
@@ -73,7 +73,10 @@ function relevantSnippet(result: RankedWikiResult, query: string): string {
   return truncateSnippet(selected.join(' '))
 }
 
-export function renderWikiResponse(response: WikiSearchResponse): InteractionEditReplyOptions {
+export function renderWikiResponse(
+  response: WikiSearchResponse,
+  identity: BotIdentity,
+): InteractionEditReplyOptions {
   const primary = response.results[0]
   if (!primary) {
     return {
@@ -83,13 +86,13 @@ export function renderWikiResponse(response: WikiSearchResponse): InteractionEdi
   }
 
   const embed = new EmbedBuilder()
-    .setColor(ASTRA_COLOR)
+    .setColor(identity.accentColor)
     .setAuthor({
       name: primary.chunk.heading === primary.chunk.pageTitle
-        ? 'Astra Wiki'
-        : shortLabel(primary.chunk.pageTitle, 'Astra Wiki'),
+        ? identity.wikiLabel
+        : shortLabel(primary.chunk.pageTitle, identity.wikiLabel),
     })
-    .setTitle(shortLabel(primary.chunk.heading, 'Astra Wiki'))
+    .setTitle(shortLabel(primary.chunk.heading, identity.wikiLabel))
     .setURL(primary.chunk.url)
     .setDescription(relevantSnippet(primary, response.query))
 

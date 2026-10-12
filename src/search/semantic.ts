@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto'
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
-import { dirname } from 'node:path'
+import { access, mkdir, readFile, rename, writeFile } from 'node:fs/promises'
+import { dirname, join, resolve } from 'node:path'
 import { AutoModel, AutoTokenizer, env } from '@huggingface/transformers'
 import type { WikiChunk } from '../wiki/types.js'
 import type { SemanticHit, SemanticSearcher } from './types.js'
@@ -130,7 +130,22 @@ export class EmbeddingGemmaModel {
     if (!this.#runtimePromise) {
       this.#runtimePromise = (async () => {
         env.cacheDir = this.cacheDirectory
-        const tokenizer = await AutoTokenizer.from_pretrained(EMBEDDING_GEMMA_REPOSITORY, {
+        // Transformers.js 4.2's auto-tokenizer discovery probes main even when
+        // revision is pinned, and fails offline despite a complete local cache.
+        // Point discovery at the pinned local files once they have been downloaded.
+        const tokenizerCacheDirectory = resolve(
+          this.cacheDirectory, EMBEDDING_GEMMA_REPOSITORY, EMBEDDING_GEMMA_REVISION,
+        )
+        let tokenizerSource = EMBEDDING_GEMMA_REPOSITORY
+        try {
+          await Promise.all(['tokenizer.json', 'tokenizer_config.json'].map(
+            (name) => access(join(tokenizerCacheDirectory, name)),
+          ))
+          tokenizerSource = tokenizerCacheDirectory
+        } catch (error) {
+          if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error
+        }
+        const tokenizer = await AutoTokenizer.from_pretrained(tokenizerSource, {
           revision: EMBEDDING_GEMMA_REVISION,
         })
         const model = await AutoModel.from_pretrained(EMBEDDING_GEMMA_REPOSITORY, {

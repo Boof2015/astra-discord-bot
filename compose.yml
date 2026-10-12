@@ -1,15 +1,27 @@
+x-bot-service: &bot-service
+  build:
+    context: .
+  image: astra-wiki-bot:local
+  restart: unless-stopped
+  security_opt:
+    - no-new-privileges:true
+  stop_grace_period: 20s
+
 services:
-  bot:
-    build:
-      context: .
-    restart: unless-stopped
+  astra:
+    <<: *bot-service
     env_file:
-      - .env
-    security_opt:
-      - no-new-privileges:true
-    stop_grace_period: 20s
+      - ${ASTRA_ENV_FILE:-.env}
     volumes:
-      - bot-data:/app/data
+      - astra-data:/app/data
+
+  prism:
+    <<: *bot-service
+    env_file:
+      - ${PRISM_ENV_FILE:-.env.prism}
+    volumes:
+      - prism-data:/app/data
 
 volumes:
-  bot-data:
+  astra-data:
+  prism-data:

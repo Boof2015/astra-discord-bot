@@ -1,0 +1,82 @@
+intents:
+  - name: getting-started
+    expected: Getting-Started
+    variants:
+      - how do I get started with Prism
+      - help me set up Prism for the first time
+
+  - name: installation
+    expected: Installing-and-Updating
+    variants:
+      - where do I download Prism
+      - how do I update Prism
+
+  - name: audio-capture
+    expected: Audio-Sources-and-Capture
+    variants:
+      - how does Prism capture system audio
+      - switch from output capture to my microphone
+
+  - name: scope-settings
+    expected: Understanding-the-Scopes
+    variants:
+      - help me choose an analyzer
+      - explain the shared scope settings
+
+  - name: meters
+    expected:
+      - Level-and-Loudness-Meters
+      - Level-and-Loudness-Meters#vu-meter
+    variants:
+      - where can I see LUFS in Prism
+      - explain the VU and loudness meters
+
+  - name: plugins
+    expected: DAW-Plugins
+    variants:
+      - how do I install the Prism VST3 plugins
+      - can I use a Prism analyzer in my DAW
+
+  - name: profiles
+    expected: Profiles
+    variants:
+      - how do I share a prsm profile
+      - save my whole rack layout
+
+  - name: themes-and-overlays
+    expected:
+      - Themes-and-Transparent-Overlays
+      - Themes-and-Transparent-Overlays#chroma-key-alternative
+    variants:
+      - make a transparent Prism window for OBS
+      - how do chroma key themes work
+
+  - name: now-playing
+    expected:
+      - Now-Playing-Integrations
+      - Now-Playing-Integrations#provider-priority
+    variants:
+      - show track metadata from Astra in Prism
+      - what is the now playing provider priority
+
+  - name: rolling-capture
+    expected: Rolling-Audio-Capture
+    variants:
+      - save the last thirty seconds of audio
+      - how do I drag a clip out of the rolling buffer
+
+  - name: terminal-ui
+    expected: Terminal-UI
+    variants:
+      - how do I start prism-tui
+      - use Prism from the terminal
+
+  - name: troubleshooting
+    expected:
+      - Troubleshooting
+      - Troubleshooting#the-scopes-are-flat-or-frozen
+      - Troubleshooting#a-plugin-window-is-blank
+      - DAW-Plugins#blank-or-unavailable-interface
+    variants:
+      - Prism scopes are flat and frozen
+      - my plugin window is blank

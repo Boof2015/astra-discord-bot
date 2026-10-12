@@ -9,10 +9,10 @@ import {
   type MessageContextMenuCommandInteraction,
 } from 'discord.js'
 import type { MaintenanceMode, MaintenanceStatus } from '../app/maintenanceMode.js'
-import type { BotConfig } from '../config.js'
+import type { BotConfig, BotIdentity } from '../config.js'
 import type { WikiService } from '../app/wikiService.js'
 import type { RankedWikiResult } from '../search/types.js'
-import { ASTRA_ADMIN_COMMAND, WIKI_MESSAGE_COMMAND, WIKI_SLASH_COMMAND } from './commands.js'
+import { WIKI_SLASH_COMMAND, wikiMessageCommandName } from './commands.js'
 import { queryFromMention } from './mention.js'
 import { personalityLines } from './personality.js'
 import { renderWikiResponse } from './renderResponse.js'
@@ -21,8 +21,8 @@ function discordTimestamp(value: Date, style: 'f' | 'R' = 'f'): string {
   return `<t:${Math.floor(value.getTime() / 1_000)}:${style}>`
 }
 
-function maintenanceMessage(status: MaintenanceStatus): string {
-  let message = 'Astra Bot is taking a quick maintenance break.'
+function maintenanceMessage(status: MaintenanceStatus, identity: BotIdentity): string {
+  let message = `${identity.productName} Bot is taking a quick maintenance break.`
   if (status.reason) message += `\nReason: ${status.reason}`
   message += status.resumeAt
     ? ` I’ll resume automatically ${discordTimestamp(status.resumeAt, 'R')}.`
@@ -49,7 +49,7 @@ async function runAdminCommand(
 ): Promise<void> {
   if (!interaction.inGuild() || !interaction.memberPermissions?.has(PermissionFlagsBits.ManageGuild)) {
     await interaction.reply({
-      content: 'You need **Manage Server** to use Astra’s admin commands.',
+      content: `You need **Manage Server** to use ${config.identity.productName}’s admin commands.`,
       flags: MessageFlags.Ephemeral,
       allowedMentions: { parse: [] },
     })
@@ -95,9 +95,9 @@ async function runAdminCommand(
       const automaticResume = status.resumeAt
         ? ` I’ll resume automatically ${discordTimestamp(status.resumeAt, 'R')}.`
         : ''
-      console.info(`Public Wiki searches paused by ${interaction.user.tag}.`)
+      console.info(`${config.identity.productName} public Wiki searches paused by ${interaction.user.tag}.`)
       await interaction.reply({
-        content: `Public Wiki searches are paused.${automaticResume}`,
+        content: `${config.identity.wikiLabel} searches are paused.${automaticResume}`,
         flags: MessageFlags.Ephemeral,
         allowedMentions: { parse: [] },
       })
@@ -106,11 +106,13 @@ async function runAdminCommand(
 
     if (subcommand === 'resume') {
       const wasPaused = await maintenance.resume()
-      if (wasPaused) console.info(`Public Wiki searches resumed by ${interaction.user.tag}.`)
+      if (wasPaused) {
+        console.info(`${config.identity.productName} public Wiki searches resumed by ${interaction.user.tag}.`)
+      }
       await interaction.reply({
         content: wasPaused
-          ? 'Public Wiki searches are active again.'
-          : 'Public Wiki searches were already active.',
+          ? `${config.identity.wikiLabel} searches are active again.`
+          : `${config.identity.wikiLabel} searches were already active.`,
         flags: MessageFlags.Ephemeral,
         allowedMentions: { parse: [] },
       })
@@ -160,11 +162,11 @@ async function runAdminCommand(
     }
 
     await interaction.editReply({
-      content: 'Unknown Astra admin command.',
+      content: `Unknown ${config.identity.productName} admin command.`,
       allowedMentions: { parse: [] },
     })
   } catch (error) {
-    console.error(`Astra admin command ${subcommand} failed.`, error)
+    console.error(`${config.identity.productName} admin command ${subcommand} failed.`, error)
     if (interaction.deferred || interaction.replied) {
       await interaction.editReply({
         content: 'That admin operation failed. Check the bot logs for details.',
@@ -182,6 +184,7 @@ async function runAdminCommand(
 
 async function runSearch(
   interaction: ChatInputCommandInteraction | MessageContextMenuCommandInteraction,
+  identity: BotIdentity,
   service: WikiService,
   maintenance: MaintenanceMode,
   query: string,
@@ -189,7 +192,7 @@ async function runSearch(
   const maintenanceStatus = await maintenance.status()
   if (maintenanceStatus.paused) {
     await interaction.reply({
-      content: maintenanceMessage(maintenanceStatus),
+      content: maintenanceMessage(maintenanceStatus, identity),
       flags: MessageFlags.Ephemeral,
       allowedMentions: { parse: [] },
     })
@@ -207,9 +210,9 @@ async function runSearch(
   await interaction.deferReply()
   try {
     const response = await service.search(query, 3)
-    await interaction.editReply(renderWikiResponse(response))
+    await interaction.editReply(renderWikiResponse(response, identity))
   } catch (error) {
-    console.error('Wiki search failed.', error)
+    console.error(`${identity.wikiLabel} search failed.`, error)
     await interaction.editReply({
       content: personalityLines.pick('error'),
       allowedMentions: { parse: [] },
@@ -219,6 +222,7 @@ async function runSearch(
 
 async function runMentionSearch(
   message: Message,
+  identity: BotIdentity,
   service: WikiService,
   maintenance: MaintenanceMode,
   query: string,
@@ -226,7 +230,7 @@ async function runMentionSearch(
   const maintenanceStatus = await maintenance.status()
   if (maintenanceStatus.paused) {
     await message.reply({
-      content: maintenanceMessage(maintenanceStatus),
+      content: maintenanceMessage(maintenanceStatus, identity),
       allowedMentions: { parse: [], repliedUser: false },
     })
     return
@@ -234,7 +238,7 @@ async function runMentionSearch(
 
   if (!query) {
     await message.reply({
-      content: personalityLines.pick('bareMention'),
+      content: personalityLines.pickForProduct('bareMention', identity.productName),
       allowedMentions: { parse: [], repliedUser: false },
     })
     return
@@ -245,7 +249,7 @@ async function runMentionSearch(
   }
   try {
     const response = await service.search(query, 3)
-    const rendered = renderWikiResponse(response)
+    const rendered = renderWikiResponse(response, identity)
     await message.reply({
       ...(typeof rendered.content === 'string' ? { content: rendered.content } : {}),
       ...(rendered.embeds ? { embeds: rendered.embeds } : {}),
@@ -253,7 +257,7 @@ async function runMentionSearch(
       allowedMentions: { parse: [], repliedUser: false },
     })
   } catch (error) {
-    console.error('Mentioned Wiki search failed.', error)
+    console.error(`Mentioned ${identity.wikiLabel} search failed.`, error)
     await message.reply({
       content: personalityLines.pick('error'),
       allowedMentions: { parse: [], repliedUser: false },
@@ -270,29 +274,33 @@ export async function startDiscordBot(
   const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
   })
+  const messageCommandName = wikiMessageCommandName(config.identity)
 
   client.once(Events.ClientReady, (readyClient) => {
-    console.info(`Discord connected as ${readyClient.user.tag}.`)
+    console.info(`${config.identity.productName} Discord connected as ${readyClient.user.tag}.`)
   })
 
   client.on(Events.InteractionCreate, (interaction) => {
-    if (interaction.isChatInputCommand() && interaction.commandName === ASTRA_ADMIN_COMMAND) {
+    if (
+      interaction.isChatInputCommand()
+      && interaction.commandName === config.identity.adminCommandName
+    ) {
       void runAdminCommand(interaction, config, service, maintenance, startedAt)
       return
     }
 
     if (interaction.isChatInputCommand() && interaction.commandName === WIKI_SLASH_COMMAND) {
       const query = interaction.options.getString('question', true)
-      void runSearch(interaction, service, maintenance, query)
+      void runSearch(interaction, config.identity, service, maintenance, query)
       return
     }
 
-    if (interaction.isMessageContextMenuCommand() && interaction.commandName === WIKI_MESSAGE_COMMAND) {
+    if (interaction.isMessageContextMenuCommand() && interaction.commandName === messageCommandName) {
       const messageText = [
         interaction.targetMessage.content,
         ...interaction.targetMessage.embeds.flatMap((embed) => [embed.title, embed.description]),
       ].filter((value): value is string => Boolean(value)).join('\n')
-      void runSearch(interaction, service, maintenance, messageText)
+      void runSearch(interaction, config.identity, service, maintenance, messageText)
     }
   })
 
@@ -300,7 +308,7 @@ export async function startDiscordBot(
     if (message.author.bot || !client.user || !message.mentions.users.has(client.user.id)) return
     const query = queryFromMention(message.content, client.user.id)
     if (query === null) return
-    void runMentionSearch(message, service, maintenance, query)
+    void runMentionSearch(message, config.identity, service, maintenance, query)
   })
 
   await client.login(config.discordToken)

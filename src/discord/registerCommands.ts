@@ -5,7 +5,7 @@ import { commandPayloads } from './commands.js'
 loadLocalEnvironment()
 const config = loadConfig({ requireDiscord: true })
 const rest = new REST({ version: '10' }).setToken(config.discordToken)
-const body = commandPayloads(Boolean(config.discordGuildId))
+const body = commandPayloads(config.identity, Boolean(config.discordGuildId))
 
 if (config.discordGuildId) {
   await rest.put(

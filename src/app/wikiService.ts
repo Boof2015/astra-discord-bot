@@ -39,7 +39,10 @@ export class WikiService {
     await this.refresh(true)
     this.#timer = setInterval(() => {
       void this.refresh(false).catch((error) => {
-        console.error('Periodic Wiki refresh failed; keeping the previous index.', error)
+        console.error(
+          `Periodic ${this.config.identity.wikiLabel} refresh failed; keeping the previous index.`,
+          error,
+        )
       })
     }, this.config.wikiPollMilliseconds)
     this.#timer.unref()
@@ -63,6 +66,7 @@ export class WikiService {
     if (!force && !sync.changed && this.#engine) return
 
     const created = await createSearchEngine({
+      productName: this.config.identity.productName,
       wikiDirectory: this.config.wikiDirectory,
       wikiBaseUrl: this.config.wikiBaseUrl,
       aliasesFile: this.config.aliasesFile,
@@ -80,7 +84,7 @@ export class WikiService {
       refreshedAt: new Date(),
     }
     console.info(
-      `Wiki index ready: ${created.chunkCount} sections, `
+      `${this.config.identity.wikiLabel} index ready: ${created.chunkCount} sections, `
       + `${created.semanticEnabled ? 'hybrid' : 'lexical-only'} search, commit ${sync.commit}.`,
     )
   }

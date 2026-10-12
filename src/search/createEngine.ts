@@ -5,6 +5,7 @@ import { LexicalIndex } from './lexical.js'
 import { EmbeddingGemmaModel, LocalSemanticIndex } from './semantic.js'
 
 export interface CreateSearchEngineOptions {
+  productName: string
   wikiDirectory: string
   wikiBaseUrl: string
   aliasesFile: string
@@ -28,7 +29,7 @@ export async function createSearchEngine(
     loadAliases(options.aliasesFile),
   ])
   const chunks = applyAliases(parsedChunks, aliases)
-  const lexicalIndex = new LexicalIndex(chunks)
+  const lexicalIndex = new LexicalIndex(chunks, options.productName)
 
   if (!options.semanticEnabled) {
     return {

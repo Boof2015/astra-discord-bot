@@ -8,7 +8,7 @@ const config = loadConfig({ requireDiscord: true })
 const wikiService = new WikiService(config)
 const maintenanceMode = await MaintenanceMode.open(config.botStateFile)
 
-console.info('Preparing the Astra Wiki index...')
+console.info(`Preparing the ${config.identity.wikiLabel} index...`)
 await wikiService.start()
 const client = await startDiscordBot(config, wikiService, maintenanceMode)
 

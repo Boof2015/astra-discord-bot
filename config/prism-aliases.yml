@@ -1,0 +1,148 @@
+aliases:
+  Getting-Started:
+    - set up Prism
+    - get started with Prism
+    - first run
+    - start using Prism
+  Installing-and-Updating:
+    - install Prism
+    - update Prism
+    - download Prism
+  Audio-Sources-and-Capture:
+    - audio capture
+    - system audio
+    - output capture
+    - input device
+    - microphone input
+  Audio-Sources-and-Capture#input-trim:
+    - input gain
+    - capture gain
+    - boost quiet microphone analysis
+    - analyzer level without changing playback volume
+  Audio-Sources-and-Capture#output-and-input-sources:
+    - microphone versus system playback
+    - switch capture source
+    - automatic microphone fallback
+    - room audio after output capture fails
+  Audio-Sources-and-Capture#channel-routing:
+    - channel routing matrix
+    - select interface input channels
+    - route mono input to left and right
+  Audio-Sources-and-Capture#troubleshooting-a-silent-rack:
+    - silent rack
+    - scopes are not moving
+    - no audio signal
+  Understanding-the-Scopes:
+    - analyzer settings
+    - scope settings
+    - choose an analyzer
+    - help me choose an analyzer
+    - shared scope settings
+  Understanding-the-Scopes#fft-size:
+    - FFT resolution
+    - frequency resolution
+    - separate nearby tones
+    - distinguish close frequencies
+  Understanding-the-Scopes#linked-analysis:
+    - linked measurement cursors
+    - shared crosshair between scopes
+    - synchronized frequency guides
+  Spectrum-and-Spectrogram:
+    - frequency analyzer
+    - FFT display
+    - frequency history
+  Oscilloscope-and-Waveform:
+    - waveform display
+    - time domain
+    - pitch lock
+  Vectorscope:
+    - stereo image
+    - phase scope
+    - lissajous
+  Vectorscope#rgb-multiband:
+    - frequency dependent stereo width
+    - bass midrange and treble stereo image
+    - multiband stereo colors
+  Level-and-Loudness-Meters:
+    - audio meters
+    - LUFS
+    - VU meter
+    - true peak
+    - stereo correlation
+  DAW-Plugins:
+    - Prism plugins
+    - install Prism VST3 plugins
+    - VST3
+    - Audio Unit
+    - AU plugin
+    - analyzer plugin
+    - use a Prism analyzer in my DAW
+  DAW-Plugins#rescanning-and-missing-plugins:
+    - rescan plugins in the host
+    - missing DAW plugin after install
+  DAW-Plugins#desktop-capture-versus-plugin-audio:
+    - plugin track audio versus system audio
+    - what audio does an analyzer plugin receive
+  Prism-Bridge:
+    - DAW audio to desktop rack
+    - send a track or master bus to standalone scopes
+  Prism-Bridge#install-and-connect:
+    - connect Bridge to desktop
+    - select a DAW track as capture source
+  Prism-Bridge#bars-beats-and-seconds:
+    - DAW timeline ruler
+    - host tempo bars and beats
+  Waterfall:
+    - layered spectrum history
+    - spectral ridges
+  Spectrum-Reference-Tracks:
+    - reference spectrum comparison
+    - compare mix tonal balance with a recording
+  Rack-Layout-and-Windows:
+    - rack layout
+    - popout window
+    - detached scope
+    - always on top
+  Rack-Layout-and-Windows#detaching-a-module:
+    - pop out a scope into its own window
+    - separate meter window
+    - pop in a detached scope
+    - return a window to the main rack
+  Profiles:
+    - Prism profile
+    - .prsm file
+    - save workspace
+    - save my whole rack layout
+    - share rack layout
+  Themes-and-Transparent-Overlays:
+    - Prism theme
+    - .iro file
+    - transparent window
+    - OBS overlay
+    - chroma key
+  Rolling-Audio-Capture:
+    - rolling buffer
+    - instant replay
+    - save the last audio
+    - drag out a clip
+  Now-Playing-Integrations:
+    - now playing
+    - track metadata
+    - Astra integration
+    - Spotify integration
+    - TIDAL integration
+  Now-Playing-Integrations#provider-priority:
+    - choose between Spotify Astra and TIDAL metadata
+    - which player supplies the song title
+    - reorder music providers
+  Terminal-UI:
+    - prism-tui
+    - start prism-tui
+    - terminal interface
+    - command line visualizer
+    - use Prism from the terminal
+    - TUI
+  Troubleshooting:
+    - Prism is not working
+    - fix Prism
+    - report a Prism bug

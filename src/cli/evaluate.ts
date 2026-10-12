@@ -15,6 +15,7 @@ const evaluationPath = resolve(
 )
 const queries = await loadEvaluationQueries(evaluationPath)
 const created = await createSearchEngine({
+  productName: config.identity.productName,
   wikiDirectory: config.wikiDirectory,
   wikiBaseUrl: config.wikiBaseUrl,
   aliasesFile: config.aliasesFile,
@@ -23,6 +24,9 @@ const created = await createSearchEngine({
   modelCacheDirectory: config.modelCacheDirectory,
   embeddingCacheFile: config.embeddingCacheFile,
 })
+if (semanticEnabled && !created.semanticEnabled) {
+  throw new Error('Semantic evaluation requires the semantic engine; lexical fallback is not a valid result.')
+}
 
 let topOneHits = 0
 let topThreeHits = 0
@@ -101,6 +105,7 @@ console.info(`Variants in top 3: ${topThreeHits}/${queries.length}`)
 console.info(`Correct page at top 1: ${pageTopOneHits}/${queries.length}`)
 console.info(`Correct page in top 3: ${pageTopThreeHits}/${queries.length}`)
 console.info(`Intents fully passing: ${fullyPassingIntents}/${passingIntents.size}`)
+console.info(`Unrelated queries rejected: ${noResultHits}/${noResultQueries}`)
 console.info(`Mode: ${created.semanticEnabled ? 'hybrid' : 'lexical-only'}`)
 
 function minimumRate(name: string, fallback: number): number {

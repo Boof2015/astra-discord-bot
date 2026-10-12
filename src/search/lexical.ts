@@ -34,13 +34,18 @@ function addTokens(target: Map<string, number>, source: string): number {
   return tokens.length
 }
 
-function exactQueryCandidates(normalizedQuery: string): string[] {
+function escapeRegularExpression(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function exactQueryCandidates(normalizedQuery: string, productName: string): string[] {
   if (!normalizedQuery) return []
   const candidates = new Set([normalizedQuery])
   const leadingPatterns = [
     /^(?:where is|where are) (?:the )?/,
     /^(?:where do i|where can i) (?:find|open|see|view|change|set|configure|adjust) (?:the )?/,
     /^how (?:do|can|could|should|would) i /,
+    /^(?:can|could|should|would) i /,
     /^how (?:does|do) (?:the )?/,
     /^what (?:is|are|does) (?:the )?/,
     /^why (?:is|are|does) (?:the )?/,
@@ -51,9 +56,13 @@ function exactQueryCandidates(normalizedQuery: string): string[] {
     /^show me (?:the )?/,
   ]
   const trailingPatterns = [
-    / (?:in|inside|on|for) astra$/,
     / (?:work|do|settings|options|page|screen|menu)$/,
   ]
+  if (productName) {
+    trailingPatterns.unshift(
+      new RegExp(` (?:in|inside|on|for) ${escapeRegularExpression(productName)}$`),
+    )
+  }
 
   for (const pattern of leadingPatterns) {
     const candidate = normalizedQuery.replace(pattern, '').trim()
@@ -72,8 +81,12 @@ function exactQueryCandidates(normalizedQuery: string): string[] {
   return [...candidates]
 }
 
-function exactPhraseBoost(document: IndexedDocument, normalizedQuery: string): number {
-  const candidates = exactQueryCandidates(normalizedQuery)
+function exactPhraseBoost(
+  document: IndexedDocument,
+  normalizedQuery: string,
+  productName: string,
+): number {
+  const candidates = exactQueryCandidates(normalizedQuery, productName)
   if (candidates.length === 0) return 0
   if (document.normalizedAliases.some((alias) => candidates.includes(alias))) return 14
   if (candidates.includes(document.normalizedHeading)) return 12
@@ -88,8 +101,10 @@ export class LexicalIndex {
   readonly #documents: IndexedDocument[]
   readonly #documentFrequency = new Map<string, number>()
   readonly #averageWeightedLength: number
+  readonly #productName: string
 
-  constructor(chunks: WikiChunk[]) {
+  constructor(chunks: WikiChunk[], productName = 'Astra') {
+    this.#productName = normalizeSearchPhrase(productName)
     this.#documents = chunks.map((chunk) => {
       const pageTitleFrequencies = new Map<string, number>()
       const headingFrequencies = new Map<string, number>()
@@ -189,7 +204,7 @@ export class LexicalIndex {
           / (termFrequency + lengthNormalization)
       }
 
-      const exactBoost = exactPhraseBoost(document, normalizedQuery)
+      const exactBoost = exactPhraseBoost(document, normalizedQuery, this.#productName)
       score += exactBoost
       if (score > 0) {
         hits.push({

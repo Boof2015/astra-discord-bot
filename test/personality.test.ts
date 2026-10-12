@@ -30,3 +30,12 @@ test('uses the configured weights when there is no previous line', () => {
     'The Wiki has no idea what you’re talking about. Neither do I.',
   )
 })
+
+test('uses the configured product name in branded lines', () => {
+  const picker = new PersonalityLinePicker()
+
+  assert.equal(
+    picker.pickForProduct('bareMention', 'Prism', () => 0.999),
+    'Ask me something. Preferably about Prism.',
+  )
+})

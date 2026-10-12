@@ -43,3 +43,22 @@ jobs:
           WIKI_SYNC_ENABLED: "false"
           SEMANTIC_SEARCH_ENABLED: "false"
         run: npm run evaluate
+
+      - name: Check out the current Prism Wiki
+        run: git clone --depth=1 https://github.com/Boof2015/prism.wiki.git data/prism-wiki
+
+      - name: Run Prism retrieval regression suite
+        env:
+          BOT_PRODUCT_NAME: Prism
+          WIKI_DIRECTORY: data/prism-wiki
+          WIKI_BASE_URL: https://github.com/Boof2015/prism/wiki
+          WIKI_SYNC_ENABLED: "false"
+          SEMANTIC_SEARCH_ENABLED: "false"
+          ALIASES_FILE: config/prism-aliases.yml
+          EVALUATION_PATH: test/queries-prism
+          EVALUATION_MIN_TOP_ONE: "0.70"
+          EVALUATION_MIN_TOP_THREE: "0.85"
+          EVALUATION_MIN_PAGE_TOP_ONE: "0.80"
+          EVALUATION_MIN_PAGE_TOP_THREE: "0.90"
+          EVALUATION_MIN_NO_RESULT: "1"
+        run: npm run evaluate

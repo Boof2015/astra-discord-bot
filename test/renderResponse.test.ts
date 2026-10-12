@@ -2,8 +2,23 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { ActionRowBuilder, ButtonBuilder, EmbedBuilder } from 'discord.js'
 import { renderWikiResponse } from '../src/discord/renderResponse.js'
+import type { BotIdentity } from '../src/config.js'
 import type { RankedWikiResult, WikiSearchResponse } from '../src/search/types.js'
 import type { WikiChunk } from '../src/wiki/types.js'
+
+const ASTRA_IDENTITY: BotIdentity = {
+  productName: 'Astra',
+  adminCommandName: 'astra',
+  wikiLabel: 'Astra Wiki',
+  accentColor: 0x8b5cf6,
+}
+
+const PRISM_IDENTITY: BotIdentity = {
+  productName: 'Prism',
+  adminCommandName: 'prism',
+  wikiLabel: 'Prism Wiki',
+  accentColor: 0x22d3ee,
+}
 
 function rankedResult(overrides: Partial<WikiChunk> = {}): RankedWikiResult {
   const chunk: WikiChunk = {
@@ -46,7 +61,7 @@ function rendered(response: WikiSearchResponse): {
   embed: ReturnType<EmbedBuilder['toJSON']>
   row: ReturnType<ActionRowBuilder<ButtonBuilder>['toJSON']>
 } {
-  const output = renderWikiResponse(response)
+  const output = renderWikiResponse(response, ASTRA_IDENTITY)
   const embed = output.embeds?.[0]
   const row = output.components?.[0]
   assert.ok(embed instanceof EmbedBuilder)
@@ -150,11 +165,29 @@ test('uses the same voice when no Wiki section matches', () => {
     query: 'mysterious thing',
     confidence: 'low',
     results: [],
-  })
+  }, ASTRA_IDENTITY)
 
   assert.ok([
     'I couldn’t pin that one down.',
     'I checked under the couch. Nothing.',
     'The Wiki has no idea what you’re talking about. Neither do I.',
   ].includes(String(output.content)))
+})
+
+test('uses the configured Wiki label and accent color', () => {
+  const output = renderWikiResponse({
+    query: 'how do I get started',
+    confidence: 'high',
+    results: [rankedResult({
+      id: 'Home',
+      pageSlug: 'Home',
+      pageTitle: 'Prism User Guide',
+      heading: 'Prism User Guide',
+    })],
+  }, PRISM_IDENTITY)
+  const embed = output.embeds?.[0]
+
+  assert.ok(embed instanceof EmbedBuilder)
+  assert.equal(embed.toJSON().author?.name, 'Prism Wiki')
+  assert.equal(embed.toJSON().color, 0x22d3ee)
 })

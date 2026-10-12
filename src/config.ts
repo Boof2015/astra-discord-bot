@@ -1,6 +1,14 @@
 import { resolve } from 'node:path'
 
+export interface BotIdentity {
+  productName: string
+  adminCommandName: string
+  wikiLabel: string
+  accentColor: number
+}
+
 export interface BotConfig {
+  identity: BotIdentity
   discordToken: string
   discordClientId: string
   discordGuildId: string | null
@@ -39,6 +47,32 @@ function requiredEnvironmentValue(name: string, required: boolean): string {
   return value
 }
 
+function loadIdentity(): BotIdentity {
+  const productName = process.env.BOT_PRODUCT_NAME?.trim() || 'Astra'
+  if (productName.length > 20) {
+    throw new Error('BOT_PRODUCT_NAME must be 20 characters or fewer.')
+  }
+
+  const adminCommandName = process.env.BOT_ADMIN_COMMAND_NAME?.trim() || 'astra'
+  if (!/^[a-z0-9_-]{1,32}$/.test(adminCommandName)) {
+    throw new Error(
+      'BOT_ADMIN_COMMAND_NAME must contain 1-32 lowercase letters, numbers, hyphens, or underscores.',
+    )
+  }
+
+  const rawAccentColor = process.env.BOT_ACCENT_COLOR?.trim() || '#8B5CF6'
+  if (!/^#[0-9a-f]{6}$/i.test(rawAccentColor)) {
+    throw new Error('BOT_ACCENT_COLOR must use #RRGGBB format.')
+  }
+
+  return {
+    productName,
+    adminCommandName,
+    wikiLabel: `${productName} Wiki`,
+    accentColor: Number.parseInt(rawAccentColor.slice(1), 16),
+  }
+}
+
 export function loadLocalEnvironment(): void {
   try {
     process.loadEnvFile('.env')
@@ -51,6 +85,7 @@ export function loadConfig(options: { requireDiscord?: boolean } = {}): BotConfi
   const requireDiscord = options.requireDiscord ?? true
   const pollMinutes = positiveNumberFromEnvironment('WIKI_POLL_MINUTES', 5)
   return {
+    identity: loadIdentity(),
     discordToken: requiredEnvironmentValue('DISCORD_TOKEN', requireDiscord),
     discordClientId: requiredEnvironmentValue('DISCORD_CLIENT_ID', requireDiscord),
     discordGuildId: process.env.DISCORD_GUILD_ID?.trim() || null,

@@ -1,0 +1,19 @@
+intents:
+  - name: unrelated-requests
+    expected: []
+    variants:
+      - bread
+      - sandwich recipe
+      - weather tomorrow
+      - write my history essay
+      - book me a flight
+      - what is the capital of France
+      - who is the president
+      - make me coffee
+      - how do I change a tire
+      - tell me a knock knock joke
+      - best pizza near me
+      - solve this calculus problem
+      - turn on my bedroom lights
+      - when is the football game
+      - translate this into Spanish

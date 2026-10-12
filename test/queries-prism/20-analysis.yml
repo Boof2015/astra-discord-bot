@@ -1,0 +1,90 @@
+intents:
+  - name: fft-tradeoff
+    expected: Understanding-the-Scopes#fft-size
+    variants:
+      - how can I separate two nearby frequencies more clearly
+      - why does a bigger FFT react more slowly
+  - name: display-tilt
+    expected: Understanding-the-Scopes#display-tilt
+    variants:
+      - does spectrum tilt actually boost the treble in my audio
+      - what does the dB per octave tilt setting do
+  - name: linked-guides
+    expected: Understanding-the-Scopes#linked-analysis
+    variants:
+      - can I move a measurement cursor in one scope and see it in the others
+      - how do I link frequency guides between spectrum and spectrogram
+  - name: render-rate
+    expected:
+      - Understanding-the-Scopes#performance-controls
+      - Audio-Sources-and-Capture#capture-and-performance
+      - Troubleshooting#the-display-is-moving-but-looks-slow
+    variants:
+      - will reducing the frame rate make my captured audio worse
+      - the audio is fine but the scopes are choppy how can I reduce CPU use
+  - name: pitch-lock
+    expected: Oscilloscope-and-Waveform#pitch-lock
+    variants:
+      - how do I stop a repeating waveform from sliding sideways
+      - why is the oscilloscope fundamental frequency readout unavailable with pitch lock off
+  - name: stereo-pattern
+    expected: Vectorscope#reading-common-patterns
+    variants:
+      - what does a horizontal cloud in the vectorscope mean
+      - why is the stereo scope leaning toward one side
+  - name: polar-reference
+    expected: Vectorscope#references-differ-by-projection
+    variants:
+      - does hitting the circle in polar mode mean the audio is clipping
+      - is the polar vectorscope circle an exact dBFS limit
+  - name: vectorscope-rgb
+    expected: Vectorscope#rgb-multiband
+    variants:
+      - can I tell whether the bass or treble is making the stereo image wide
+      - what do the RGB colors in the vectorscope show
+  - name: vu-reference
+    expected: Level-and-Loudness-Meters#reference-level
+    variants:
+      - why is my VU above zero even though the audio is not clipping
+      - how do I change what digital level corresponds to zero VU
+  - name: lufs-reset
+    expected: Level-and-Loudness-Meters#integrated-measurement
+    variants:
+      - how do I reset integrated loudness before measuring another song
+      - stopping my DAW did not clear the integrated LUFS reading
+  - name: correlation
+    expected:
+      - Level-and-Loudness-Meters#correlation
+      - Vectorscope#use-correlation-as-a-second-opinion
+    variants:
+      - what does a negative stereo correlation reading mean
+      - could my wide stereo signal cancel when played in mono
+  - name: waterfall-history
+    expected:
+      - Waterfall#desktop-and-plugin-controls
+      - Waterfall#reading-the-display
+    variants:
+      - how do I keep more seconds of spectrum history in Waterfall
+      - does changing waterfall ridge density change the retained history length
+  - name: reference-load
+    expected: Spectrum-Reference-Tracks#load-a-track
+    variants:
+      - can I drop a FLAC song onto Spectrum to compare my mix against it
+      - how do I load a reference recording without playing it
+  - name: reference-difference
+    expected: Spectrum-Reference-Tracks#overlay-and-difference
+    variants:
+      - what do negative values mean in Spectrum Difference view
+      - why can stereo content cancel out of the reference comparison
+  - name: reference-match
+    expected:
+      - Spectrum-Reference-Tracks#trim-and-match-level
+      - Spectrum-Reference-Tracks#if-the-comparison-is-unavailable-or-confusing
+    variants:
+      - Match level is grayed out even though I loaded a reference
+      - does Match level keep adjusting automatically as the song plays
+  - name: reference-recall
+    expected: Spectrum-Reference-Tracks#profiles-projects-and-sharing
+    variants:
+      - do I need the original reference audio file when reopening a saved profile
+      - if I share a profile does it include a playable copy of my reference song
