@@ -6,6 +6,8 @@ x-bot-service: &bot-service
   security_opt:
     - no-new-privileges:true
   stop_grace_period: 20s
+  environment:
+    STATUS_SHARED_DIRECTORY: /app/presence
 
 services:
   astra:
@@ -14,6 +16,7 @@ services:
       - ${ASTRA_ENV_FILE:-.env}
     volumes:
       - astra-data:/app/data
+      - status-presence:/app/presence
 
   prism:
     <<: *bot-service
@@ -21,7 +24,9 @@ services:
       - ${PRISM_ENV_FILE:-.env.prism}
     volumes:
       - prism-data:/app/data
+      - status-presence:/app/presence
 
 volumes:
   astra-data:
   prism-data:
+  status-presence:

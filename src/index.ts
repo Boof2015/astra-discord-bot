@@ -2,6 +2,7 @@ import { WikiService } from './app/wikiService.js'
 import { MaintenanceMode } from './app/maintenanceMode.js'
 import { loadConfig, loadLocalEnvironment } from './config.js'
 import { startDiscordBot } from './discord/bot.js'
+import { startStatusPresence } from './discord/statusPresence.js'
 
 loadLocalEnvironment()
 const config = loadConfig({ requireDiscord: true })
@@ -11,6 +12,7 @@ const maintenanceMode = await MaintenanceMode.open(config.botStateFile)
 console.info(`Preparing the ${config.identity.wikiLabel} index...`)
 await wikiService.start()
 const client = await startDiscordBot(config, wikiService, maintenanceMode)
+const stopStatusPresence = await startStatusPresence(client, config)
 
 let shuttingDown = false
 const shutdown = async (signal: string): Promise<void> => {
@@ -18,7 +20,8 @@ const shutdown = async (signal: string): Promise<void> => {
   shuttingDown = true
   console.info(`Received ${signal}; shutting down.`)
   wikiService.stop()
-  client.destroy()
+  await stopStatusPresence()
+  await client.destroy()
 }
 
 process.once('SIGINT', () => void shutdown('SIGINT'))

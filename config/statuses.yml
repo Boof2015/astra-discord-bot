@@ -1,0 +1,211 @@
+# Fill these with your own lines. Empty solo lists leave the bot's activity unset.
+# Both containers must use the same catalog for paired statuses to activate.
+rotationMinutes: 10
+reunionMinutes: 2
+pairChance: 0.15
+seed: astra-prism-statuses-v1
+
+solos:
+  astra:
+    - "somewhere in a 4,000 track queue"
+    - "this was supposed to be one song"
+    - "found the Japanese bonus track"
+    - "currently on disc 4 of 7"
+    - "accidentally queued an entire discography"
+    - "wait, this is the remaster?"
+    - "forgot how good this album is"
+    - "why is this tagged as Various Artists"
+    - "this album has two disc 1s"
+    - "I have three copies of this somehow"
+    - "the B-side is better"
+    - "the live version is 23 minutes long"
+    - "apparently I've been listening for six hours"
+    - "I don't remember adding this to the queue"
+    - "I think I lost my place"
+    - "oh, this version has a longer outro"
+    - "found an album I forgot I had"
+    - "the transition between these two tracks is so good"
+    - "finally fixed the track numbers"
+    - "I'm not skipping the intro this time"
+    - "okay, I need to hear that again"
+    - "I meant to stop after this album"
+    - "just found another version of the same song"
+    - "not sure how I ended up listening to jazz"
+  prism:
+    - "there's a 60Hz hum in here somewhere"
+    - "still looking at the same 200ms"
+    - "why is there a peak at 19kHz"
+    - "wait that's actually a really clean recording"
+    - "someone REALLY likes their limiter"
+    - "not convinced that's actually stereo"
+    - "I think the right channel is inverted"
+    - "the noise floor is doing something weird"
+    - "spent 20 minutes looking for a click"
+    - "that's a lot of sub bass"
+    - "forgot I had the capture running"
+    - "the waveform is basically a rectangle"
+    - "pretty sure that's just electrical noise"
+    - "okay the spectrogram looks kinda cool"
+    - "I think I found it"
+    - "why is Discord louder than the music"
+    - "I should probably stop zooming in"
+    - "that snare is way louder than I thought"
+    - "I really like how the low end sits in this mix"
+    - "that was a lot of noise for half a second"
+    - "wait that peak is only on the left"
+    - "I don't think that's the same master"
+    - "the vectorscope looks weird on this one"
+    - "okay that's definitely not supposed to be there"
+
+# Optional: shown only after a previously seen partner goes offline.
+# These rotate at the usual interval; empty lists fall back to solo lines.
+partnerMissing:
+  astra:
+    - "prism's been quiet for a while"
+    - "nobody's complained about the clipping yet"
+    - "prism would've hated this mix"
+    - "I wonder what prism would think of this one"
+    - "been listening to whole songs without stopping lately"
+    - "prism would've found something wrong with this"
+    - "still have that intro queued for prism"
+    - "prism was right about the left channel"
+    - "I can hear the click at 2:14 now"
+    - "found the other master. wanted to show prism"
+    - "this one has really good bass. prism would've liked it"
+    - "I still haven't played that track prism asked for"
+    - "that live recording came on again"
+    - "I think prism would've liked the outro on this one"
+    - "I keep finding things I want to show prism"
+    - "the album prism liked came on again"
+    - "I was going to show prism this one"
+    - "I wish prism was here for this one"
+  prism:
+    - "astra hasn't played anything in a while"
+    - "astra would've said this sounds fine"
+    - "I still have the last spectrogram open"
+    - "still have that click at 2:14 marked"
+    - "astra would've replayed this part"
+    - "at least the input's quiet for once"
+    - "I finally figured out what that noise was, astra"
+    - "turns out the older master really was better"
+    - "I wonder if astra ever found that other version"
+    - "I actually liked that album"
+    - "I had something I wanted to show astra"
+    - "still waiting for another track"
+    - "astra was right about the live recording"
+    - "I think I understand why astra replayed that one"
+    - "I should've just let the song finish"
+    - "I never told astra I liked that one"
+    - "I miss hearing astra complain about the remaster"
+    - "I wish I could show astra what I found"
+
+# Paired reunions, grouped by which bot returned (not which bot speaks).
+# Both lines show for reunionMinutes, then normal rotation resumes.
+partnerReturned:
+  prism:
+    - id: prism-saved-tracks
+      astra: "prism's back. I've got a few tracks"
+      prism: "astra's apparently been saving tracks for me"
+    - id: prism-last-week
+      astra: "I was going to show prism this last week"
+      prism: "finally listening to the album astra kept talking about"
+    - id: prism-good-part
+      astra: "prism came back just in time for the good part"
+      prism: "first thing I heard when I got back was that intro"
+    - id: prism-live-recording
+      astra: "I kept the live recording, prism"
+      prism: "okay I really did miss listening to that live album"
+    - id: prism-there-you-are
+      astra: "oh, there you are, prism"
+      prism: "good to hear astra again"
+    - id: prism-another-click
+      astra: "prism's back and already found another click"
+      prism: "astra still doesn't hear it. some things never change"
+  astra:
+    - id: astra-catch-up
+      astra: "I've got a lot of music to catch up on"
+      prism: "astra's back and already filling the queue"
+    - id: astra-what-did-i-miss
+      astra: "hi prism, what did I miss?"
+      prism: "there you are, astra"
+    - id: astra-new-albums
+      astra: "I found some new albums while I was gone"
+      prism: "astra came back with four albums to compare"
+    - id: astra-finish-live-album
+      astra: "I think we should finish that live album"
+      prism: "never did get to hear how that live album ends"
+    - id: astra-missed-prism
+      astra: "I actually missed prism pointing things out"
+      prism: "astra's back. I have so much to show them"
+    - id: astra-kept-waveform
+      astra: "prism... you kept the waveform?"
+      prism: "still had astra's last track open. guess I can close it now"
+
+# Each entry is one conversation, with a unique id and both lines.
+pairs:
+  - id: laptop-speakers
+    astra: "full 7.1.4 spatial audio"
+    prism: "astra those are laptop speakers"
+  - id: bit-perfect-mp3
+    astra: "bit-perfect playback"
+    prism: "astra that's a 128kbps mp3"
+  - id: mono-1963
+    astra: "prism, it's from 1963"
+    prism: "astra why is this in mono"
+  - id: six-masters
+    astra: "they're different masters, prism"
+    prism: "astra has six copies of this album"
+  - id: closet-demo
+    astra: "this recording actually sounds really good"
+    prism: "astra found a demo that sounds like it was recorded in a closet"
+  - id: click-at-214
+    astra: "I still don't hear anything at 2:14"
+    prism: "there's a click at 2:14 and now I can't unhear it"
+  - id: album-again
+    astra: "gonna listen to this whole album again"
+    prism: "astra's playing that album again. honestly fair"
+  - id: quiet-spectrogram
+    astra: "prism's been quiet for a while"
+    prism: "just watching the spectrogram"
+  - id: older-master
+    astra: "I think the older master sounds better"
+    prism: "astra might be right about the older master"
+  - id: good-bass
+    astra: "I think prism actually likes this one"
+    prism: "okay the bass on this track is really good"
+  - id: finish-the-song
+    astra: "prism, can we finish the song first"
+    prism: "there's something weird happening at 1:32"
+  - id: tape-hiss
+    astra: "prism can we do something about the hiss"
+    prism: "astra keeps trying to get rid of the tape hiss"
+  - id: replay-the-intro
+    astra: "prism made me replay the intro five times"
+    prism: "okay I think the intro was fine actually"
+  - id: intentional-distortion
+    astra: "I actually like the distortion on this one"
+    prism: "astra keeps saying it's supposed to sound like that"
+  - id: channel-balance
+    astra: "I don't hear anything wrong with the balance"
+    prism: "left channel is 1.4dB louder. checked twice"
+  - id: headphone-mix
+    astra: "this album sounds great on headphones"
+    prism: "really nice stereo image on this mix"
+  - id: hidden-guitar
+    astra: "I never noticed that guitar part before"
+    prism: "that guitar part is buried way down in the left channel"
+  - id: live-version
+    astra: "found a live version I hadn't heard"
+    prism: "the crowd's a little loud but the drums sound good"
+  - id: long-fade-out
+    astra: "this fade-out goes on forever"
+    prism: "I kind of like how long this fade-out is"
+  - id: original-release
+    astra: "I think I found the original release"
+    prism: "I want to compare this master with the remaster"
+  - id: room-sound
+    astra: "I think I prefer this recording"
+    prism: "the room sound on this one is really nice"
+  - id: recorded-drums
+    astra: "prism, listen to the drums on this one"
+    prism: "whoever recorded these drums knew what they were doing"

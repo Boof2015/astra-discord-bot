@@ -60,6 +60,24 @@ The guild-only `/astra` and `/prism` commands are hidden from members who do not
 
 Use `astra` or `prism` for `<product>`. Maintenance mode does not disconnect the bot, unload the model, or stop background Wiki polling. The two services store state independently, so pausing one does not affect the other.
 
+## Rotating statuses
+
+Edit [`config/statuses.yml`](config/statuses.yml) to supply `solos.astra`, `solos.prism`, and `pairs`. Each pair has a unique `id` and an `astra` and `prism` line. Statuses appear as custom text, without a forced "Playing" or "Watching" prefix. Each line must be a single line of at most 128 characters. Empty solo lists leave that bot's activity unset.
+
+By default, statuses rotate every 10 minutes and about 15% of time slots select a paired entry. Adjust `rotationMinutes` and `pairChance` in the catalog. A shared seed and clock choose the same pair in both processes, including after a restart. Solo lines avoid immediate repeats when there is more than one choice. Both bots must have solo lines before pairs can be configured.
+
+Compose mounts the small `status-presence` volume into both containers at `/app/presence`. Each bot writes a heartbeat every 10 seconds while the rotation is running, including whether its Discord connection is ready. A pair is shown only when the partner's heartbeat is fresh and agrees on the catalog, time slot, and pair. Updates generally align within one heartbeat interval. After a crash, a heartbeat expires after 35 seconds and the other bot switches to a fallback on its next tick (within roughly 45 seconds of the last heartbeat). Graceful shutdown removes the heartbeat; a detected disconnection marks it offline. This does not require the privileged Presence Intent.
+
+Optional `partnerMissing.astra` and `partnerMissing.prism` lists supply special fallback lines when the other bot disappears. They activate only after this process has seen its partner online, so starting a bot on its own uses normal solo statuses. Missing-partner lines rotate at the usual interval and avoid immediate repeats; empty lists fall back to solos. This works during solo slots too, independently of whether a pair was active.
+
+Optional `partnerReturned.astra` and `partnerReturned.prism` lists contain paired reunions, grouped by **which bot returned**. Each entry has a unique `id` and both `astra` and `prism` lines, just like a normal pair. The bot that observed the disappearance chooses a row when its partner returns and shares the selection and expiry through its heartbeat. Both bots display their matching lines for `reunionMinutes` (default 2, configurable from 1 to 60), with updates generally aligning within one heartbeat interval, then resume normal rotation. Reunions take priority over normal pairs regardless of `pairChance`.
+
+A returning process can join the reunion after a full restart because the surviving bot remembers the absence. Starting both bots for the first time does not trigger a reunion. Events are bound to the current process sessions and expire without being extended by heartbeats; a further disappearance cancels them. Repeated returns avoid repeating the last row for that returning bot when multiple rows are available. Empty return lists resume normal rotation immediately, and reunions work even without missing-partner lines. Both bots need solo lines and matching catalogs for reunion pairs too.
+
+Both bots need the same catalog and shared directory. Different catalogs during a rolling deployment or a shared-volume error cause normal solo fallback rather than disappearance lines. Heartbeats contain coordination metadata only; credentials, Wiki clones, and search caches remain in their existing separate locations. Run one instance of each product against a shared directory. For local runs, set `STATUS_SHARED_DIRECTORY` to the same absolute directory in both processes. For separate hosts, this local-volume arrangement would need a shared coordination service.
+
+Catalog changes are loaded at startup, so rebuild and recreate both bot services after editing the bundled file. This updates statuses across every Discord server each bot belongs to. Existing Astra deployments using the old `bot` service should be migrated before launching the renamed `astra` service, to avoid two instances using the Astra token.
+
 ## Local setup
 
 ```sh
@@ -206,6 +224,8 @@ docker compose up -d --build
 | `MODEL_CACHE_DIRECTORY` | `./data/model-cache` | Downloaded model files |
 | `EMBEDDING_CACHE_FILE` | `./data/embeddings.json` | Per-section embedding cache |
 | `BOT_STATE_FILE` | `./data/bot-state.json` | Persistent maintenance-mode state |
+| `STATUS_MESSAGES_FILE` | `./config/statuses.yml` | Shared catalog of solo and paired custom statuses |
+| `STATUS_SHARED_DIRECTORY` | `./data/status-presence` | Heartbeat directory shared by both bots; Compose sets `/app/presence` |
 
 When sync is enabled, `WIKI_DIRECTORY` must either not exist or already be the bot's Git clone. The bot will not overwrite a normal directory. Updates use `git pull --ff-only`; a rewritten or conflicting checkout fails safely and leaves the previous search index online.
 

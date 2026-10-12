@@ -23,6 +23,8 @@ export interface BotConfig {
   modelCacheDirectory: string
   embeddingCacheFile: string
   botStateFile: string
+  statusMessagesFile: string
+  statusSharedDirectory: string
 }
 
 function booleanFromEnvironment(name: string, fallback: boolean): boolean {
@@ -107,5 +109,7 @@ export function loadConfig(options: { requireDiscord?: boolean } = {}): BotConfi
       process.env.EMBEDDING_CACHE_FILE?.trim() || './data/embeddings.json',
     ),
     botStateFile: resolve(process.env.BOT_STATE_FILE?.trim() || './data/bot-state.json'),
+    statusMessagesFile: resolve(process.env.STATUS_MESSAGES_FILE?.trim() || './config/statuses.yml'),
+    statusSharedDirectory: resolve(process.env.STATUS_SHARED_DIRECTORY?.trim() || './data/status-presence'),
   }
 }
